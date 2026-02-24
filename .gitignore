@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Environment / secrets
+.env
+*.env
+secrets.py
+
+# Reports (generated output — not source code)
+reports/
+
+# Logs & debug
+*.log
+run_log.txt
+test_output.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/

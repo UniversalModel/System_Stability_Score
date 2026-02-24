@@ -1,0 +1,138 @@
+CARDIAC DIAGNOSTIC REPORT
+=========================
+Patient:    Ivan P., Male, 55 years old
+Date:       February 20, 2026
+Facility:   Cardiovascular Diagnostic Center, Sofia
+Physician:  Dr. M. Georgieva, MD Cardiology
+
+────────────────────────────────────────────────────────────────────
+1. REASON FOR EXAMINATION
+────────────────────────────────────────────────────────────────────
+Periodic checkup requested by patient due to:
+  - Occasional shortness of breath during moderate exertion (climbing 2 floors)
+  - Two episodes of palpitations in the last 3 months, each lasting ~10 minutes
+  - Family history: father had MI at age 62
+  - Patient is a moderate smoker (15 cigarettes/day for 25 years)
+  - Sedentary lifestyle, desk work
+
+────────────────────────────────────────────────────────────────────
+2. CLINICAL MEASUREMENTS
+────────────────────────────────────────────────────────────────────
+Blood Pressure:    148/92 mmHg  (Grade 2 hypertension — Stage 1 elevated)
+Resting Heart Rate: 78 bpm  (normal range)
+BMI:               27.4  (slightly overweight)
+SpO2 at rest:      97%   (normal)
+SpO2 after treadmill stress (7 min, moderate): 94%  (borderline drop)
+
+────────────────────────────────────────────────────────────────────
+3. ECG — 12-LEAD ELECTROCARDIOGRAM
+────────────────────────────────────────────────────────────────────
+Rhythm:          Sinus rhythm
+QRS Duration:    98 ms (normal <120 ms)
+QTc Interval:    438 ms (normal <450 ms)
+PR Interval:     184 ms (upper normal, borderline first-degree AV block)
+ST segment:      Mild ST depression 0.8 mm in leads V4-V5 during stress test
+                 (returns to baseline within 3 min of recovery)
+Left axis deviation: minimal, not clinically significant
+Findings: Possible early ischemic changes under stress in the lateral wall.
+          Occasional premature atrial contractions (PAC) — 3 per hour at rest.
+
+────────────────────────────────────────────────────────────────────
+4. ECHOCARDIOGRAM (TRANSTHORACIC)
+────────────────────────────────────────────────────────────────────
+Left Ventricular Ejection Fraction (LVEF): 54%
+  (Normal: ≥55%; borderline mildly reduced)
+Left Ventricular End-Diastolic Diameter (LVEDD): 56 mm
+  (Normal male: 42-59 mm — upper end of normal)
+Left Ventricular Wall Thickness (Interventricular Septum): 12.5 mm
+  (Normal: <11 mm → MILD concentric LV hypertrophy — likely hypertension-related)
+Left Atrial Diameter: 43 mm (Normal <40 mm → mildly dilated)
+Mitral Valve: Trace mitral regurgitation, leaflets structurally normal
+Aortic Valve: Tricuspid, no stenosis, minimal calcification at leaflet tips
+Diastolic Dysfunction: Grade 1 (impaired relaxation pattern — E/A ratio 0.85)
+Pericardium: No effusion
+Wall Motion: Normal at rest; anterolateral hypokinesia noted at peak stress
+
+────────────────────────────────────────────────────────────────────
+5. LABORATORY RESULTS
+────────────────────────────────────────────────────────────────────
+Total Cholesterol:   6.8 mmol/L  (HIGH — normal <5.2)
+LDL Cholesterol:     4.1 mmol/L  (HIGH — target <2.6 for cardiac risk)
+HDL Cholesterol:     1.1 mmol/L  (borderline low — target >1.0 for men)
+Triglycerides:       2.4 mmol/L  (ELEVATED — normal <1.7)
+HbA1c:               5.9%        (prediabetes range — normal <5.7%)
+Fasting Glucose:     6.1 mmol/L  (prediabetes — normal <5.6)
+hsCRP (inflammation):1.8 mg/L    (borderline — normal <1.0 is low risk)
+Troponin I:          <0.01 ng/mL (NORMAL — no acute myocardial injury)
+BNP (heart failure): 78 pg/mL    (ELEVATED — normal <35 pg/mL → compensated stress)
+Creatinine:          94 μmol/L   (normal renal function)
+TSH:                 2.1 mIU/L   (normal thyroid)
+
+────────────────────────────────────────────────────────────────────
+6. CORONARY ARTERY CALCIUM SCORE (CT)
+────────────────────────────────────────────────────────────────────
+Total CAC Score: 127 (Agatston units)
+  LAD (Left Anterior Descending): 89 units  (moderate calcification)
+  LCX (Left Circumflex):          21 units  (mild)
+  RCA (Right Coronary Artery):    17 units  (mild)
+Interpretation: Score 100-400 = MODERATE cardiovascular risk.
+  Corresponds to approximately 10-year MACE risk of 10-15% (Framingham).
+
+────────────────────────────────────────────────────────────────────
+7. CURRENT MEDICATIONS
+────────────────────────────────────────────────────────────────────
+  - Amlodipine 5mg/day  (calcium channel blocker for hypertension)
+  - Aspirin 100mg/day   (antiplatelet, started last year)
+  - No statin currently prescribed (newly indicated based on today's labs)
+
+────────────────────────────────────────────────────────────────────
+8. PHYSICIAN ASSESSMENT & CONCLUSIONS
+────────────────────────────────────────────────────────────────────
+PRIMARY FINDINGS:
+  1. Borderline reduced LVEF (54%) with mild LV hypertrophy — early cardiac
+     remodeling in the context of uncontrolled hypertension.
+  2. Grade 1 diastolic dysfunction — the heart is losing elasticity/compliance.
+  3. Mildly dilated left atrium — increased AF risk over next 5-10 years.
+  4. Stress-induced anterolateral hypokinesia — suggests reduced perfusion
+     in the LAD territory correlating with CAC score of 89 in LAD.
+  5. Elevated cardiovascular risk profile: dyslipidemia + prediabetes +
+     hypertension + smoking + positive family history + elevated CAC.
+  6. BNP 78 pg/mL suggests the heart is under increased workload stress,
+     compensated but not optimal.
+
+RISK STRATIFICATION:
+  - 10-year cardiovascular event risk (SCORE2): approximately 12-15% (HIGH)
+  - AF lifetime risk: elevated due to LA dilation + hypertension
+
+RECOMMENDED INTERVENTIONS:
+  1. Initiate Rosuvastatin 20mg/day (target LDL <1.8 mmol/L in high risk)
+  2. Intensify blood pressure control — add ACE inhibitor (Perindopril 5mg)
+     (also provides renal and cardiac protective effects)
+  3. Lifestyle: smoking cessation MANDATORY — quantified risk increase 2.5x
+  4. Mediterranean diet + moderate aerobic exercise 150 min/week
+  5. Glucose monitoring — HbA1c follow-up in 3 months; metformin if progresses
+  6. Follow-up echocardiogram in 6 months to track LVEF and diastolic function
+  7. Holter monitor 24h to quantify PAC burden and rule out paroxysmal AF
+
+PROGNOSIS WITH COMPLIANCE:
+  With full medication compliance, smoking cessation, and lifestyle changes:
+  LVEF expected to recover to 56-60% within 12 months.
+  10-year MACE risk reducible to ~6-8%.
+
+PROGNOSIS WITHOUT COMPLIANCE:
+  Progressive LV remodeling, LA dilation → AF, increased MI risk within 5-7 years.
+
+────────────────────────────────────────────────────────────────────
+9. PATIENT REPORTED SYMPTOMS (SUBJECTIVE)
+────────────────────────────────────────────────────────────────────
+  - "I feel mostly fine but get winded faster than 5 years ago"
+  - Palpitation episodes not associated with chest pain or syncope
+  - Sleep quality: moderate (snoring, not assessed for OSA)
+  - Stress level: HIGH (management position, 55-60h work week)
+  - Exercise: minimal (walk ~20 min 2-3x/week)
+  - Diet: high in processed food, red meat, low in vegetables
+  - Alcohol: 2-3 glasses of wine per week (moderate)
+
+────────────────────────────────────────────────────────────────────
+END OF REPORT
+────────────────────────────────────────────────────────────────────

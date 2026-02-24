@@ -1,6 +1,14 @@
 # System Stability Score (SSS) — U-Model v25
 
+> *"Every system that exists pays three inescapable prices — Time, Space, and Energy.  
+> The question is not whether it pays, but whether it can afford to."*  
+> — U-Theory, 2024
+
 **AI jury that evaluates ANY system via the triadic stability framework: Form / Position / Action**
+
+[![U-Model](https://img.shields.io/badge/U--Model-v25-blue)](https://U-Model.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![OpenRouter](https://img.shields.io/badge/AI-OpenRouter-orange)](https://openrouter.ai)
 
 Part of [U-Model.org](https://U-Model.org) — Universal Model of System Stability.
 

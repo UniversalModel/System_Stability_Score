@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 25.4  
+> **Version:** 26.0  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -515,9 +515,9 @@ Dimension i compactifies (radius R_i ↓ toward 0)
 | **Prediction map** | ST-P1–P5; testable via DESI, Euclid, Eöt-Wash |
 | **Dependency graph** | U-Theory (why) → ST machinery (how) → residues/predictions |
 | **Cross-doc** | "Dimensional cascade" (ToE 5D→3D) ↔ "Dimensional sacrifice" principle |
-| **Patch map** | A: $o_i$ scalar; B: translation table; C: floors; D: $D_{eff}$; E: residue taxonomy; F: $D_\Sigma$/$D_\text{macro}$ split; G: Action channels; H: Newton-time proj(X); I: Y causality; J: state vector $\mathbf{o}$; K: compactification criterion; L: CY ID program; M: Price Alphabet ($C_i$); **N: DPR 1.1 — multi-currency budget $\mathbf{B}$, payment units ($m$/$s$/$J$/bit/e-bit), simulator logic** |
-| **Open questions** | ST-Q1–Q4: CY property ID (→ Patch L), compactification dynamics, re-open conditions, $U_{Universe}(\mathbf{o})$ |
-| **Epistemic safety** | Dark sector = compactification hypothesis; DM has $A_\text{grav}$ open (Patch G); Time disambiguation: *endurance cost of F* $\neq$ *phenomenology of X* (Patch N.1) |
+| **Patch map** | A–E: v25.1 core; F–L: consistency upgrades; M: Price Alphabet; N: DPR 1.1 (units + simulator); **O: $o_i(\mathbf{x},t)$ fields; P: $R_i$ radius registry + receipt; Q: hysteresis $\Delta_i$; R: tick sizes + non-compensation; S: exchange layer $E\to Y$ with $\eta$; T: $\mathcal{K}$ linked to DST log-potential; U: $\beta_i=0 \leftrightarrow \partial\mathcal{K}/\partial o_i=0$ (ST market clearing); V: DPR YAML schema + L2/L3 auto-tags** |
+| **Open questions** | ST-Q1–Q4: CY property ID (→ Patch L), compactification dynamics (→ Patch Q $\Delta_i$), re-open conditions (BN signatures), $U_{Universe}(\mathbf{o})$ |
+| **Epistemic safety** | L2: Price Alphabet, DPR collapse rule, $\beta_i$ market clearing; L3: DM pockets ($o_{A_{EM}}\approx 0$), DE ($\Lambda \sim o_X$), bubble nucleation; Patch V auto-flags L3 dependencies |
 
 ---
 
@@ -1012,7 +1012,281 @@ $$D_\text{macro} > 3 \quad\Longleftrightarrow\quad B_X \geq C_X \; (\text{Freedo
 
 ---
 
-## ST.19 — REFERENCES
+## ST.19 — DPR v26 PATCH SET (O–V): FIELD EXTENSION + MARKET MECHANICS
+
+These patches extend the Dimensional Price Registry from a **global state vector** to a **local field theory**, add market mechanics (hysteresis, exchange layers, tick sizes), and formally link the cost field $\mathcal{K}$ to the DST and String Theory beta-functions.
+
+---
+
+### Patch O — Openness as a Field $o_i(\mathbf{x},t)$
+
+**Problem:** The state vector $\mathbf{O}$ is global, but dark matter pockets, life on a planet, and quantum computers are *local* phenomena. Regional compactification requires spatial structure.
+
+**Upgrade:**
+
+$$o_i \;\to\; o_i(\mathbf{x},t), \qquad \mathbf{O}(\mathbf{x},t) = [o_P, o_F, o_A, o_X, o_Y, \ldots]$$
+
+Local collapse rule (consistent with Patch K multi-currency criterion):
+
+$$o_i(\mathbf{x},t) \to 0 \iff C_i(\mathbf{x},t) > B_i(\mathbf{x},t)$$
+
+**Concrete benefit:** A dark matter pocket is now a spatial profile:
+- $o_{A_{\text{EM}}}(\mathbf{x}) \approx 0$ in the pocket region
+- $o_{A_{\text{grav}}}(\mathbf{x}) > 0$ throughout
+
+Life on a planet is a local $o_X(\mathbf{x},t) > 0$ island sustained against the background cosmological $o_X$-decay. A quantum computer is a local $o_Y(\mathbf{x},t)$ spike, sustained by active isolation.
+
+**Rule:** All DPR quantities are understood as fields unless explicitly stated as global averages.
+
+---
+
+### Patch P — Compactification Radius Registry $R_i$ + Residue Receipt
+
+**Problem:** The dimensional cascade describes $R_i \downarrow$ as compactification proceeds and classifies residues (micro/meso/macro via Patch E), but no formal registry links $R_i$ to $o_i$.
+
+**Upgrade:** Add to DPR for each dimension:
+
+| Field | Meaning |
+|-------|---------|
+| $R_i$ | Effective compactification radius / characteristic scale |
+| residue-type | micro / meso / macro (Patch E taxonomy) |
+| $o_i \approx f(R_i)$ | monotone: larger $R_i$ $\Rightarrow$ more open |
+
+**Canonical interface:**
+
+$$o_i = \tanh\!\left(\frac{R_i}{R_i^{\text{ref}}}\right) \quad \in [0,1]$$
+
+where $R_i^{\text{ref}}$ is the reference scale at which $o_i = 0.5$ (half-open).
+
+**Receipt table (Patch E extended):**
+
+| Dimension | $R_i$ | Residue type | Observable |
+|-----------|--------|-------------|------------|
+| 6D–10D (CY) | $\sim 10^{-35}$ m | Micro-fossil | CY topology (ST) |
+| 4D dark dim. | $\sim \mu$m–mm | Meso-residue | Sub-mm gravity deviation |
+| DM pockets | $\sim$ galactic | Macro-pocket | No EM coupling, gravity only |
+| $\Lambda$ | Universe-wide | Cosmological | $o_X$ field pressure |
+
+---
+
+### Patch Q — Hysteresis Barrier $\Delta_i$: Closing Easy, Reopening Hard
+
+**Problem:** ST-Q3 asks whether closed dimensions can reopen and at what cost. The current collapse rule (Patch K) is symmetric. But phase transitions in physics are typically asymmetric: nucleating a new phase requires overcoming a barrier.
+
+**Upgrade:** Introduce a reopening barrier $\Delta_i \geq 0$ per dimension:
+
+$$\text{Close: } C_i > B_i \qquad\qquad \text{Reopen: } B_i > C_i + \Delta_i$$
+
+| Dimension | $\Delta_i$ | Why |
+|-----------|------------|-----|
+| 3D (A) | $\Delta_A \approx 0$ | Stability Lock is thermodynamically favored; 3D is the ground state |
+| 4D (X) | $\Delta_X > 0$ | Life must actively pay to sustain openness; once lost, requires large energy fluctuation to restart |
+| 5D (Y) | $\Delta_Y \gg 0$ | Decoherence is fast; restoring macro-coherence requires bubble nucleation (BN) — a rare event |
+| 6D–10D | $\Delta_{CY} \to \infty$ | Planck-scale barrier; effectively irreversible in our phase |
+
+**Physical interpretation:** $\Delta_i$ is the **nucleation energy** for reopening dimension $i$ — the height of the potential barrier between the current compactified phase and the partially-open phase.
+
+**Falsifiability (L3):** If $\Delta_Y$ is finite at cosmological scales, bubble nucleation events should produce anomalous vacuum energy signatures detectable as CMB non-Gaussianities.
+
+---
+
+### Patch R — Currency Tick Sizes + Non-Compensation Enforcement
+
+**Problem:** Non-compensability is stated as a principle but not operationally enforced in the simulator or registry.
+
+**Upgrade:** Define the **minimum transaction (tick)** for each currency:
+
+| Currency | Tick $q_i$ | Physical invariant | Rule |
+|----------|-----------|-------------------|------|
+| Space ($B_S$) | $q_S = \ell_P$ (Planck length) | Minimum distinguishable position | Two objects cannot be co-located below $\ell_P$ |
+| Time ($B_T$) | $q_T = t_P$ (Planck time) | Minimum stability interval | No stable Form below one Planck time |
+| Energy ($B_E$) | $q_E \sim h$ (Planck constant) | Minimum action per interaction | Planck constant as minimum transaction fee |
+| Freedom ($B_X$) | $q_X = 1$ bit ($k_B \ln 2$) | Landauer limit | Minimum irreversibility per bit of complexity created |
+| Coherence ($B_Y$) | $q_Y = 1$ e-bit (Bell pair) | Minimum quantum correlation unit | Decoherence destroys below 1 e-bit threshold |
+
+**Non-compensation rule (formal):**
+
+> Budget $B_i$ can only be spent to satisfy a deficit in currency $i$. A surplus in $B_E$ cannot directly repair a $B_S$ or $B_T$ deficit. **Cross-currency exchange** is permitted only via the Exchange Layer (Patch S) with efficiency $\eta < 1$.
+
+**Consequence:** A system with $B_E \gg C_E$ but $B_T < C_T$ (abundant energy, unstable form) still collapses on its Form dimension — consistent with short-lived high-energy particles in particle physics.
+
+---
+
+### Patch S — Exchange Layer: Energy $\to$ Coherence with Efficiency $\eta$
+
+**Problem:** Quantum computers demonstrably convert energy (refrigeration, error correction power) into coherence — but the DPR has no mechanism for cross-currency exchange.
+
+**Upgrade:** Define the exchange layer with a temperature- and noise-dependent efficiency:
+
+$$B_Y = \eta_{E\to Y}(T, \text{noise}) \cdot E_{\text{spent}}$$
+
+where:
+- $\eta_{E \to Y}(T, \text{noise})$ is the **exchange efficiency** (approaches 1 only at $T \to 0$ with zero noise)
+- $E_{\text{spent}}$ is the energy budget allocated to coherence maintenance
+
+**Efficiency model:**
+
+$$\eta_{E\to Y}(T) \approx \eta_0 \cdot e^{-T/T_0}$$
+
+where $T_0$ is the characteristic decoherence temperature for the system.
+
+**General exchange table:**
+
+| From | To | Mechanism | Efficiency |
+|------|----|-----------|------------|
+| Energy ($B_E$) | Coherence ($B_Y$) | Refrigeration + error correction | $\eta_{E\to Y} \ll 1$ at room temp; $\sim 0.1$–0.4 at mK |
+| Energy ($B_E$) | Freedom ($B_X$) | Metabolic work + information processing | $\eta_{E\to X} \sim$ thermodynamic efficiency of life |
+| Freedom ($B_X$) | Energy ($B_E$) | Landauer erasure (bits $\to$ heat) | $\eta_{X\to E} = k_B T \ln 2$ per bit |
+
+**Rule:** All exchanges are lossy ($\eta < 1$). There is no free conversion between currencies — consistent with thermodynamic irreversibility and the 2nd Law operating as a market friction.
+
+---
+
+### Patch T — Cost Field $\mathcal{K}$ Linked to DST: Stability Lock as Global Minimum
+
+**Problem:** The cost field $\mathcal{K}(\mathbf{o})$ is defined abstractly ($C_i = \partial\mathcal{K}/\partial o_i$) but its shape is unspecified. It should be chosen so that the Stability Lock at 3D is a **global minimum**.
+
+**Upgrade:** Define $\mathcal{K}$ as a **triadic log-potential**:
+
+$$\mathcal{K}(\mathbf{o}; \mathbf{w}) = \sum_i w_i \cdot \Phi(o_i) \;-\; \lambda \cdot (\ln F + \ln P + \ln A)$$
+
+where:
+- $\Phi(o_i)$ is a convex penalty function (e.g., $\Phi(o_i) = -\ln o_i + (1-o_i)^{-1}$ — diverges at $o_i \to 0$ and $o_i \to 1$)
+- $\lambda \cdot (\ln F + \ln P + \ln A)$ is the **triadic gain term** (log of geometric mean — non-compensable)
+- $w_i$ are dimension-specific weights (encodes that closing higher dims is cheaper)
+
+**Properties of this choice:**
+- Minimum of $\mathcal{K}$ at $(F, P, A) = $ optimal $\Leftrightarrow$ $U \geq \varphi^{-1}$ (Stability Lock)
+- Saddle points correspond to partial compactification states (e.g., $o_A \to 0$ = dark matter pocket)
+- $\partial\mathcal{K}/\partial o_i = 0$ defines **market clearing** (Patch U)
+
+---
+
+### Patch U — ST Beta-Functions ↔ Market Clearing ($\partial\mathcal{K}/\partial o_i = 0$)
+
+**Context:** String Theory's conformal invariance conditions (beta-function equations $\beta_i = 0$) are the mathematical conditions for a consistent string background — i.e., for which vibrational modes (properties) are stable at a given energy scale.
+
+**Upgrade:** Identify the **market clearing condition** with the ST beta-function vanishing:
+
+$$\beta_i = 0 \;\Longleftrightarrow\; \frac{\partial \mathcal{K}}{\partial o_i} = 0 \;\Longleftrightarrow\; C_i = B_i \quad (\text{market equilibrium})$$
+
+**Consequence table:**
+
+| ST concept | DPR translation |
+|------------|----------------|
+| $\beta_i = 0$ (conformal invariance) | Dimension $i$ at market equilibrium: $C_i = B_i$ |
+| $\beta_i > 0$ (relevant operator, infrared) | $C_i > B_i$: dimension closing (compactification) |
+| $\beta_i < 0$ (irrelevant operator, UV) | $B_i > C_i$: dimension stable / trying to open |
+| RG flow to IR fixed point | Cosmological evolution toward Stability Lock |
+| Marginal operator (exactly $\beta_i = 0$) | Dimension at critical openness (phase boundary) |
+
+**This closes the Floor-4 loop:** String Theory does not need to be rewritten — its beta-function apparatus is already the market-clearing equations of the dimensional economy. $\mathcal{K}$ is the "action" whose extremization reproduces ST's stability conditions.
+
+**Rule:** When computing $\mathcal{K}$ extrema, use ST beta-function results as the canonical reference for which $o_i$ configurations are stable. No new mathematics is invented; existing ST calculations are re-read as DPR equilibrium conditions.
+
+---
+
+### Patch V — DPR Schema: Epistemic Tags + Test Pointers per Entry
+
+**Problem:** Appendix ST maintains strict L2/L3 tagging in prose, but the DPR table has no machine-readable epistemic metadata. The `System_Stability_Score` scorer could automatically reduce confidence for L3-dependent results.
+
+**Upgrade:** Each DPR entry carries a formal schema:
+
+```yaml
+# DPR Entry Schema (v26)
+dimension: <int>           # 1D..11D
+property: <string>         # "Position", "Form", "Action", "X", "Y", "CY_n"
+currency: <string>         # "Space", "Time", "Energy", "Freedom", "Coherence", ...
+token: <string>            # canonical short name
+unit: <string>             # m | s | J | bit | e-bit | Planck
+tick: <string>             # q_i = minimum transaction
+o_i_value: <float | range> # current openness: e.g. 0.4-0.6
+status: OPEN | PARTIAL | MICRO | CLOSED
+epistemic_level: L2 | L3
+tests: [<ST-P#>, ...]      # predictions that constrain this entry
+dependencies: [<patch>, ...] # which patches this entry relies on
+```
+
+**Example entries (abbreviated):**
+
+```yaml
+- dimension: 3
+  property: Action
+  currency: Energy
+  token: Dissipation-tax
+  unit: J / J·s
+  tick: q_E = h (Planck constant)
+  o_i_value: 1.0
+  status: OPEN
+  epistemic_level: L2
+  tests: []
+  dependencies: [PatchA, PatchM, PatchN]
+
+- dimension: 4
+  property: X (Anti-entropy)
+  currency: Freedom
+  token: Temporal-Freedom / Irreversibility
+  unit: bit / ΔS
+  tick: q_X = 1 bit (k_B·ln2)
+  o_i_value: 0.3-0.6
+  status: PARTIAL
+  epistemic_level: L2
+  tests: [ST-P4]
+  dependencies: [PatchA, PatchH, PatchM, PatchN]
+
+- dimension: 4
+  property: X — dark energy interpretation
+  currency: Freedom
+  token: X-bleed (Λ)
+  unit: cosmological
+  tick: N/A
+  o_i_value: 0.3-0.6 (global)
+  status: PARTIAL
+  epistemic_level: L3
+  tests: [ST-P4, DESI/Euclid w(z)]
+  dependencies: [PatchA, PatchE, PatchM, PatchO]
+```
+
+**Integration with System_Stability_Score:**
+
+When a scorer output depends on any DPR entry with `epistemic_level: L3`, the system automatically appends:
+> *"[!] Result includes L3 speculative dependencies: [entry list]. Confidence reduced accordingly."*
+
+This makes the L2/L3 discipline **programmatically enforceable**, not just a documentation convention.
+
+---
+
+### v26 DPR Economy — Full Updated Flow
+
+```
+Given O(x,t) and Budgets B(x,t):
+
+  if C_i(x,t) > B_i(x,t):
+     o_i(x,t) ⇓   [Patch O: local collapse]
+     R_i ⇓         [Patch P: radius shrinks]
+     → residue type: micro/meso/macro [Patch E/P]
+
+  if Reopen attempted:
+     require B_i > C_i + Δ_i  [Patch Q: hysteresis]
+
+  Cross-currency exchange:
+     B_Y += η(T, noise) · E_spent  [Patch S: E→Y]
+
+  Market equilibrium:
+     ∂K/∂o_i = 0  ⇔  β_i = 0 (ST)  [Patch U]
+
+  Epistemic output:
+     if any dependency = L3: auto-flag result  [Patch V]
+
+Special profiles:
+  Life  : o_X(x,t) > 0 island  | pays Freedom via ΔS > 0
+  QC    : o_Y(x,t) spike       | pays Coherence via E→Y exchange
+  DM    : o_A_EM(x) ≈ 0 pocket | o_A_grav(x) > 0 persists
+```
+
+---
+
+## ST.20 — REFERENCES
 
 | # | Reference |
 |---|-----------|
@@ -1028,9 +1302,9 @@ $$D_\text{macro} > 3 \quad\Longleftrightarrow\quad B_X \geq C_X \; (\text{Freedo
 
 ---
 
-> *Appendix ST — String Theory as the 4th Floor | Patch Set v25.4*  
-> *ST.16: Consistency Upgrades (F–L) | ST.17: Price Alphabet (M) | ST.18: Dimensional Economy Standard DPR 1.1 (N)*  
+> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.0*  
+> *ST.16: Consistency Upgrades (F–L) | ST.17: Price Alphabet (M) | ST.18: DPR 1.1 (N)*  
+> *ST.19: DPR v26 — Patches O–V: fields, $R_i$ receipt, hysteresis $\Delta_i$, tick sizes, $E\to Y$ exchange, $\mathcal{K}$ log-potential, $\beta_i$ market clearing, YAML schema*  
 > *Price Alphabet: Space↔P, Time↔F, Energy↔A, Freedom↔X, Coherence↔Y*  
-> *DPR 1.1 units: m / s / J / bit / e-bit | Simulator: check_dimensional_access()*  
-> *U-Model v25 | © 2026 Petar Nikolov | CC BY 4.0*  
+> *U-Model v26 | © 2026 Petar Nikolov | CC BY 4.0*  
 > *Dimensional Stability Theorem | [DOI: 10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)*

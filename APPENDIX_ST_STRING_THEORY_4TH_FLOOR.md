@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.1  
+> **Version:** 26.2  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -1440,11 +1440,197 @@ Y     : Field API — o_i(x,t) + R_i registry as unified language
          for micro/meso/macro phenomena
 Z     : Dual-metric standard — D_Sigma (geometric, 0-11) vs
          D_macro (thermodynamic, 3.0-4.0) formally separated
+
+PATCH SUPPLEMENT — v26.2 DARK SECTOR (ST.21)
+9     : Vocab Lock — "4D residue" reserved for X-bleed (DE);
+         DM renamed to "A-channel residue / macro-pocket residue"
+10    : Dark Residue Matrix — o-vector signatures for DM, DE,
+         Classical Matter, Quantum Coherent State
+11    : DPR Extension — Dark States Registry (type: openness_
+         pattern, NOT new dimensions); YAML schema
+12    : Diagnostic Pointers — QC-P12 (sub-mm DM gravity),
+         QC-P14 (dynamic Lambda / DESI), QC-P15 (gravity
+         decoherence without heat / optomechanics)
 ```
 
 ---
 
-## ST.21 — REFERENCES
+## ST.21 — DARK SECTOR FORMAL PATCH SET (v26.2)
+
+> **Patch Set v26.2** | Epistemic Level: L2 (vocabulary lock, matrix structure) + L3 (diagnostic pointers)  
+> **Patches:** 9 (Vocab Lock) · 10 (Dark Residue Matrix) · 11 (DPR Extension — Dark States) · 12 (Diagnostic Pointers)  
+> **Purpose:** Close the terminological gap between "4D residue" (X-bleed / DE) and "A-channel residue" (DM). Provide the first falsifiable test hierarchy for dark-sector predictions.  
+> **Target sections for back-integration:** ST.6.0 (vocab lock), ST.7.2 (matrix), ST.2.x (DPR extension)
+
+---
+
+### ST.21.0 — PATCH 9: DARK SECTOR VOCABULARY LOCK (v26.2)
+
+**Problem:** `ST.6–ST.7` used "4D residue" loosely for both Dark Matter and Dark Energy, creating a false implication that DM is sourced by the 4D (X) dimension — a category error.
+
+**Resolution:** Strict type-safe naming, binding for all subsequent sections and simulator outputs.
+
+---
+
+#### ST.6.0 DARK SECTOR TERMINOLOGY LOCK (v26.2)
+
+To prevent ambiguity, U-Theory adopts the following strict naming convention:
+
+- **4D residue** → reserved for **X-residues**: phenomena sourced by the partially-open 4D (X) dimension, including Dark Energy = X-bleed (cosmological pressure from the Freedom/Anti-entropy channel).
+
+- **Dark Matter (DM)** is defined as an **A-channel residue / triad fragment**: matter in which the **electromagnetic Action channel** is compactified locally, while gravitational coupling remains open:
+
+$$o_{A_\text{EM}} \approx 0, \quad o_{A_\text{grav}} > 0$$
+
+**Naming rules (binding for all subsequent sections):**
+
+- ❌ Never call Dark Matter a "4D residue" — that label is reserved for X-bleed (DE).
+- ✅ Call DM: **"macro-pocket residue"** or **"A-channel residue"**.
+- ✅ Call DE: **"4D residue"**, **"X-bleed"**, or **"cosmological X-pressure"**.
+
+**Canonical cross-reference table:**
+
+| Term | Source dimension | Canonical name | Deprecated name |
+|------|-----------------|----------------|-----------------|
+| Dark Matter | A (Action/EM) locally compactified | A-channel residue / macro-pocket residue | "4D residue" ❌ |
+| Dark Energy | X (Anti-entropy / 4D) globally pressuring | 4D residue / X-bleed | "DM residue" ❌ |
+
+**Epistemic level:** L2 — vocabulary fix. Resolves internal inconsistency; no new predictions.
+
+---
+
+### ST.21.1 — PATCH 10: DARK RESIDUE MATRIX (O-VECTOR SIGNATURES)
+
+**Problem:** No unified table maps dark-sector phenomena to their exact local openness-vector patterns $\mathbf{o}(\mathbf{x},t)$.
+
+**Resolution:** Full signature matrix — each dark-sector state defined by its canonical openness vector.
+
+---
+
+#### ST.7.2 DARK RESIDUE MATRIX (O-VECTOR SIGNATURES) — v26.2
+
+Each dark-sector effect is characterised by a local openness-vector pattern $\mathbf{o}(\mathbf{x},t)$:
+
+| Phenomenon | Openness pattern (core signature) | Observable consequence | Classification |
+|---|---|---|---|
+| **Dark Matter (A-channel residue)** | $o_{A_\text{EM}}\approx0,\ o_{A_\text{grav}}>0,\ o_P\approx1,\ o_F\approx1$ | Mass + gravity; no EM interaction (invisible to light) | Macro-pocket residue — regional compactification state |
+| **Dark Energy (4D residue / X-bleed)** | $o_X>0$ globally; cosmological X-pressure builds with complexity | Repulsive cosmological pressure $\Lambda\sim f(o_X)$ | Cosmological residue — X-pressure (dynamic $\Lambda$) |
+| **Classical Matter (Stability Lock)** | $o_P,o_F,o_A\approx1;\ o_X$ partial; $o_Y$ micro-open | Chemistry, EM interaction, life possible | 3D Triadic equilibrium — Stability Lock regime |
+| **Quantum Coherent State** | $o_Y\approx0.6$–$0.9;\ T\to0$ | Entanglement, superposition accessible | Artificially opened Y-channel via $\eta_{E\to Y}$ exchange |
+
+**Diagnostic rule:**
+- DM is a **macro-pocket** (regional compactification state within the 3D Triadic structure).
+- DE is a **cosmological residue** (X-pressure building on the Hubble scale).
+- Neither constitutes macroscopic access to a new geometric dimension.
+
+**Triadic schematic — Dark Sector decomposition:**
+
+```text
+   Form (F)  ─────────────  Position (P)
+  [pays Time]              [pays Space]
+        \                    /
+         \                  /
+          \                /
+           Action (A)
+        [pays Energy]
+         /         \
+   A_EM             A_grav
+ (EM coupling)   (grav. coupling)
+
+  Classical matter:  o_AEM≈1   o_Agrav≈1
+  DM (A-residue):    o_AEM≈0   o_Agrav>0   ← macro-pocket residue
+  DE (X-bleed):      global o_X > 0  →  Λ  ← 4D residue
+```
+
+**Epistemic level:** L2 for DM signature pattern (structural isomorphism with observational constraints); L3 for $\Lambda\sim f(o_X)$ cosmic correlation claim.
+
+---
+
+### ST.21.2 — PATCH 11: DPR EXTENSION — DARK STATES (NOT NEW DIMENSIONS)
+
+**Problem:** The DPR table (ST.18) only lists open dimensions. Dark-sector phenomena are *states* (openness patterns) of existing dimensions — they need distinct, typed registry entries that are clearly NOT new geometric dimensions.
+
+**Resolution:** Two state-rows added to the DPR registry with explicit `type: openness_pattern`.
+
+---
+
+#### ST.2.x DPR EXTENSION: DARK STATES REGISTRY — v26.2
+
+The following entries are **registry states** (named openness patterns), not additional spatial dimensions:
+
+| State | "Unpaid" channel | Currency deficit | Canonical openness signature | Scale |
+|---|---|---|---|---|
+| **DM state** | $A_\text{EM}$ Action channel | Energy-interaction license (EM coupling) | $o_{A_\text{EM}}\approx0,\ o_{A_\text{grav}}>0$ | Macro (galactic halos → sub-mm meso-residue) |
+| **DE state** | Containment of X-channel | Freedom/Irreversibility budget mismatch | global $o_X>0$ → X-pressure = $\Lambda$ | Cosmological (Hubble scale) |
+
+**Key distinction:** These states arise from **partial compactification within the existing 3D Triadic structure** — they are not evidence of macroscopic access to 4D or 5D geometry.
+
+**YAML schema extension (DPR v26.2):**
+
+```yaml
+dark_states:
+  - id: "DM-STATE"
+    type: "openness_pattern"          # NOT a new dimension
+    compactified_channel: "A_EM"
+    open_channels: ["A_grav", "P", "F"]
+    canonical_name: "A-channel residue / macro-pocket residue"
+    deprecated_name: "4D residue"
+    epistemic_level: "L3"
+    test_pointer: "QC-P12"
+
+  - id: "DE-STATE"
+    type: "openness_pattern"          # NOT a new dimension
+    compactified_channel: null
+    pressure_channel: "X"
+    canonical_name: "4D residue / X-bleed"
+    epistemic_level: "L3"
+    test_pointer: "QC-P14"
+```
+
+**Epistemic level:** L2 for registry structure and type discipline; L3 for cosmological assignments.
+
+---
+
+### ST.21.3 — PATCH 12: DARK SECTOR DIAGNOSTIC POINTERS (TESTABLE HIERARCHY)
+
+**Concept:** If DM and DE are specific economic states (typed openness patterns), we derive falsifiable predictions — without exotic new particles. Extends ST.9 Predictions (ST-P1–P5) with three new test-pointers.
+
+| Phenomenon | U-Theory Definition | Primary Test Pointer (Observable) | Prediction & Falsifiability Label |
+|---|---|---|---|
+| **Dark Matter** | A-channel residue: $o_{A_\text{EM}}\approx0$, $o_{A_\text{grav}}>0$ | Sub-mm torsion balance (meso-scale gravity) | **QC-P12:** If DM is a collapsed A-channel residue, Newton's law should deviate at meso-residue radius $R_A$. Prediction: screening effects in vacuum below 50 µm. |
+| **Dark Energy** | X-bleed / 4D pressure: $\Lambda\sim\text{Anti-entropy}$ | Variable $\Lambda(z)$ — cosmic complexity correlation | **QC-P14:** $\Lambda$ correlates with structural complexity density (galaxy-formation epoch density), not only vacuum energy. Prediction: $\Lambda$ is dynamic; check DESI / Euclid $w(z)$ data. |
+| **Graviton (A_grav quanta)** | P-channel quanta of $A_\text{grav}$; $A_\text{EM}$ closed | Decoherence rates without thermal heating | **QC-P15:** Gravity causes quantum decoherence (position-collapse via P) without thermal energy exchange ($A_\text{EM}\approx0$). Gravity-induced decoherence ≠ thermalization. Testable today with optomechanical setups. |
+
+**Engineering consequences of Patch 12:**
+
+1. **DM search reorientation (QC-P12):** U-Theory redirects the search from WIMP particle detectors (null results for 40 years) to *sub-mm gravitational anomalies*. The "shadow" of the compactified $A_\text{EM}$ channel may manifest as a screening or enhancement of gravity at meso-residue scale $R_A \sim$ few µm.
+
+2. **DE as complexity pressure (QC-P14):** If DE is driven by $o_X$ (the Anti-entropy/complexity channel), cosmic expansion should correlate with structural complexity density — stronger acceleration in epochs of active galaxy and life formation. This is a dynamic-$\Lambda$ prediction accessible to DESI and Euclid datasets without new instrumentation.
+
+3. **Gravity as "cold observer" (QC-P15):** Gravity induces position collapse ($o_P$ channel activated) without firing the EM Action channel ($o_{A_\text{EM}}\approx0$). Prediction: gravity causes decoherence in optomechanical experiments *without* measurable thermal heating. Current setups (e.g., Aspelmeyer group) are approaching the precision threshold.
+
+**Epistemic level:** L3 — speculative but properly falsifiable. All three predictions are in-principle testable within 10–20 years given incremental technology improvement.
+
+---
+
+### v26.2 Patch Map Supplement
+
+```
+PATCH SUPPLEMENT — v26.2 DARK SECTOR
+
+9  : Vocab Lock — "4D residue" reserved for X-bleed (DE);
+     DM renamed to "A-channel residue / macro-pocket residue"
+10 : Dark Residue Matrix — o-vector signatures for DM, DE,
+     Classical Matter, Quantum Coherent State
+11 : DPR Extension — Dark States Registry (type: openness_
+     pattern, NOT new dimensions); YAML schema for DM/DE states
+12 : Diagnostic Pointers — QC-P12 (sub-mm DM), QC-P14 (dynamic
+     Lambda), QC-P15 (gravity decoherence without heat)
+```
+
+---
+
+## ST.22 — REFERENCES
 
 | # | Reference |
 |---|-----------|
@@ -1460,9 +1646,10 @@ Z     : Dual-metric standard — D_Sigma (geometric, 0-11) vs
 
 ---
 
-> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.1*  
+> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.2*  
 > *ST.16: F–L | ST.17: M (Price Alphabet) | ST.18: N (DPR 1.1) | ST.19: O–V (DPR v26)*  
 > *ST.20: W–Z — Compliance Audit: multi-currency collapse, Action channel split, field API, dual-metric standard*  
-> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse*  
-> *U-Model v26 | © 2026 Petar Nikolov | CC BY 4.0*  
+> *ST.21: Patches 9–12 — Dark Sector Vocab Lock, Residue Matrix, DPR Dark States, Diagnostic Pointers (QC-P12/P14/P15)*  
+> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"*  
+> *U-Model v26.2 | © 2026 Petar Nikolov | CC BY 4.0*  
 > *Dimensional Stability Theorem | [DOI: 10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)*

@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.0  
+> **Version:** 26.1  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -515,9 +515,9 @@ Dimension i compactifies (radius R_i ↓ toward 0)
 | **Prediction map** | ST-P1–P5; testable via DESI, Euclid, Eöt-Wash |
 | **Dependency graph** | U-Theory (why) → ST machinery (how) → residues/predictions |
 | **Cross-doc** | "Dimensional cascade" (ToE 5D→3D) ↔ "Dimensional sacrifice" principle |
-| **Patch map** | A–E: v25.1 core; F–L: consistency upgrades; M: Price Alphabet; N: DPR 1.1 (units + simulator); **O: $o_i(\mathbf{x},t)$ fields; P: $R_i$ radius registry + receipt; Q: hysteresis $\Delta_i$; R: tick sizes + non-compensation; S: exchange layer $E\to Y$ with $\eta$; T: $\mathcal{K}$ linked to DST log-potential; U: $\beta_i=0 \leftrightarrow \partial\mathcal{K}/\partial o_i=0$ (ST market clearing); V: DPR YAML schema + L2/L3 auto-tags** |
-| **Open questions** | ST-Q1–Q4: CY property ID (→ Patch L), compactification dynamics (→ Patch Q $\Delta_i$), re-open conditions (BN signatures), $U_{Universe}(\mathbf{o})$ |
-| **Epistemic safety** | L2: Price Alphabet, DPR collapse rule, $\beta_i$ market clearing; L3: DM pockets ($o_{A_{EM}}\approx 0$), DE ($\Lambda \sim o_X$), bubble nucleation; Patch V auto-flags L3 dependencies |
+| **Patch map** | A–E: v25.1 core; F–L: consistency; M: Price Alphabet; N: DPR 1.1; O–V: DPR v26 fields/mechanics; **W: multi-currency collapse (alphabet compliance); X: Action channel split (DM fix); Y: field API $o_i(\mathbf{x},t)$ + $R_i$ registry; Z: dual-metric standard ($D_\Sigma$ vs $D_\text{macro}$)** |
+| **Open questions** | ST-Q1–Q4: CY property ID (Patch L), compactification dynamics ($\Delta_i$, Patch Q), re-open BN signatures, $U_{Universe}(\mathbf{o})$ |
+| **Epistemic safety** | L2: Price Alphabet, collapse rule, $\beta_i = 0$ market clearing, dual-metric; L3: DM channel split ($A_{EM}\approx 0$), DE ($\Lambda\sim o_X$), BN; deprecated: "$U_{DM}=0$", un-bounded $D_{eff}=3+o_X/o_Y$ |
 
 ---
 
@@ -1286,7 +1286,165 @@ Special profiles:
 
 ---
 
-## ST.20 — REFERENCES
+## ST.20 — DPR v26.1: COMPLIANCE AUDIT + INTEGRATION PATCHES (W–Z)
+
+This section documents the **v26.1 consistency audit** of the informal DPR design patterns (conceptual Patches 1–4) against the U-Theory alphabet and Appendix ST canon, and introduces four formal integration patches (W–Z) that resolve the identified tensions.
+
+---
+
+### Audit: Informal Patches 1–4 → Formal Status
+
+| Informal patch | Description | Status | Resolution |
+|----------------|-------------|--------|------------|
+| **Patch 1** (DPR collapse rule) | $C_i > E_{local} \Rightarrow o_i \to 0$ | ⚠️ Single-currency — conflicts with 3-currency alphabet (Space/Time/Energy) | **Patch W** below; use $\mathbf{B}$ vector |
+| **Patch 2** (compactification = bankruptcy) | High-energy symmetries unaffordable at low energy | ✅ Consistent with ST | Keep; note "13.8 Gyr" as general knowledge, not formal claim |
+| **Patch 3** (dark matter = unpaid Action) | $A = 0 \Rightarrow U_{DM} = 0$ | ⚠️ "$A=0$" kills mass; DM must remain gravitationally active | **Patch X** below; use Action channel split |
+| **Patch 4** ($D_{eff}$ formula) | $D_{eff} = 3 + X/Y$ | ⚠️ Ratio can diverge; conflicts with sum-of-openness variant | **Patch Z** below; dual-metric standard |
+
+---
+
+### Patch W — Multi-Currency Collapse: Alphabet Compliance
+
+**Integrates:** Informal Patch 1 + Patch N (DPR-CORE)
+
+**Problem:** The collapse rule using a single scalar $E_{local}$ conflicts with the canonical 3-currency alphabet (Space / Time / Energy for P / F / A). A Space deficit cannot be repaired by surplus Energy \u2014 non-compensability is structural.
+
+**Canonical form:**
+
+The available resource is not a scalar but a **budget vector**:
+
+$$\mathbf{B} = (B_S,\; B_T,\; B_E,\; B_X,\; B_Y,\; \ldots)$$
+
+Each dimension $i$ has its own currency $\text{Currency}_i$. The collapse rule is currency-specific and local (Patch O):
+
+$$C_i(\mathbf{x},t) > B_i(\mathbf{x},t) \;\Rightarrow\; o_i(\mathbf{x},t) \to 0$$
+
+**Non-compensation rule (Patch R):** Cross-currency exchange is permitted *only* via the Exchange Layer (Patch S) with efficiency $\eta < 1$. A budget surplus in one currency cannot directly substitute for a deficit in another.
+
+**Alphabet mapping:**
+
+| Dimension | Currency | Budget | Collapse means |
+|-----------|----------|--------|---------------|
+| 1D (P) | Space | $B_S$ | Spatial exclusion exhausted |
+| 2D (F) | Time | $B_T$ | Form cannot endure; decay |
+| 3D (A) | Energy | $B_E$ | Action ceases; no interactions |
+| 4D (X) | Freedom | $B_X$ | Irreversibility capacity spent; time frozen |
+| 5D (Y) | Coherence | $B_Y$ | Decoherence closes the dimension |
+
+**Rule:** All DPR collapse conditions must specify which currency budget $B_i$ is exhausted. "Energy runs out" is an acceptable shorthand only when $i = 3$ (Action / Energy dimension).
+
+---
+
+### Patch X — Action Channel Split: Dark Matter Consistency
+
+**Integrates:** Informal Patch 3 + Patch G (Action channel decomposition)
+
+**Problem:** Writing $A = 0$ for dark matter implies mass = 0 (since Action includes gravitational coupling). But dark matter *has* mass \u2014 it curves spacetime and forms galactic halos. The "$A=0$" formulation is therefore internally inconsistent.
+
+**Resolution:** Decompose Action into interaction channels:
+
+$$A = \{A_\text{grav},\; A_\text{EM},\; A_\text{weak},\; A_\text{strong}\}$$
+
+Dark matter is characterized by a **channel-specific compactification**:
+
+$$o_{A_\text{grav}}(\mathbf{x}) > 0, \qquad o_{A_\text{EM}}(\mathbf{x}) \approx 0$$
+
+**Corrected dark matter score:**
+
+$$U_{DM} = \sqrt[3]{F \times P \times A_\text{grav}} > 0$$
+
+Dark matter is *not* $U = 0$. It is a system with a partially-open Action pillar \u2014 gravitationally coherent but electromagnetically compactified. This is why it cannot form complex structures (no EM chemistry), emit or absorb light, or sustain life \u2014 but *can* cluster gravitationally and contribute to $\Omega_m$.
+
+**Epistemic level:** L3 (speculative but internally consistent; testable via direct detection experiments that distinguish gravitational from EM coupling).
+
+**Rule:** All references to "dark matter has $A = 0$" or "$U_{DM} = 0$" are deprecated. Use the channel-split formulation above.
+
+---
+
+### Patch Y — Openness as Field + Compactification Radius Registry
+
+**Integrates:** Informal Patch 7 context + Patches O and P
+
+This patch formalizes the **spatial API** for all openness-based phenomena, replacing global scalars with local fields and linking them to the compactification radius $R_i$:
+
+$$o_i \;\to\; o_i(\mathbf{x},t), \qquad o_i = \tanh\!\left(\frac{R_i(\mathbf{x},t)}{R_i^\text{ref}}\right)$$
+
+**Unified vocabulary for all scales:**
+
+| Phenomenon | $o_i(\mathbf{x})$ profile | $R_i$ scale | Residue type |
+|------------|--------------------------|-------------|-------------|
+| CY compactification | $o_{6..10} \approx 0$ globally | $\sim \ell_P$ | Micro-fossil |
+| Dark dimension hypothesis | $o_4(\mathbf{x}) \approx 0.01$ in bubble | $\sim \mu$m | Meso-residue |
+| Dark matter pocket | $o_{A_{EM}}(\mathbf{x}) \approx 0$ regionally | $\sim$ galactic | Macro-pocket |
+| Life on planet | $o_X(\mathbf{x},t) > 0$ locally | $\sim$ planetary | Sustained local island |
+| Quantum computer | $o_Y(\mathbf{x},t) \approx 0.8$ temporarily | $\sim$ cm | Engineered spike |
+
+**Rule:** When describing any dimensional phenomenon (dark matter, life, quantum devices), specify:
+1. Which $o_i$ is affected
+2. The spatial scale (links to residue type)
+3. Whether it is global or local (field vs. scalar)
+
+---
+
+### Patch Z — Dual-Metric Standard: Resolving $D_{eff}$ Conflicts
+
+**Integrates:** Informal Patch 4 + Patch F ($D_\Sigma$ vs $D_\text{macro}$ split)
+
+**Problem:** Three incompatible definitions of $D_{eff}$ coexist:
+
+1. $D_{eff} = 3 + X/Y$ (ratio — diverges when $o_Y \to 0$)
+2. $D_{eff} = 3 + o_X/o_Y$ (same ratio in openness form — same divergence problem)
+3. $D_{eff} = \sum_i o_i$ (sum — bounded but different quantity)
+
+**Resolution: Two formally distinct metrics, never conflated:**
+
+$$\boxed{D_\Sigma = \sum_i o_i} \quad \text{(geometric openness, range 0–11)}$$
+
+$$\boxed{D_\text{macro} = 3 + g(o_X, o_Y) \in [3.0,\; 4.0]} \quad \text{(thermodynamic openness meter)}$$
+
+where $g(o_X, o_Y)$ is a bounded function (e.g., $o_X \cdot \tanh(o_X/o_Y)^{-1}$) that saturates at 1 when $X \to Y$.
+
+**Interpretation rule:**
+
+| Metric | Use it for | Never use it for |
+|--------|-----------|-----------------|
+| $D_\Sigma$ | Full thermodynamic diagnosis; cosmic phase comparison | "How many dimensions feel real to us" |
+| $D_\text{macro}$ | Simulator output; life/complexity threshold; phase accessible to matter | Total count of open dimensions |
+
+**Key statement:** $D_\text{macro}$ is **not** a literal count of geometric axes. It is a scalar summarizing "how much of the 4D complexity channel is accessible to a macroscopic observer." This is why $D_\text{macro} \leq 4.0$ by construction \u2014 exceeding 4 dimensions is not currently accessible to any macroscopic system, no matter how energetically favorable.
+
+**Deprecated:** Any equation that equates $3 + o_X/o_Y$ to a concrete number without the bounding function is deprecated in v26.1. Use $D_\text{macro}$ with an explicit bounded $g$.
+
+---
+
+### v26.1 Patch Map Summary
+
+```
+PATCH ALPHABET — APPENDIX ST v26.1
+
+A–E   : v25.1 core (openness scalars, translation table, floors,
+         D_eff formula, residue taxonomy)
+F–L   : Consistency upgrades (D_Sigma/D_macro split, Action
+         channels, Newton-time, Y causality, state vector,
+         compactification criterion, CY ID program)
+M     : Price Alphabet (canonical currency per property)
+N     : DPR 1.1 (multi-currency budget, units, simulator)
+O–V   : DPR v26 field extension (o_i(x,t), R_i registry,
+         hysteresis, tick sizes, E→Y exchange, K log-potential,
+         beta-function market clearing, YAML schema)
+W     : Alphabet compliance — replaces single E_local collapse
+         with multi-currency B vector rule
+X     : Action channel split — corrects DM from U=0 to channel-
+         specific compactification; A_grav open, A_EM closed
+Y     : Field API — o_i(x,t) + R_i registry as unified language
+         for micro/meso/macro phenomena
+Z     : Dual-metric standard — D_Sigma (geometric, 0-11) vs
+         D_macro (thermodynamic, 3.0-4.0) formally separated
+```
+
+---
+
+## ST.21 — REFERENCES
 
 | # | Reference |
 |---|-----------|
@@ -1302,9 +1460,9 @@ Special profiles:
 
 ---
 
-> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.0*  
-> *ST.16: Consistency Upgrades (F–L) | ST.17: Price Alphabet (M) | ST.18: DPR 1.1 (N)*  
-> *ST.19: DPR v26 — Patches O–V: fields, $R_i$ receipt, hysteresis $\Delta_i$, tick sizes, $E\to Y$ exchange, $\mathcal{K}$ log-potential, $\beta_i$ market clearing, YAML schema*  
-> *Price Alphabet: Space↔P, Time↔F, Energy↔A, Freedom↔X, Coherence↔Y*  
+> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.1*  
+> *ST.16: F–L | ST.17: M (Price Alphabet) | ST.18: N (DPR 1.1) | ST.19: O–V (DPR v26)*  
+> *ST.20: W–Z — Compliance Audit: multi-currency collapse, Action channel split, field API, dual-metric standard*  
+> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse*  
 > *U-Model v26 | © 2026 Petar Nikolov | CC BY 4.0*  
 > *Dimensional Stability Theorem | [DOI: 10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)*

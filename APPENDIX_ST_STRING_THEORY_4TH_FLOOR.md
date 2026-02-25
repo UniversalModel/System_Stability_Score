@@ -368,11 +368,11 @@ $$o_P, o_F, o_A, o_X, o_Y, \ldots \in [0,1]$$
 
 - Region with $o_A \approx 0$, $o_F, o_P > 0$ → dark-matter-like pocket
 - Cosmological $o_X$ tracking → drives $\Lambda$ (dark energy pressure, L3)
-- $D_{eff}$ becomes a function of all scalars:
+- $D_\Sigma$ (geometric openness sum) is defined as:
 
-$$D_{eff} = \sum_i o_i \quad \text{where the sum runs over all potential dimensions}$$
+$$D_\Sigma = \sum_i o_i \quad \text{where the sum runs over all potential dimensions}$$
 
-For our Universe: $D_{eff} \approx 3 + o_X + o_Y \approx 3.3$–$3.7$
+For our Universe: $D_\Sigma \approx 3 + o_X + o_Y \approx 3.3$–$3.7$ *(distinct from deprecated ratio $D_{eff}=3+o_X/o_Y$; see Patch Z / Patch AB)*
 
 ---
 
@@ -565,7 +565,7 @@ These patches resolve four definitional tensions identified during the v25.1 con
 
 1. $D_{eff} = 3 + X/Y$ (ST.11 original)
 2. $D_{eff} = 3 + o_X / o_Y$ (Patch D — ratio, can blow up to ~8+)
-3. $D_{eff} = \sum_i o_i$ (Patch A — sum, reaches 3.3–3.7)
+3. $D_\Sigma = \sum_i o_i$ (Patch A — sum, geometric openness, reaches 3.3–3.7)
 
 The ratio $o_X / o_Y \approx 0.4/0.05 = 8$ contradicts the table value ~3.8–4.0.
 
@@ -1230,7 +1230,7 @@ dependencies: [<patch>, ...] # which patches this entry relies on
   currency: Energy
   token: Dissipation-tax
   unit: J / J·s
-  tick: q_E = h (Planck constant)
+  tick: q_A = h (Planck action, J·s — minimum A-channel transaction fee)
   o_i_value: 1.0
   status: OPEN
   epistemic_level: L2
@@ -1409,7 +1409,7 @@ $$o_i \;\to\; o_i(\mathbf{x},t), \qquad o_i = \tanh\!\left(\frac{R_i(\mathbf{x},
 
 1. $D_{eff} = 3 + X/Y$ (ratio — diverges when $o_Y \to 0$)
 2. $D_{eff} = 3 + o_X/o_Y$ (same ratio in openness form — same divergence problem)
-3. $D_{eff} = \sum_i o_i$ (sum — bounded but different quantity)
+3. $D_\Sigma = \sum_i o_i$ (sum — bounded but different quantity)
 
 **Resolution: Two formally distinct metrics, never conflated:**
 

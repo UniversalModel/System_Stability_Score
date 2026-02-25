@@ -981,7 +981,7 @@ def check_dpr(system):
         "status":  "SOLVENT_3D",
         "o_X":     o_X,
         "o_Y":     o_Y,
-        "D_sigma": 3.0 + o_X + o_Y
+        "D_Sigma": 3.0 + o_X + o_Y  # D_Sigma = sum_i o_i (geometric openness)
     }
 ```
 

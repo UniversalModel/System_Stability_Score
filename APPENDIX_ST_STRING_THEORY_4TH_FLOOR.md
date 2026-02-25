@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.7  
+> **Version:** 26.8 (Gold Master)  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -262,6 +262,24 @@ Now = Stability Lock at 3D       ↔   Spontaneous compactification to 4D (3+1)
 
 ---
 
+### ST.8.H — THE HOLOGRAPHIC ARCHIVE (AdS/CFT AS DIMENSIONAL RECEIPT)
+
+When a dimension collapses — as in the 11D → 4D compactification at the Big Bang — the information about its full structure is **not destroyed**. It is encoded on the **boundary** of the remaining stable space. This is the AdS/CFT correspondence (Maldacena, 1997) re-read through U-Theory:
+
+| U-Theory concept | Holographic statement |
+|---|---|
+| Closed dimension | Its information is preserved on the lower-dimensional boundary |
+| Black hole event horizon | The **account ledger** encoding the entropy of all infalling objects (their final dimensional prices) |
+| AdS bulk (5D gravity) | Equivalent to a CFT on the 4D boundary — same physics, different representation |
+| Calabi-Yau topology | The **fossil record** of sacrificed properties — readable (in principle) from 4D boundary observables |
+| Our 3D macroscopic reality | A holographic projection of the full 11D structure; access to higher dimensions is not lost — it is compressed to the boundary |
+
+> **Interpretation (v26.8):** The Holographic Principle acts as U-Theory's **dimensional filing system**. No property ever truly dies — its information migrates to the boundary when its dimension compactifies. The CY manifolds are both the tomb and the archive of what the Universe gave up to stabilise at 3D.
+
+**Epistemic level:** L2 for the AdS/CFT structural isomorphism (mathematically established); L3 for the claim that *our* Universe's boundary is physically accessible.
+
+---
+
 ## ST.9 — PREDICTIONS (L2/L3)
 
 | # | Prediction | Epistemic level | Testable via |
@@ -307,9 +325,13 @@ The Principle of Dimensional Sacrifice:
 
 > *"Every level of stability requires the sacrifice of one level of freedom. We are 3D beings because we paid with the price of 4D (temporal freedom) and 5D (non-locality). The Calabi-Yau manifolds are not mathematical curiosities — they are the tombs of the properties we gave up to exist."*
 
-The formula of unification (canonical form, see Patch F for full split):
+The formula of unification — **canonical bounded form (Patch AB, ST.23.AB)**:
 
-$$D_\text{macro} = 3 + g(o_X, o_Y) \quad \text{where } g \in [0,1], \quad D_\Sigma = \sum_i o_i \leq 11$$
+$$D_\text{macro} = 3 + g(o_X, o_Y), \quad g = 1 - \exp\!\left(-\frac{o_X}{\max(o_Y,\,\varepsilon)}\right), \quad \varepsilon = 10^{-6}$$
+
+$$D_\Sigma = \sum_i o_i \leq 11 \quad \text{(geometric total)}$$
+
+**Bounded properties:** $g \in [0,1]$ by construction, so $D_\text{macro} \in [3,4]$ always. When $o_Y \to 0$ (classical world), $g \to 1$ only if $o_X > 0$; when $o_X = 0$, $g = 0$ regardless.
 
 At $o_X = 0$: $D_\text{macro} = 3$ — the frozen Universe, no life possible.  
 At $o_X > 0$: $D_\text{macro} > 3$ — complexity, evolution, consciousness.  
@@ -2348,7 +2370,7 @@ PATCH SET v26.5 — STANDARD MODEL INTERFACE POLISH (ST.24)
 
 ---
 
-> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.7 — Compliance Lint II*  
+> *Appendix ST — String Theory as the 4th Floor | **v26.8 GOLD MASTER***  
 > *ST.16: F–L | ST.17: M (Price Alphabet) | ST.18: N (DPR 1.1) | ST.19: O–V (DPR v26)*  
 > *ST.20: W–Z — Compliance Audit: multi-currency collapse, Action channel split, field API, dual-metric*  
 > *ST.21: Patches 9–12 — Dark Sector Vocab Lock, Residue Matrix, DPR Dark States, Diagnostic Pointers*  
@@ -2357,6 +2379,7 @@ PATCH SET v26.5 — STANDARD MODEL INTERFACE POLISH (ST.24)
 > *ST.24: Patches 14–16 — SM Interface Polish: Gauge-Price (photon as receipt, Higgs as fee), Graviton Protocol (P-channel, QC-P17), Vacuum Liquidity (HUP credit, Casimir L2)*  
 > *v26.6 Patches AH–AN — Compliance lint: CY label fix (ST.5), DM formula canonicalize (ST.6), ST.2 cross-ref, Patch D deprecation (ST.12), Patch F g-cleanup (ST.16), Λ wording (ST.7), N.5 multi-currency simulator (ST.18)*  
 > *v26.7 Patches BD/BF/BE-Z — Compliance lint II: ST.9 predictions table TPR-sync (remove U=0 from ST-P1), Patch R q_E→q_A tick fix, Patch Z tanh deprecated→Patch AB canonical*  
+> *v26.8 Patches AO/AP/AQ — Gold Master: ST.11 canonical g explicit (Patch AB pointer), ST.8.H Holographic Archive (AdS/CFT receipt), version lock*  
 > *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups independent of DPR; $A=0$ without channel qualification; gravity as A-type energy exchange; single-resource N.5 check ("system.resources"); α/β/tanh g-forms; "U=0 for Action" in ST-P1; $q_E\sim h$ tick label*  
-> *U-Model v26.7 | © 2026 Petar Nikolov | CC BY 4.0*  
+> *U-Model v26.8 | © 2026 Petar Nikolov | CC BY 4.0*  
 > *Dimensional Stability Theorem | [DOI: 10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)*

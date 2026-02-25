@@ -5,8 +5,8 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.6  
-> **Last Updated:** February 26, 2026  
+> **Version:** 26.7  
+> **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
 > **Prerequisites:** Core DST Theorem (Parts 0–IV), Appendix Ω (Speculative), Appendix QC (Quantum)
@@ -266,11 +266,13 @@ Now = Stability Lock at 3D       ↔   Spontaneous compactification to 4D (3+1)
 
 | # | Prediction | Epistemic level | Testable via |
 |---|-----------|-----------------|--------------|
-| ST-P1 | Dark matter cannot form complex bound structures because its Action pillar is closed (U=0 for Action) | L2 | Consistency check with existing dark matter observations ✓ |
-| ST-P2 | Gravitational waves propagate in the partially-open 4D (X-dimension), making them sensitive to anti-entropy gradients | L3 | LISA / Pulsar Timing Array anomalous polarization modes |
-| ST-P3 | If a "dark dimension" at micron scale exists, gravity deviates from $1/r^2$ at sub-millimeter distances | L3 | Eöt-Wash torsion balance experiments |
-| ST-P4 | The cosmological constant $\Lambda$ is not truly constant but tracks the openness of the X-dimension — slight variation over cosmic time | L3 | DESI / Euclid measurements of $w(z)$ |
-| ST-P5 | Quantum entanglement entropy corresponds to geometric area in 5D (Y-dimension) — consistent with holographic entropy bounds | L2 | Consistent with Ryu-Takayanagi formula in AdS/CFT ✓ |
+| ST-P1 | Dimensional hierarchy stability: $D_\text{macro}\in[3,4]$ (no macro dimension crossing above 4D) | L2 | Consistency + broad cosmology constraints |
+| ST-P2 | CY compactification leaves measurable residues (micro/meso classification via $R_i$ spectrum) | L3 | Collider + astrophysics residue constraints |
+| ST-P3 | Dark Matter = A-channel residue: $o_{A_\text{EM}}\approx0,\ o_{A_\text{grav}}>0$ | L3 | Lensing + EM decoupling + QC-P12 (sub-mm gravity) |
+| ST-P4 | Dark Energy = X-bleed: $o_X>0 \Rightarrow \Lambda\sim f(o_X)$, potentially time-varying | L3 | DESI/Euclid $w(z)$ + QC-P14 (dynamic $\Lambda$) |
+| ST-P5 | Quantum coherence = local Y-opening (budgeted via $\eta_{E\to Y}$); cost scales as $2^N$ | L3 | QC coherence time vs temperature / isolation budget |
+
+> **Rule (v26.7):** Never use "U=0" language for Dark Matter. ST-P3 is the canonical DM prediction. ST-P1 concerns dimensional macro-stability, not DM.
 
 ---
 
@@ -1091,7 +1093,7 @@ $$\text{Close: } C_i > B_i \qquad\qquad \text{Reopen: } B_i > C_i + \Delta_i$$
 |----------|-----------|-------------------|------|
 | Space ($B_S$) | $q_S = \ell_P$ (Planck length) | Minimum distinguishable position | Two objects cannot be co-located below $\ell_P$ |
 | Time ($B_T$) | $q_T = t_P$ (Planck time) | Minimum stability interval | No stable Form below one Planck time |
-| Energy ($B_E$) | $q_E \sim h$ (Planck constant) | Minimum action per interaction | Planck constant as minimum transaction fee |
+| Energy ($B_E$) | $q_A \sim h$ (Planck action) | Minimum A-channel transaction | Planck constant as minimum transaction fee per interaction event; Energy unit is J (no universal minimum energy tick — quantisation depends on the system) |
 | Freedom ($B_X$) | $q_X = 1$ bit ($k_B \ln 2$) | Landauer limit | Minimum irreversibility per bit of complexity created |
 | Coherence ($B_Y$) | $q_Y = 1$ e-bit (Bell pair) | Minimum quantum correlation unit | Decoherence destroys below 1 e-bit threshold |
 
@@ -1393,7 +1395,9 @@ $$\boxed{D_\Sigma = \sum_i o_i} \quad \text{(geometric openness, range 0–11)}$
 
 $$\boxed{D_\text{macro} = 3 + g(o_X, o_Y) \in [3.0,\; 4.0]} \quad \text{(thermodynamic openness meter)}$$
 
-where $g(o_X, o_Y)$ is a bounded function (e.g., $o_X \cdot \tanh(o_X/o_Y)^{-1}$) that saturates at 1 when $X \to Y$.
+where $g(o_X, o_Y)$ is a bounded function — **canonical form defined solely in Patch AB (ST.23.AB):**
+$$g(o_X,o_Y)=1-\exp\!\left(-\frac{o_X}{\max(o_Y,\varepsilon)}\right),\quad \varepsilon=10^{-6}$$
+This guarantees saturation at 1 when $o_X \gg o_Y$. All $\tanh$/$\alpha$/$\beta$ examples are deprecated.
 
 **Interpretation rule:**
 
@@ -2344,7 +2348,7 @@ PATCH SET v26.5 — STANDARD MODEL INTERFACE POLISH (ST.24)
 
 ---
 
-> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.6 — Compliance Lint*  
+> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.7 — Compliance Lint II*  
 > *ST.16: F–L | ST.17: M (Price Alphabet) | ST.18: N (DPR 1.1) | ST.19: O–V (DPR v26)*  
 > *ST.20: W–Z — Compliance Audit: multi-currency collapse, Action channel split, field API, dual-metric*  
 > *ST.21: Patches 9–12 — Dark Sector Vocab Lock, Residue Matrix, DPR Dark States, Diagnostic Pointers*  
@@ -2352,6 +2356,7 @@ PATCH SET v26.5 — STANDARD MODEL INTERFACE POLISH (ST.24)
 > *ST.23: Patches AA–AG — Infrastructure: GPD, Clamping g, CPMA, DM deprecation, DPR Engine v1.0, TPR v1.0, Epistemic Propagation*  
 > *ST.24: Patches 14–16 — SM Interface Polish: Gauge-Price (photon as receipt, Higgs as fee), Graviton Protocol (P-channel, QC-P17), Vacuum Liquidity (HUP credit, Casimir L2)*  
 > *v26.6 Patches AH–AN — Compliance lint: CY label fix (ST.5), DM formula canonicalize (ST.6), ST.2 cross-ref, Patch D deprecation (ST.12), Patch F g-cleanup (ST.16), Λ wording (ST.7), N.5 multi-currency simulator (ST.18)*  
-> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups independent of DPR; $A=0$ without channel qualification; gravity as A-type energy exchange; single-resource N.5 check ("system.resources"); α/β/tanh g-forms*  
-> *U-Model v26.6 | © 2026 Petar Nikolov | CC BY 4.0*  
+> *v26.7 Patches BD/BF/BE-Z — Compliance lint II: ST.9 predictions table TPR-sync (remove U=0 from ST-P1), Patch R q_E→q_A tick fix, Patch Z tanh deprecated→Patch AB canonical*  
+> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups independent of DPR; $A=0$ without channel qualification; gravity as A-type energy exchange; single-resource N.5 check ("system.resources"); α/β/tanh g-forms; "U=0 for Action" in ST-P1; $q_E\sim h$ tick label*  
+> *U-Model v26.7 | © 2026 Petar Nikolov | CC BY 4.0*  
 > *Dimensional Stability Theorem | [DOI: 10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)*

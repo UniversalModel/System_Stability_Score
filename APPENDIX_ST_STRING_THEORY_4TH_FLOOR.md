@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.9 (Patch AR — Existence Pricing Alignment)  
+> **Version:** 26.10 (Patches CH–CN — Currency/Tick Lock + Gravity Notation)  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -959,11 +959,16 @@ $$o_i \to 0 \iff C_i > B_i \quad (\text{compactification / property death})$$
 
 ### N.4 — Payment Units: Invariants of the Price Alphabet
 
-| Property | Currency | Proposed unit | Physical invariant / meaning |
-|----------|----------|--------------|------------------------------|
+> **PATCH CH — A-CURRENCY vs A-TICK LOCK (v26.9, binding):**
+> - **A-currency = Energy (Joule, J):** the *amount* of work / dissipation paid per interaction.
+> - **A-tick = $q_A \sim h$ (J·s):** the *minimum transaction fee* for the A-channel — Planck Action, **not** an energy price.
+> - **Never write:** `J/h` or "h is the energy price". **Always write:** energy unit = J; tick = $q_A \sim h$ (J·s), separate fields.
+
+| Property | Currency | Unit | Physical invariant / meaning |
+|----------|----------|------|------------------------------|
 | **P (1D)** | Space | **Meter ($m$) / Exclusion** | Pauli Exclusion Principle: two objects cannot occupy the same location at zero cost |
 | **F (2D)** | Time (Endurance) | **Second ($s$) / Duration** | Decay lifetime $\tau$: stable particles pay small $B_T$; unstable particles default |
-| **A (3D)** | Energy | **Joule ($J$) / Action ($J \cdot s$)** | Planck constant $h$: minimum transaction fee per interaction in 3D |
+| **A (3D)** | Energy | **Joule ($J$)** | Work / dissipation in 3D. **Tick:** $q_A \sim h$ (J·s) is the minimum A-channel transaction fee — distinct from the energy currency. |
 | **X (4D)** | Freedom (Irreversibility) | **Bit ($H$) / Entropy production** | $\Delta S > 0$ (2nd Law): you pay in irreversible entropy gain; you receive local structure |
 | **Y (5D)** | Coherence (Entanglement) | **E-bit / Bell pair** | Coherence cost scales as $2^N$ with number of entangled subsystems; exponentially expensive |
 | CY (6D–10D) | Hyper-Energy | **GUT/Planck units** | Symmetry maintenance energies; physically inaccessible below $\sim 10^{16}$ GeV |
@@ -1022,7 +1027,8 @@ Property  Currency     Unit          Rule
 ──────────────────────────────────────────────────────────────
 P (1D)  : Space       m / Exclusion  Pauli min = 1 "seat" per object
 F (2D)  : Time        s / Duration   decay lifetime τ
-A (3D)  : Energy      J / h          ħ = min transaction fee
+A (3D)  : Energy      J              Work/dissipation currency
+          Tick: q_A~h (J·s)          minimum A-channel transaction fee
 X (4D)  : Freedom     bit / ΔS      pay entropy; receive structure
 Y (5D)  : Coherence   e-bit / 2^N   exponential isolation cost
 CY 6-10 : Hyper-E     Planck units   GUT closed market
@@ -2048,6 +2054,11 @@ glossary:
     u_theory_name: "A-channel residue / macro-pocket residue"
     formula: "U_DM = cbrt(F * P * A_grav) > 0"
     openness_signature: {o_A_em: ~0, o_A_grav: ">0", o_P: ~1, o_F: ~1}
+    gravity_note: >-
+      Gravity-response is expressed via P+F channels (Graviton Protocol: curvature = P-displacement,
+      mass = F-endurance). o_A_grav labels the gravitational sub-channel of A for bookkeeping;
+      it is NOT an ordinary Energy (J) expenditure — it is the A-channel that mediates P+F updates.
+      Rule: gravity ≠ Energy currency payment. It is a P+F channel update tracked under A_grav.
     deprecated_formula: "U_DM = cbrt(F * P * 0) = 0"
     deprecated_since: "v26.1"
     epistemic_level: "L3"
@@ -2353,7 +2364,7 @@ $$\Delta E \cdot \Delta t \geq \frac{\hbar}{2} \quad \Leftrightarrow \quad \text
 
 The Heisenberg Credit Line sets the **minimum tick size** for any dimensional transaction. No dimension can be opened or closed for an investment smaller than $\hbar/2$ per degree of freedom. This is the deepest justification for the tick sizes introduced in Patch R (ST.19):
 
-$$q_A \sim h \quad (= 2\pi \cdot \hbar) \quad \text{(Planck Action — minimum energy transaction for } A\text{-channel)}$$
+$$q_A \sim h \quad (= 2\pi \cdot \hbar) \quad \text{(Planck Action — minimum \textbf{action} transaction fee for } A\text{-channel; not an energy price)}$$
 
 **Epistemic:** L2 for the Casimir and Lamb Shift retroactive confirmations; L2 for the HUP as loan-agreement restatement (structural isomorphism); L3 for the claim that tick sizes derive from DPR cost-field $\mathcal{K}$ rather than being an assumption.
 

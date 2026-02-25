@@ -5,8 +5,8 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.5  
-> **Last Updated:** February 25, 2026  
+> **Version:** 26.6  
+> **Last Updated:** February 26, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
 > **Prerequisites:** Core DST Theorem (Parts 0–IV), Appendix Ω (Speculative), Appendix QC (Quantum)
@@ -98,7 +98,7 @@ $$U_{3D} = \sqrt[3]{F \times P \times A} \geq \varphi^{-1} \quad \Rightarrow \qu
 | **String Theory sees it as** | An additional coordinate |
 | **U-Theory sees it as** | A process — open when there is Life and Consciousness; closed in heat death |
 
-> **Dark matter connection (L3):** A dimension in which the property "Action" (electromagnetic interaction / light) is closed but "Position" (gravity) remains open produces an object with mass (curves spacetime) but no electromagnetic interaction. **This is the exact definition of dark matter.** Dark matter may not be a missing particle — it may be matter trapped between the 2nd and 3rd floor, where Form and Position are active but Action is compactified.
+> **Dark sector note (L3):** See **ST.6** for the formal definition of Dark Matter as an **A-channel residue** ($o_{A_\text{EM}}\approx0$, $o_{A_\text{grav}}>0$). The X (4D) dimension is the **anti-entropy channel** — it is not the DM residue channel. DM lives in the A-channel formalism (compactified EM, open gravity), not in the X/4D structure.
 
 ---
 
@@ -170,7 +170,7 @@ This "Principle of Dimensional Sacrifice" reconciles U-Theory with conventional 
 | Future (heat death) | Collapse | 3 only | Anti-entropy (X) closes; time becomes meaningless |
 | Future (if X reopens) | New phase | 4+ | Life, complexity, consciousness re-emerge |
 
-$$D_{eff} = 3 + \frac{\text{Anti-Entropy}(X)}{\text{Entanglement Cost}(Y)}$$
+$$D_{eff} = 3 + \frac{\text{Anti-Entropy}(X)}{\text{Entanglement Cost}(Y)} \quad \text{(heuristic only — see Patch AB, ST.23 for canonical bounded form)}$$
 
 When $X \to 0$ (heat death): $D_{eff} \to 3$ — pure geometry, no life.  
 When $X$ is sustained: $D_{eff} > 3$ — complexity, evolution, consciousness.
@@ -188,13 +188,15 @@ In U-Theory terms:
 The six Calabi-Yau dimensions are **not arbitrary mathematical objects**. They are the topological record of what the Universe gave up:
 
 ```
-Dimension 4 → closed at Planck energy → property: ???
-Dimension 5 → closed at GUT scale     → property: grand unified symmetry (SU(5))
-Dimension 6 → closed at ...           → property: extended SUSY
-Dimension 7 → closed at ...           → property: ???
-Dimension 8 → closed at ...           → property: ???
-Dimension 9 → closed at ...           → property: ???
+CY₁  (compact dim #1) → closed at Planck/GUT band → property: ?? (open mapping)
+CY₂  (compact dim #2) → closed at GUT band        → property: candidate SU(5) (test pointer: proton decay)
+CY₃  (compact dim #3) → closed at ...             → property: candidate extended SUSY
+CY₄  (compact dim #4) → closed at ...             → property: ???
+CY₅  (compact dim #5) → closed at ...             → property: ???
+CY₆  (compact dim #6) → closed at ...             → property: ???
 ```
+
+> **Terminology rule (v26.6):** "CY₁..CY₆" = String compact dimensions (geometry/topology). "X (4D)" and "Y (5D)" = U-Theory property dimensions (economic/semantic). These are **not 1:1** — CY₁..CY₆ should never be equated with or numbered as U-Theory's X or Y dimensions.
 
 > **Open research:** The exact property corresponding to each compactified dimension is not yet established. This is the frontier where U-Theory and ST can be formally unified — by identifying which physical symmetry or observable corresponds to each closed dimension.
 
@@ -214,9 +216,13 @@ In dimensional terms: dark matter is matter in which the property "Action" (spec
 
 This is not a particle we have not yet found. It is a **different compactification state** of the same underlying fields — matter that paid the triadic price differently: giving up Action to stabilize only Form and Position.
 
-$$U_{DM} = \sqrt[3]{F \times P \times 0} = 0 \quad \text{(Action = 0)}$$
+$$o_{A_\text{grav}} > 0,\quad o_{A_\text{EM}}\approx 0$$
 
-Dark matter scores U = 0 on the triadic formula — it is **not a stable system in the U-Model sense** — which is why it cannot form complex structures, cannot evolve, cannot sustain life. It exists only as mass — Form and Position without Action.
+$$U_{DM}=\sqrt[3]{F \times P \times A_\text{grav}} > 0$$
+
+**Interpretation rule (v26.4+):** "DM = Action closed" always and only means "$A_\text{EM}$ closed", never "$A_\text{grav}$ closed". Dark matter has gravitational Form-Position-Action coherence but cannot interact with light (EM channel compactified). It cannot form complex dissipative structures or evolve — but it is not $U=0$.
+
+*(Epistemic: L3 for interpretation; L2 for internal consistency of channel formalism.)*
 
 ---
 
@@ -226,7 +232,7 @@ Dark matter scores U = 0 on the triadic formula — it is **not a stable system 
 
 Dark energy — the force accelerating the expansion of the Universe — may be the **pressure of the partially-open 4D (X, anti-entropy) dimension** pushing outward against the 3D containment of the Stability Lock.
 
-The Universe's attempt to re-open the 4D dimension manifests as an outward repulsive pressure at cosmological scales. This matches the observed dark energy as a **cosmological constant** — a fixed, non-diluting energy density that does not decrease as the Universe expands (unlike matter or radiation, which dilute as $1/r^3$ and $1/r^4$ respectively).
+The Universe's attempt to re-open the 4D dimension manifests as an outward repulsive pressure at cosmological scales. This is observationally consistent (to date) with a **cosmological constant** baseline — a non-diluting energy density that does not decrease as the Universe expands (unlike matter or radiation, which dilute as $1/r^3$ and $1/r^4$ respectively). **L3 hypothesis (ST-P4 / QC-P14):** $\Lambda$ may drift weakly with cosmic time if $o_X(t)$ evolves (X-bleed dynamic $\Lambda$) — testable via DESI / Euclid $w(z)$ measurements.
 
 $$\Lambda \sim f(X) \quad \text{where } X = \text{anti-entropy property in 4D}$$
 
@@ -395,9 +401,11 @@ FLOOR 1: Newton
 
 ### Patch D — $D_{eff}$ as Compact Interface Between U-Theory and ST
 
-The formula $D_{eff} = 3 + X/Y$ is adopted as the **canonical scalar** linking U-Theory and ST. It serves as a single number summarizing the current state of dimensional openness.
+> ⚠️ **DEPRECATED (v26.1+):** The raw ratio form $D_{eff}=3+o_X/o_Y$ is unbounded as $o_Y\to0$ and must not be used as a numerical estimator. **Replacement:** Use $D_\Sigma=\sum_i o_i$ and $D_\text{macro}=3+g(o_X,o_Y)\in[3,4]$ with canonical $g$ defined in Patch AB (ST.23.AB). If this ratio is cited, label it "heuristic only" and never use without bounded clamp.
 
-$$D_{eff} = 3 + \frac{o_X}{o_Y}$$
+The formula $D_{eff} = 3 + X/Y$ is adopted as the **canonical scalar** linking U-Theory and ST. It serves as a single number summarizing the current state of dimensional openness. *(Historical reference only — see deprecation notice above.)*
+
+$$D_{eff} = 3 + \frac{o_X}{o_Y} \quad \text{(heuristic only — unbounded; use Patch AB form)}$$
 
 | State | $o_X$ | $o_Y$ | $D_{eff}$ | Interpretation |
 |-------|--------|--------|-----------|----------------|
@@ -544,19 +552,11 @@ The ratio $o_X / o_Y \approx 0.4/0.05 = 8$ contradicts the table value ~3.8–4.
 | **$D_\Sigma$** (geometric openness) | $\displaystyle\sum_{i} o_i$ | 0 → 11 | Total openness across all potential dimensions; full thermodynamic diagnosis |
 | **$D_\text{macro}$** (effective macro-dimension) | $3 + g(o_X, o_Y)$ | 3.0 → 4.0 | How much the 4D complexity channel is accessible; bounded, does not "explode" |
 
-The clamping function $g$ is defined as:
+The clamping function $g$ is formally defined in **Patch AB (ST.23.AB)**. The canonical form (v26.4):
 
-$$g(o_X, o_Y) = \frac{o_X}{1 + o_X/o_Y} \cdot \frac{1}{\alpha} \quad \in [0,1]$$
+$$\boxed{g(o_X,o_Y)=1-\exp\!\left(-\frac{o_X}{\max(o_Y,\,\varepsilon)}\right)} \quad \varepsilon=10^{-6}$$
 
-or more simply in the working approximation:
-
-$$D_\text{macro} = 3 + \min\!\left(o_X,\; 1 - e^{-o_X/o_Y \cdot \beta}\right)$$
-
-For documentation purposes, use the canonical simple form:
-
-$$\boxed{D_\text{macro} = 3 + o_X \cdot \tanh\!\left(\frac{o_X}{o_Y}\right)^{-1}}$$
-
-which saturates at 4.0 when $o_X \to 1$.
+This guarantees $D_\text{macro}\in[3,4]$ and removes all undefined constants. Prior forms using $\alpha$, $\beta$, or $\tanh$ are deprecated — use only the exponential form above.
 
 **Rule for all future sections:**
 - Use $D_\Sigma$ when diagnosing the total dimensional state of the Universe.
@@ -927,46 +927,37 @@ $$o_i \to 0 \iff C_i > B_i \quad (\text{compactification / property death})$$
 The multi-currency DPR translates directly into a Budget Check replacing any binary "exists/not-exists" test:
 
 ```python
-# U-Theory DPR 1.1 — Dimensional Budget Check
-# Reference implementation (Patch N)
+# DPR 1.1 — Multi-currency Budget Check (canonical v26.6)
 
-PRICE_SPACE    = 1.0   # normalized; Pauli exclusion effective cost
-PRICE_TIME     = 1.0   # normalized; stability window
-PRICE_ENERGY   = 6.626e-34  # Planck constant (J·s) as minimum fee
-THRESH_X       = 1.0   # entropy-production threshold for o_X = 1.0
+EPS = 1e-12
+THRESH_X = 1.0  # normalize: bits/s for o_X=1
 
-def check_dimensional_access(system):
+def check_dpr(system):
     """
-    Returns dict of openness scalars for X and Y dimensions.
-    system: object with attributes
-        .mass, .stability, .energy, .resources
-        .entropy_production  (bits/s or nats/s)
-        .qubits              (number of coherent qubits)
-        .isolation_budget    (coherence maintenance capacity)
+    Required fields:
+      budgets: B_S, B_T, B_E, B_X, B_Y
+      costs:   C_S, C_T, C_E, C_X, C_Y
+      qubits, isolation_budget_e_bits, entropy_production_bits_per_s
+    Unit note: currency for A = Energy (J) (work/dissipation).
+    Tick q_A ~ h is the minimum Action (J·s) transaction fee, NOT the energy price.
     """
-    # --- Base Triad: must afford 3D existence ---
-    cost_3d = (
-        system.mass      * PRICE_SPACE  +   # P: Space currency
-        system.stability * PRICE_TIME   +   # F: Time currency
-        system.energy    * PRICE_ENERGY     # A: Energy currency
-    )
-    if system.resources < cost_3d:
-        return {"status": "VACUUM_FLUCTUATION", "o_X": 0.0, "o_Y": 0.0}
+    # --- Base solvency (Triad currencies — non-compensable) ---
+    if system.B_S < system.C_S: return {"status": "DEFAULT_SPACE"}
+    if system.B_T < system.C_T: return {"status": "DEFAULT_TIME"}
+    if system.B_E < system.C_E: return {"status": "DEFAULT_ENERGY"}
 
-    # --- X-Dimension: pay Irreversibility Tax (Freedom currency) ---
-    # More entropy production = more temporal-freedom budget spent = more o_X
-    o_X = min(1.0, system.entropy_production / THRESH_X)
+    # --- X openness (Freedom / Irreversibility currency) ---
+    o_X = min(1.0, system.entropy_production_bits_per_s / max(THRESH_X, EPS))
 
-    # --- Y-Dimension: pay Coherence(Entanglement) budget ---
-    # Coherence cost grows exponentially with qubit count
-    coherence_cost = 2 ** system.qubits
-    o_Y = min(1.0, system.isolation_budget / coherence_cost)
+    # --- Y openness (Coherence / Entanglement currency) ---
+    coherence_cost = 2 ** int(system.qubits)
+    o_Y = min(1.0, system.isolation_budget_e_bits / max(coherence_cost, EPS))
 
     return {
-        "status":     "EXISTS",
-        "o_X":        o_X,    # 0 = heat death; 0.3-0.6 = life/complexity
-        "o_Y":        o_Y,    # 0 = classical; ~1 = fully coherent quantum
-        "D_sigma":    3.0 + o_X + o_Y,  # geometric openness
+        "status":  "SOLVENT_3D",
+        "o_X":     o_X,
+        "o_Y":     o_Y,
+        "D_sigma": 3.0 + o_X + o_Y
     }
 ```
 
@@ -2353,13 +2344,14 @@ PATCH SET v26.5 — STANDARD MODEL INTERFACE POLISH (ST.24)
 
 ---
 
-> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.5 — FEATURE FREEZE*  
+> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.6 — Compliance Lint*  
 > *ST.16: F–L | ST.17: M (Price Alphabet) | ST.18: N (DPR 1.1) | ST.19: O–V (DPR v26)*  
 > *ST.20: W–Z — Compliance Audit: multi-currency collapse, Action channel split, field API, dual-metric*  
 > *ST.21: Patches 9–12 — Dark Sector Vocab Lock, Residue Matrix, DPR Dark States, Diagnostic Pointers*  
 > *ST.22: Patch 13 — Gauge-Price Dictionary: U(1)/SU(2)/SU(3)/GR ↔ DPR channels; QC-P16 proton decay*  
 > *ST.23: Patches AA–AG — Infrastructure: GPD, Clamping g, CPMA, DM deprecation, DPR Engine v1.0, TPR v1.0, Epistemic Propagation*  
 > *ST.24: Patches 14–16 — SM Interface Polish: Gauge-Price (photon as receipt, Higgs as fee), Graviton Protocol (P-channel, QC-P17), Vacuum Liquidity (HUP credit, Casimir L2)*  
-> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups independent of DPR; $A=0$ without channel qualification; gravity as A-type energy exchange*  
-> *U-Model v26.5 | © 2026 Petar Nikolov | CC BY 4.0*  
+> *v26.6 Patches AH–AN — Compliance lint: CY label fix (ST.5), DM formula canonicalize (ST.6), ST.2 cross-ref, Patch D deprecation (ST.12), Patch F g-cleanup (ST.16), Λ wording (ST.7), N.5 multi-currency simulator (ST.18)*  
+> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups independent of DPR; $A=0$ without channel qualification; gravity as A-type energy exchange; single-resource N.5 check ("system.resources"); α/β/tanh g-forms*  
+> *U-Model v26.6 | © 2026 Petar Nikolov | CC BY 4.0*  
 > *Dimensional Stability Theorem | [DOI: 10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)*

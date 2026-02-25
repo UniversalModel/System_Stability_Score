@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.10 (Patches CH–CN — Currency/Tick Lock + Gravity Notation)  
+> **Version:** 26.11 (Patch DF — GPD gravity channel header + canonical note)  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -1739,14 +1739,18 @@ The DPR translation: **gauge symmetry = the rule that defines what currency is v
 
 #### Formal Mapping Table
 
-| Gauge Group | SM Interaction | Action Sub-channel | DPR Currency Token | $o$-label | When $o\approx0$ |
+| Gauge Group | SM Interaction | Interaction / Coupling Channel | DPR Currency Token | $o$-label | When $o\approx0$ |
 |---|---|---|---|---|---|
 | $U(1)_Y$ | Electromagnetism / hypercharge | $A_\text{EM}$ | `EM-license` (photon exchange) | $o_{A_\text{EM}}$ | No EM coupling (electrically neutral, e.g., DM, neutrinos at low E) |
 | $SU(2)_L$ | Weak nuclear force | $A_\text{weak}$ | `Weak-license` (W/Z boson exchange) | $o_{A_\text{weak}}$ | No weak coupling (right-handed sterile neutrino; hypothetical) |
 | $SU(3)_c$ | Strong nuclear (QCD) | $A_\text{strong}$ | `Strong-license` (gluon exchange) | $o_{A_\text{strong}}$ | No colour charge (leptons, DM candidates, photons) |
-| GR (classical) | Gravity | $A_\text{grav}$ | `Grav-license` (graviton / curvature) | $o_{A_\text{grav}}$ | Gravitational decoupling (hypothetical; never observed) |
+| GR (classical) | Gravity | $A_\text{grav}$ *(P+F update — see note)* | `Grav-license` (curvature) | $o_{A_\text{grav}}$ | Gravitational decoupling (hypothetical; never observed) |
 | **Triadic (Form)** | **Temporal structure** | $F$ (Form) | `Time-currency` | $o_F$ | No temporal extent (point-event; instantaneous collapse) |
 | **Triadic (Position)** | **Spatial extent** | $P$ (Position) | `Space-currency` | $o_P$ | No spatial extent (fully localised; 0-dim object) |
+
+> **Patch DF (v26.11, binding) — Gravity ≠ A-currency payment:**  
+> $A_\text{EM}$, $A_\text{weak}$, $A_\text{strong}$ are **Action sub-channels** — they cost Energy (J) via particle exchange.  
+> $A_\text{grav}$ is **not** an Energy (J) expenditure. Per the Graviton Protocol: gravity is a **P+F geometric coordinate update** (curvature = P-displacement, mass endurance = F-cost). The label `o_A_grav` is a bookkeeping alias tracking gravitational coupling strength — it does not imply that gravity *pays in Energy currency*. Rule: gravity debits P+F budgets, not $B_E$.
 
 **Reading rule:** A particle's **Standard Model representation** $(Q, T_3, C)$ directly determines which $o_{A_i}$ channels are open:
 
@@ -1923,14 +1927,16 @@ PATCH SUPPLEMENT — v26.3 GAUGE-PRICE DICTIONARY (ST.22)
 
 **GPD-1 — Canonical Interface Table:**
 
-| Gauge group | Action channel | DPR currency token | Simulator field key | Observable handle |
+| Gauge group | Interaction / Coupling Channel | DPR currency token | Simulator field key | Observable handle |
 |---|---|---|---|---|
 | $U(1)_Y$ | $A_\text{EM}$ | `em_license` | `o_A_em` | Electromagnetic cross-sections, photoelectric |
 | $SU(2)_L$ | $A_\text{weak}$ | `weak_license` | `o_A_weak` | W/Z boson production; Higgs coupling above $v$ |
 | $SU(3)_c$ | $A_\text{strong}$ | `strong_license` | `o_A_strong` | Colour confinement; QCD cross-sections |
-| GR (diff. inv.) | $A_\text{grav}$ | `grav_license` | `o_A_grav` | Gravitational lensing; decoherence (QC-P15) |
+| GR (diff. inv.) | $A_\text{grav}$ *(P+F update)* | `grav_license` | `o_A_grav` | Gravitational lensing; decoherence (QC-P15) |
 | — (Form) | $F$ (temporal) | `time_currency` | `o_F` | Temporal coherence length; particle lifetime |
 | — (Position) | $P$ (spatial) | `space_currency` | `o_P` | Position localisation; spatial extent |
+
+> **Note (Patch DF):** GR row — `o_A_grav` is a bookkeeping label for gravitational coupling, not an Energy (J) payment. Gravity = P+F geometric update (Graviton Protocol). Simulator must debit P/F budgets for gravitational effects, not $B_E$.
 
 **JSON schema (DPR v26.4):**
 

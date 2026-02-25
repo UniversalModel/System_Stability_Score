@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.8 (Gold Master)  
+> **Version:** 26.9 (Patch AR — Existence Pricing Alignment)  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -51,6 +51,31 @@ String Theory's compactification is not accidental — it is the **evolutionary 
 
 ## ST.2 — DIMENSIONAL LADDER: HOW DIMENSIONS OPEN FROM PROPERTIES
 
+### ST.2.0 — THE THREE PRICES OF EXISTENCE (Canonical Definition)
+
+In U-Theory v26, dimensions are **markets**. To exist is to spend. Three fundamental currencies sustain every reality frame:
+
+| Dimension | Property ($S$) | Currency ($C$) | Transaction Logic |
+|-----------|---------------|----------------|-------------------|
+| **1D** | **Position (P)** | **Space** | *Resistance to co-location.* You pay in distance to distinguish "here" from "there". Without this payment, all objects collapse into a singularity. |
+| **2D** | **Form (F)** | **Time** | *Endurance.* You pay in duration to maintain a stable boundary against dissolution. A shape lasting 0 seconds is a virtual fluctuation — it does not exist. |
+| **3D** | **Action (A)** | **Energy** | *Expenditure.* You pay in energy to interact or change state. Every interaction dissipates; change leaves a trace (entropy). No interaction is free. |
+| **4D** | **X (Flow)** | **Freedom** | *Irreversibility Tax.* You pay in directional freedom to gain complexity (the arrow of time). |
+
+> **Canonical rule (v26.9, binding):** Space → Position · Time → Form · Energy → Action. These mappings are invariant throughout this document.
+
+#### ST.2.1 — NOTE ON "TWO TIMES"
+
+Do not conflate:
+- **Time-as-Currency** ($\tau$): the duration paid to *hold* Form stable — endurance, maintenance, resistance to dissolution.
+- **Time-as-Dimension** (X, 4D): the *flow of complexity* — the arrow of time, evolution, irreversibility.
+
+> A stone pays *Time-currency* ($\tau$) to stay a stone (Form endures).  
+> A living being opens the *X-dimension* to grow (Complexity increases).  
+> These are orthogonal concepts. Conflating them is the canonical "double truth" eliminated by Patch AR.
+
+---
+
 ### 0D → 1D: The Birth of POSITION (P)
 
 | Field | Value |
@@ -66,10 +91,11 @@ String Theory's compactification is not accidental — it is the **evolutionary 
 
 | Field | Value |
 |-------|-------|
-| **Property** | Boundary / Structure — "I am distinct from you" |
-| **Dimension opened** | A plane; geometry appears |
-| **What becomes possible** | Waves, interference, holographic principle (2D encodes 3D) |
-| **U-Model connection** | Form pillar — identity, structural integrity |
+| **Property** | Endurance / Stability — "I persist through time" |
+| **Dimension opened** | The plane of stable structure; boundary is meaningful only because it endures |
+| **Currency paid** | **Time** (duration / maintenance against dissolution) |
+| **What becomes possible** | Stable identity; waves and structures that persist; holographic principle (stable 2D boundary encodes 3D) |
+| **U-Model connection** | Form pillar — identity, structural integrity; *Form costs Time, not Space* |
 
 ---
 
@@ -118,9 +144,9 @@ The full dimensional ladder:
 ```
 Property        → Dimension opened     → Status in our Universe
 ──────────────────────────────────────────────────────────────
-Localization    → 1D (line)            → OPEN (we move in space)
-Boundary        → 2D (plane)           → OPEN (geometry, waves)
-Volume/Energy   → 3D (volume)          → OPEN (the Stability Lock)
+Localization    → 1D (line)            → OPEN (we move in space)    [pays Space]
+Endurance/Form  → 2D (plane)           → OPEN (stable identity, structures persist) [pays Time]
+Volume/Energy   → 3D (volume)          → OPEN (the Stability Lock)  [pays Energy]
 Anti-entropy    → 4D (time / X)        → PARTIAL (arrow of time)
 Unity/Entangle. → 5D (non-locality)    → MICRO-OPEN (quantum scale)
 ...             → 6D–10D (Calabi-Yau) → CLOSED (Planck scale)
@@ -306,7 +332,7 @@ Is compactification instantaneous (phase transition) or gradual? U-Theory sugges
 Can a closed dimension re-open? U-Theory says yes — if the corresponding property regains sufficient energetic support. This would correspond to a phase transition in the vacuum structure. Experimental signature: bubble nucleation events with anomalous vacuum energy.
 
 **ST-Q4: The U-Score of the Universe**  
-Can the Universe itself be scored? With Form = spatial geometry (curvature), Position = cosmological placement (Hubble volume), Action = anti-entropy flow (total negentropy production):
+Can the Universe itself be scored? With Form = structural stability / endurance (cosmic curvature as proxy for form-persistence across time), Position = cosmological placement (Hubble volume), Action = anti-entropy flow (total negentropy production):
 
 $$U_{\text{Universe}} = \sqrt[3]{F_{\text{cosmic}} \times P_{\text{cosmic}} \times X_{\text{anti-entropy}}}$$
 

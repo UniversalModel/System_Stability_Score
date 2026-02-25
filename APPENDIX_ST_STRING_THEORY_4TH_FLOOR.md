@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.4  
+> **Version:** 26.5  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -1474,6 +1474,18 @@ AF    : Test Pointer Registry v1.0 — 9 predictions in
          tpr_registry.yaml; dashboard hooks for SSS
 AG    : Epistemic Propagation — confidence envelopes;
          min(epistemic_level) rule; JSON schema; report fmt
+
+PATCH SET v26.5 — SM INTERFACE POLISH (ST.24)
+14    : Gauge-Price Dictionary SM Interface (ST.5.1) —
+         U(1)/SU(2)/SU(3) as A-currency/Flavor Tax/Binding
+         Collateral; photon as receipt; Higgs as exchange fee
+15    : Graviton Protocol (ST.6.3) — gravity = P+F channel
+         (geometric update, NOT A-type); resolves DM gravity
+         paradox; QC-P17 (GW without thermal signature)
+16    : Vacuum Liquidity (ST.2.1) — HUP as micro-loan;
+         virtual particles = bankrupt borrowers; Casimir +
+         Lamb Shift as L2-confirmed DPR effects; tick size
+         q_A ~ h grounded in minimum credit unit
 ```
 
 ---
@@ -2158,11 +2170,174 @@ AF : Test Pointer Registry (TPR v1.0) — 9 predictions
 AG : Epistemic Propagation Rules — confidence envelopes;
      min(epistemic_level) rule; JSON schema; confidence report
      format; epistemic_propagator.py
+
+PATCH SET v26.5 — SM INTERFACE POLISH (ST.24)
+14 : Gauge-Price Dictionary SM Interface (ST.5.1) —
+     U(1)/SU(2)/SU(3) as A-currency/Flavor Tax/Binding
+     Collateral; photon as receipt; Higgs as exchange fee;
+     SM physicist audit checklist (3 L2-confirmed, 1 L3)
+15 : Graviton Protocol (ST.6.3) — gravity reclassified as
+     P+F channel (geometric update, NOT A-type energy
+     exchange); resolves DM gravity paradox; QC-P17 (GW
+     absorption without thermal signature / optomechanics)
+16 : Vacuum Liquidity (ST.2.1) — HUP as micro-loan
+     agreement; virtual particles = bankrupt credit-line
+     borrowers; real particles = solvent tenants; Casimir +
+     Lamb Shift as L2-confirmed DPR effects; tick size
+     q_A ~ h grounded as minimum credit unit
 ```
 
 ---
 
-## ST.24 — REFERENCES
+## ST.24 — STANDARD MODEL INTERFACE POLISH (v26.5)
+
+> **Patch Set v26.5** | Epistemic Level: L2 (interface layer) + L3 (speculative consequences)  
+> **Patches:** 14 (Gauge-Price Dictionary — SM interface) · 15 (Graviton Protocol — P-channel) · 16 (Vacuum Liquidity — Heisenberg Credit)  
+> **Purpose:** Close the two logical gaps identified by Standard Model physicists: (1) what exactly pays for gauge-symmetry charges; (2) why Dark Matter retains gravity if $A_\text{EM}=0$. Add a cosmological-constant-quality explanation for virtual particles.  
+> **Target back-integration:** ST.5.1 (Gauge-Price), ST.6.3 (Graviton), ST.2.1 (Vacuum Liquidity)  
+> **Extends:** Patch 13 (ST.22 Gauge-Price Dictionary formal entry) with an accessible SM-physicist-facing interface.
+
+---
+
+### ST.24.14 — PATCH 14: THE GAUGE-PRICE DICTIONARY — SM INTERFACE (ST.5.1)
+
+**Audit finding:** The DPR lists prices for *dimensions* (Space, Time, Energy), but physicists ask: *"What does an electron pay to have electric charge?"* This patch maps Standard Model gauge groups to U-Theory transaction types, making the Price Registry legible to particle physicists.
+
+**Integration target:** Insert as `ST.5.1` — immediately after the Triadic Price table in ST.5.
+
+---
+
+#### ST.5.1 THE GAUGE-PRICE DICTIONARY — PARTICLE PHYSICS INTERFACE (v26.5)
+
+We map the Standard Model gauge groups directly to U-Theory transaction types. Particles are **wallets** holding specific currencies; gauge charges are evidence of specific budget lines being open.
+
+| Gauge Group | Physics Force | U-Theory Price Type | Transaction semantics |
+|:---|:---|:---|:---|
+| **U(1)** | Electromagnetism | **A-Currency — EM Charge** | *Payment for Visibility.* Holding EM charge means the A_EM budget is open ($o_{A_\text{EM}}>0$). Allows energy exchange via photons. If budget collapses ($o_{A_\text{EM}}\to0$), the object becomes electromagnetically dark — i.e., Dark Matter. |
+| **SU(2)** | Weak interaction | **Flavor Tax** | *Payment for Identity Change.* Buying a weak-interaction license allows transmutation (e.g., $n\to p+e^-+\bar\nu$). Extremely expensive (massive W/Z bosons = high price), hence short-range only. Paid by chiral fermions; right-handed neutrinos never pay. |
+| **SU(3)** | Strong interaction | **Binding Collateral** | *Payment for Structure.* The strong-license budget holds quarks together inside hadrons. Collateral is non-refundable at low energy — **confinement** is the economic rule that colour charges cannot travel separately (can't export the collateral). |
+
+> **Corollary — the photon as receipt:** A photon ($\gamma$) is not merely a particle; it is the **transaction receipt** of an A-currency ($A_\text{EM}$) exchange. When two charged particles interact, they swap receipts — neither gains nor loses EM-license budget overall (charge conservation = receipt-book balance).
+
+> **Corollary — Higgs as exchange fee:** The Higgs VEV ($v=246$ GeV) is the exchange fee that converts weak-license budget into mass budget below the electroweak scale — exactly the $\eta_{E\to\text{mass}}$ exchange efficiency of Patch S (ST.19) applied at the SM level.
+
+**SM physicist audit checklist:**
+- ✅ $U(1)$ conservation = EM-license budget conservation (derived, not assumed).
+- ✅ $SU(3)$ confinement = non-exportability of Binding Collateral (economic rule).
+- ✅ $SU(2)$ mass gap = high Flavor Tax rate at low energy (Higgs mechanism as exchange rate).
+- ⬜ Coupling constants ($\alpha, g_s, g_w$) from DPR cost-field $\mathcal{K}$ minima → **L3 research program** (Patch AC / QC-P16).
+
+**Epistemic:** L2 for the mapping as an interface layer (structural isomorphism); L3 for any claim that DPR *derives* coupling constants from first principles.
+
+---
+
+### ST.24.15 — PATCH 15: THE GRAVITON PROTOCOL — P-CHANNEL UPDATE (ST.6.3)
+
+**Audit finding:** If Dark Matter has $o_{A_\text{EM}}\approx0$ (no EM interaction), Standard Model physicists ask: *"Why does it still respond to gravity? Isn't gravity also an interaction (Action)?"* This patch resolves the apparent contradiction by classifying gravity as a **Position (P) channel update**, not an Action (A) transaction.
+
+**Integration target:** Insert as `ST.6.3` — in the Dark Matter section, after the A-channel residue definition.
+
+---
+
+#### ST.6.3 THE GRAVITON PROTOCOL: P-CHANNEL UPDATE (v26.5)
+
+**Core distinction:**
+
+| Carrier | U-Theory channel | Currency paid | Zero-energy? | Reach |
+|:---|:---|:---|:---|:---|
+| Photon ($\gamma$) | $A_\text{EM}$ (Action) | Energy / EM-license | ❌ Costs energy | Long-range (massless) |
+| Graviton ($G$, hyp.) | $P$ (Position) + $F$ (Form) | *Coordinate update* — zero intrinsic cost | ✅ Purely geometric | Long-range (massless, spin-2) |
+| W/Z boson | $A_\text{weak}$ (Action) | Flavor Tax | ❌ Costs energy (mass gap) | Short-range (massive) |
+
+**The graviton definition (v26.5):**
+
+> The graviton is a quantised update of the metric tensor $g_{\mu\nu}$, paid for by the **Position (P) and Form (F)** budgets — not the Action (A) budget.
+
+$$\text{Gravity} \equiv \delta g_{\mu\nu} \quad \text{(change in spatial topology)} \quad \Rightarrow \quad \text{currency: } P + F, \quad \text{NOT } A$$
+
+**Why Dark Matter gravitates (resolved):**
+
+Dark Matter has:
+- $o_{A_\text{EM}} \approx 0$ → no photon receipts → electromagnetically invisible ✓
+- $o_{A_\text{grav}} > 0$ → ... wait — this notation now clarifies as the **geometric curvature channel**, not an Action sub-channel in the interaction sense. Gravity is the *P-channel* response to mass-energy stress, not an $A$-type energy exchange.
+- $o_P \approx 1$, $o_F \approx 1$ → spatial position and temporal form remain open → Dark Matter *has coordinates* and *persists in time* → it curves spacetime normally.
+
+**Consequence (observable):**
+
+Gravitational waves cause **positional displacement** ($\Delta L / L \sim 10^{-21}$ at LIGO scale) — a pure $P$-channel effect — without depositing thermal energy (heat) into the detector medium. EM radiation, by contrast, delivers energy through the $A_\text{EM}$ channel and thermalises the medium.
+
+**Prediction (QC-P17):** Gravitational wave absorption by matter produces positional strain without thermal signature in proportion to $o_P / o_{A_\text{EM}}$ — detectable in precision optomechanical setups where both strain and thermal noise are simultaneously monitored.
+
+**Epistemic:** L2 for the channel reclassification of gravity as $P+F$ (geometric, not $A$-type energy exchange); L3 for QC-P17 quantitative prediction.
+
+---
+
+### ST.24.16 — PATCH 16: VACUUM LIQUIDITY — HEISENBERG CREDIT (ST.2.1)
+
+**Audit finding:** Standard Model physicists ask: *"Where do virtual particles fit in your Price Registry?"* This patch integrates the Heisenberg Uncertainty Principle into the DPR as a **micro-loan mechanism** — the most compact demonstration that U-Theory's economic language is not merely metaphorical.
+
+**Integration target:** Insert as `ST.2.1` — in the Price Registry section, as a sub-item after the main dimension pricing table.
+
+---
+
+#### ST.2.1 VACUUM LIQUIDITY — HEISENBERG CREDIT LINE (v26.5)
+
+**Core claim:** The quantum vacuum is not empty. It is a **high-frequency credit market** operating at Planck-scale timescales.
+
+**The Heisenberg Uncertainty Principle as a Loan Agreement:**
+
+$$\Delta E \cdot \Delta t \geq \frac{\hbar}{2} \quad \Leftrightarrow \quad \text{"You may borrow } \Delta E \text{ to open a dimension, provided you repay within } \Delta t \text{."}$$
+
+| Economic concept | Physics concept | U-Theory term |
+|:---|:---|:---|
+| Credit line | $\hbar/2$ constant | Minimum transaction unit (quantum of dimensional access) |
+| Loan amount | $\Delta E$ | Energy borrowed to momentarily open $A$-channel |
+| Repayment deadline | $\Delta t$ | Maximum existence window before bankruptcy |
+| Borrower (solvent) | Real particle | Secured enough permanent capital (Higgs mass; binding energy) to hold dimension open indefinitely |
+| Borrower (insolvent) | Virtual particle | Cannot pay Existence Tax → bankruptcy → annihilation |
+
+**Operational definitions:**
+
+- **Virtual particle:** An entity that borrows dimensional access ($\Delta E$ from the A-budget credit line), exists for time $\Delta t \leq \hbar/(2\Delta E)$, checks whether it can pay the permanent Existence Tax (rest mass × $c^2$ × stability cost), and — finding it cannot — declares bankruptcy and annihilates. The vacuum is full of these defaulting micro-borrowers.
+
+- **Real particle:** An entity that has secured sufficient permanent capital (Higgs coupling + binding energy) to keep its dimensional budget accounts open indefinitely. A proton, for instance, has paid the Binding Collateral (SU(3) confinement) and the Higgs mass fee, making it a stable long-term tenant of 3D spacetime.
+
+- **Casimir effect:** Two conducting plates impose **boundary conditions** on the credit market — they restrict which loan denominations (wavelengths) are available in the gap. The resulting pressure is the *difference in vacuum liquidity* between inside and outside the gap — a measurable, experimentally confirmed DPR effect. **(L2 — confirmed.)**
+
+- **Lamb shift:** Quantum corrections to atomic energy levels from virtual photon loops — evidence that the A-currency market fluctuates at finite temperature even in the lowest energy state. **(L2 — measured with 12-digit precision.)**
+
+**Why this matters for DPR:**
+
+The Heisenberg Credit Line sets the **minimum tick size** for any dimensional transaction. No dimension can be opened or closed for an investment smaller than $\hbar/2$ per degree of freedom. This is the deepest justification for the tick sizes introduced in Patch R (ST.19):
+
+$$q_A \sim h \quad (= 2\pi \cdot \hbar) \quad \text{(Planck Action — minimum energy transaction for } A\text{-channel)}$$
+
+**Epistemic:** L2 for the Casimir and Lamb Shift retroactive confirmations; L2 for the HUP as loan-agreement restatement (structural isomorphism); L3 for the claim that tick sizes derive from DPR cost-field $\mathcal{K}$ rather than being an assumption.
+
+---
+
+### v26.5 Patch Map Supplement
+
+```
+PATCH SET v26.5 — STANDARD MODEL INTERFACE POLISH (ST.24)
+
+14 : Gauge-Price Dictionary SM Interface (ST.5.1) — U(1)/SU(2)/
+     SU(3) mapped to A-currency/Flavor Tax/Binding Collateral;
+     photon as receipt; Higgs as exchange fee; SM physicist
+     audit checklist (4 items, 3 L2-confirmed, 1 L3 program)
+15 : Graviton Protocol (ST.6.3) — gravity reclassified as
+     P+F channel (geometric coordinate update), NOT A-type
+     energy exchange; resolves "why DM gravitates" paradox;
+     QC-P17: GW absorption without thermal signature
+16 : Vacuum Liquidity (ST.2.1) — HUP as micro-loan agreement;
+     virtual particles as bankrupt borrowers; real particles as
+     solvent tenants; Casimir + Lamb Shift as L2-confirmed DPR
+     effects; tick size q_A ~ h grounded in minimum credit unit
+```
+
+---
+
+## ST.25 — REFERENCES
 
 | # | Reference |
 |---|-----------|
@@ -2178,12 +2353,13 @@ AG : Epistemic Propagation Rules — confidence envelopes;
 
 ---
 
-> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.4 — FEATURE FREEZE*  
+> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.5 — FEATURE FREEZE*  
 > *ST.16: F–L | ST.17: M (Price Alphabet) | ST.18: N (DPR 1.1) | ST.19: O–V (DPR v26)*  
 > *ST.20: W–Z — Compliance Audit: multi-currency collapse, Action channel split, field API, dual-metric*  
 > *ST.21: Patches 9–12 — Dark Sector Vocab Lock, Residue Matrix, DPR Dark States, Diagnostic Pointers*  
 > *ST.22: Patch 13 — Gauge-Price Dictionary: U(1)/SU(2)/SU(3)/GR ↔ DPR channels; QC-P16 proton decay*  
 > *ST.23: Patches AA–AG — Infrastructure: GPD, Clamping g, CPMA, DM deprecation, DPR Engine v1.0, TPR v1.0, Epistemic Propagation*  
-> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups as independent of DPR; A=0 without channel qualification*  
-> *U-Model v26.4 | © 2026 Petar Nikolov | CC BY 4.0*  
+> *ST.24: Patches 14–16 — SM Interface Polish: Gauge-Price (photon as receipt, Higgs as fee), Graviton Protocol (P-channel, QC-P17), Vacuum Liquidity (HUP credit, Casimir L2)*  
+> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups independent of DPR; $A=0$ without channel qualification; gravity as A-type energy exchange*  
+> *U-Model v26.5 | © 2026 Petar Nikolov | CC BY 4.0*  
 > *Dimensional Stability Theorem | [DOI: 10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)*

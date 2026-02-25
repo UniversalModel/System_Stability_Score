@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.3  
+> **Version:** 26.4  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -1458,6 +1458,22 @@ PATCH SUPPLEMENT — v26.3 GAUGE-PRICE DICTIONARY (ST.22)
          openness-vector table; Higgs = exchange efficiency
          eta(E->mass); GUT bridge QC-P16 (proton decay ~10^34-
          10^36 yr / Hyper-K); YAML schema DPR v26.3
+
+PATCH SET v26.4 — INFRASTRUCTURE (ST.23)
+AA    : Gauge-Price Dictionary formal entry — GPD-1 table;
+         JSON schema; interface for simulator
+AB    : Canonical g(o_X,o_Y) = 1-exp(-o_X/max(o_Y,eps));
+         D_Sigma vs D_macro locked; asymptote tests
+AC    : CY Property Mapping Algorithm (CPMA-1) — 4-step
+         procedure; reference impl cpma_v1.py
+AD    : DM formula deprecation changelog; U_DM=0 →
+         cbrt(F*P*A_grav)>0; canonical YAML glossary
+AE    : DPR Engine v1.0 — PDE dt o_i = I_i - Gamma_i*o_i
+         - H_i; Python update step; IUniversalField API
+AF    : Test Pointer Registry v1.0 — 9 predictions in
+         tpr_registry.yaml; dashboard hooks for SSS
+AG    : Epistemic Propagation — confidence envelopes;
+         min(epistemic_level) rule; JSON schema; report fmt
 ```
 
 ---
@@ -1827,7 +1843,326 @@ PATCH SUPPLEMENT — v26.3 GAUGE-PRICE DICTIONARY (ST.22)
 
 ---
 
-## ST.23 — REFERENCES
+## ST.23 — INFRASTRUCTURE PATCH SET v26.4 (AA–AG)
+
+> **Patch Set v26.4** | Epistemic Level: mixed (see per-patch tags)  
+> **Patches:** AA · AB · AC · AD · AE · AF · AG  
+> **Purpose:** Convert theoretical constructs (gauge channels, clamping, CY mapping, DM formula, field dynamics, test registry, epistemic propagation) into formal engineering deliverables ready for simulator implementation.  
+> **Status:** Feature Freeze for v26 — all conceptual pillars now have infrastructure specs.
+
+---
+
+### ST.23.AA — PATCH AA: GAUGE-PRICE DICTIONARY (GPD) FORMAL ENTRY
+
+**Problem:** Action channels ($A_\text{grav}, A_\text{EM}, A_\text{weak}, A_\text{strong}$) are defined (Patch G, ST.22) but lack a canonical cross-reference to gauge fields and DPR simulator currency tokens.
+
+**Upgrade:** Introduce GPD as a typed interface layer — the bridge between physics (gauge groups) and the DPR engine (currencies and openness labels).
+
+**Deliverable:** GPD-1 table + JSON schema for the simulator.
+
+**GPD-1 — Canonical Interface Table:**
+
+| Gauge group | Action channel | DPR currency token | Simulator field key | Observable handle |
+|---|---|---|---|---|
+| $U(1)_Y$ | $A_\text{EM}$ | `em_license` | `o_A_em` | Electromagnetic cross-sections, photoelectric |
+| $SU(2)_L$ | $A_\text{weak}$ | `weak_license` | `o_A_weak` | W/Z boson production; Higgs coupling above $v$ |
+| $SU(3)_c$ | $A_\text{strong}$ | `strong_license` | `o_A_strong` | Colour confinement; QCD cross-sections |
+| GR (diff. inv.) | $A_\text{grav}$ | `grav_license` | `o_A_grav` | Gravitational lensing; decoherence (QC-P15) |
+| — (Form) | $F$ (temporal) | `time_currency` | `o_F` | Temporal coherence length; particle lifetime |
+| — (Position) | $P$ (spatial) | `space_currency` | `o_P` | Position localisation; spatial extent |
+
+**JSON schema (DPR v26.4):**
+
+```json
+{
+  "gpd_entry": {
+    "gauge_group": "string",
+    "action_channel": "string",
+    "currency_token": "string",
+    "simulator_key": "string",
+    "observable_handle": "string",
+    "epistemic_level": "L2 | L3",
+    "l2_retroactive": "bool"
+  }
+}
+```
+
+**Epistemic:** L2 for the channel decomposition as interface; L3 for numerical coupling constants derived from DPR.
+
+---
+
+### ST.23.AB — PATCH AB: DIMENSIONAL CLAMPING STANDARD (CANONICAL g)
+
+**Problem:** Competing definitions of effective dimension ($D_\text{eff}$) coexist. The ratio $o_X / o_Y$ diverges when $o_Y \to 0$ (Patch F / Patch Z already flag this). No canonical bounded form of $g(o_X, o_Y)$ is established.
+
+**Upgrade:** Canonise two orthogonal metrics and fix the unique bounded $g$:
+
+$$D_\Sigma = \sum_i o_i \quad \text{(geometric openness, 0–11; counts open dimensions)}$$
+
+$$D_\text{macro} = 3 + g(o_X, o_Y) \quad \text{(thermodynamic accessibility, 3.0–4.0)}$$
+
+**Canonical g (v26.4):**
+
+$$\boxed{g(o_X, o_Y) = 1 - \exp\!\left(-\frac{o_X}{\max(o_Y,\,\varepsilon)}\right)} \quad \varepsilon = 10^{-6}$$
+
+**Properties:**
+- $g \in [0, 1)$ for all $o_X, o_Y \geq 0$ — bounded by construction.
+- $g \to 1$ as $o_X \to \infty$ (fully open 4D).
+- $g \to 0$ as $o_X \to 0$ (classical 3D limit).
+- $o_Y \to 0$: $g \to 1 - e^{-o_X / \varepsilon} \approx 1$ — saturates at 1 (classical decoherence ≠ dimensional opening; captured by the $\varepsilon$ floor).
+
+**Rule:** $D_\text{macro}$ is never interpreted as a literal count of spatial axes. It is a scalar summarising macro-complexity accessibility.
+
+**Deliverable:** "Appendix: On bounded macro-dimension" (to be added as ST.23.AB standalone block); asymptote test suite for simulator.
+
+**Epistemic:** L2 for boundedness and the canonical form of $g$; L3 for the claim that this particular form is physically unique (research program ST-Q canonical $g$).
+
+---
+
+### ST.23.AC — PATCH AC: CY PROPERTY MAPPING ALGORITHM (CPMA)
+
+**Problem:** ST.5 and ST-Q1 identify CY property mapping (dimensions 6–10 → U-Theory properties) as the key open frontier for L3→L2 upgrade. No algorithmic procedure exists yet.
+
+**Upgrade:** CPMA — a structured procedure mapping CY topology to candidate U-Theory properties.
+
+**CPMA-1 Algorithm (v26.4):**
+
+```
+INPUT:
+  CY manifold M with:
+    - Hodge numbers (h₁₁, h₂₁)
+    - Euler characteristic χ
+    - Fundamental group π₁(M)
+    - Intersection form Q
+    - Mirror partner M̃ (if known)
+
+STEP 1 — Symmetry extraction:
+  Compute isometry group Iso(M) and holonomy group Hol(M)
+  Map: SU(n) holonomy → candidate gauge symmetry → GPD channel
+
+STEP 2 — Scale band assignment:
+  h₁₁ >> h₂₁  → complex structure dominated → Planck-scale residue
+  h₁₁ ≈ h₂₁  → balanced → GUT-scale candidate
+  h₁₁ << h₂₁  → Kähler dominated → electroweak scale candidate
+
+STEP 3 — Property candidate labelling:
+  Match Iso(M) subgroups to U-Theory property spectrum:
+    U(1) subgroup         → o_A_em channel (EM-license carrier)
+    SU(2) subgroup        → o_A_weak channel
+    SU(3) subgroup        → o_A_strong channel
+    Mirror pair (M,M̃)    → candidate for X↔Y duality (Freedom ↔ Coherence)
+
+STEP 4 — Residue prediction:
+  For each identified channel, predict observable residue
+  (proton decay rate / sparticle spectrum / moduli cosmology)
+  and assign test pointer ID (QC-Pxx)
+
+OUTPUT:
+  - Candidate property label (U-Theory dimension ID)
+  - Compactification scale band (Planck / GUT / EW)
+  - Primary observable pointer (falsifiable)
+  - Epistemic level: L3 until at least one mapping yields confirmed observable
+```
+
+**Deliverable:** CPMA-1 algorithmic specification (above) + minimal reference implementation in Python (to be added to `System_Stability_Score/` as `cpma_v1.py`).
+
+**Epistemic:** L3 throughout until at least one CY→property mapping produces a confirmed experimental signature. Each confirmed mapping upgrades that specific entry to L2.
+
+---
+
+### ST.23.AD — PATCH AD: DARK MATTER FORMULA — FORMAL DEPRECATION AND REPLACEMENT
+
+**Problem:** The formula $U_\text{DM} = \sqrt[3]{F \times P \times 0} = 0$ (from the original triadic formula applied to DM with $A=0$) is formally deprecated (flagged in v26.1 Patch X). This patch provides the canonical changelog entry and replacement text for ST.6.
+
+**Upgrade:**
+
+| | Before (deprecated ≤v25) | After (canonical v26.4) |
+|---|---|---|
+| **DM Action value** | $A = 0$ (monolithic) | $A_\text{grav} > 0$, $A_\text{EM} \approx 0$ (channel-specific) |
+| **DM U-score** | $U_\text{DM} = 0$ | $U_\text{DM} = \sqrt[3]{F \times P \times A_\text{grav}} > 0$ |
+| **DM description** | "Action closed" | "EM-channel closed; gravitational channel open" |
+| **DM label** | "4D residue" ❌ | "A-channel residue / macro-pocket residue" ✓ |
+
+**Rule (binding):** The phrase "Dark matter = Action closed" always and exclusively means "$A_\text{EM}$-channel closed". Never $A_\text{grav}$. Any simulator, markdown block, or YAML entry using $A=0$ without channel qualification is non-compliant with v26.4.
+
+**Glossary entry (canonical):**
+
+```yaml
+glossary:
+  dark_matter:
+    u_theory_name: "A-channel residue / macro-pocket residue"
+    formula: "U_DM = cbrt(F * P * A_grav) > 0"
+    openness_signature: {o_A_em: ~0, o_A_grav: ">0", o_P: ~1, o_F: ~1}
+    deprecated_formula: "U_DM = cbrt(F * P * 0) = 0"
+    deprecated_since: "v26.1"
+    epistemic_level: "L3"
+```
+
+**Epistemic:** L3 for the DM interpretation; L2 for internal consistency of the channel formalism.
+
+---
+
+### ST.23.AE — PATCH AE: LOCAL FIELD DYNAMICS — MINIMAL ENGINE (DPR Engine v1.0)
+
+**Problem:** Patches O–V define $o_i(\mathbf{x},t)$ as local fields, hysteresis barriers $\Delta_i$, exchange efficiency $\eta$, and cost field $\mathcal{K}$. No unified update law exists. The field remains static in the current simulator.
+
+**Upgrade:** Minimal PDE-form update law for $o_i(\mathbf{x},t)$:
+
+$$\boxed{\partial_t o_i = I_i(\mathbf{x},t) - \Gamma_i(\mathbf{x},t)\cdot o_i - H_i(o_i)}$$
+
+**Term definitions:**
+
+| Term | Physical meaning | Plug-in model |
+|---|---|---|
+| $I_i(\mathbf{x},t)$ | Budget injection rate | Metabolism / cryogenic pump / cosmic inflation |
+| $\Gamma_i(\mathbf{x},t)$ | Local decay rate | Decoherence / dilution / "unpaid cost" drain |
+| $H_i(o_i)$ | Hysteresis barrier term | $H_i = \Delta_i \cdot \mathbb{1}[o_i < \theta_i]$ (step at threshold $\theta_i$) |
+
+**Discrete update (simulator v1.0):**
+
+```python
+def update_openness(o_i, I_i, gamma_i, delta_i, theta_i, dt):
+    """DPR Engine v1.0 — single step update for o_i(x,t)."""
+    hysteresis = delta_i if o_i < theta_i else 0.0
+    do_dt = I_i - gamma_i * o_i - hysteresis
+    return max(0.0, min(1.0, o_i + do_dt * dt))   # clamp to [0,1]
+```
+
+**Boundary conditions:**
+- $o_i \in [0, 1]$ enforced at every step (hard clamp — dimensional collapse cannot go negative).
+- $I_i = 0$ and $\Gamma_i > 0$ → exponential decay toward compactification (natural collapse).
+- $I_i > \Gamma_i + \Delta_i$ → net opening (energetically costly; requires sustained investment).
+
+**Deliverable:** `dpr_engine_v1.py` — standalone Python module with plug-in slots for $I_i$, $\Gamma_i$, $H_i$; integrating with `System_Stability_Score.py` via `IUniversalField` (Patch Y / Patch W).
+
+**Epistemic:** L2 for the PDE infrastructure form; L3 for specific parameter values ($\Gamma_i$, $\Delta_i$) in physical applications.
+
+---
+
+### ST.23.AF — PATCH AF: TEST POINTER REGISTRY (TPR v1.0)
+
+**Problem:** ST.9 lists predictions ST-P1–P5. Patches 12 and 13 add QC-P12, QC-P14, QC-P15, QC-P16. These exist as prose — no machine-readable registry, no pass/fail thresholds, no link to simulator output channels.
+
+**Upgrade:** Unified Test Pointer Registry (TPR) — machine-readable, epistemically tagged.
+
+**TPR v1.0 — Master Table:**
+
+| Prediction ID | Observable | Instrument class | Expected o-space signature | Threshold | Epistemic |
+|---|---|---|---|---|---|
+| **ST-P1** | Dimensional hierarchy (3+1 preferred) | Cosmological surveys | $D_\text{macro} \in [3.0, 4.0]$ stable | No dimension crossing observed | L2 |
+| **ST-P2** | CY compactification leaves residues | Collider + astrophysics | $R_i \sim l_P$ → micro-residue = CY; $R_i \sim$ µm → meso-residue | Residue mass spectrum matches | L3 |
+| **ST-P3** | Dark Matter = A-channel residue | Gravity + EM decoupling | $o_{A_\text{EM}}\approx0$, $o_{A_\text{grav}}>0$ | No EM interaction, positive gravitational lensing | L3 |
+| **ST-P4** | Dark Energy = X-bleed | Cosmological $\Lambda(z)$ | $o_X > 0$ globally → $\Lambda \sim f(o_X)$ | $w(z) \neq -1$; X-bleed correlation with complexity | L3 |
+| **ST-P5** | Quantum coherence = open Y-dim | QC coherence time vs $o_Y$ | $o_Y$ inversely proportional to $T$ | Coherence time scales with $\eta_{E\to Y}$ prediction | L3 |
+| **QC-P12** | Sub-mm gravity deviation (DM meso-residue) | Eöt-Wash / torsion balance | Screening below 50 µm | Newton deviation at $R_A$ scale | L3 |
+| **QC-P14** | Dynamic $\Lambda(z)$ complexity correlation | DESI / Euclid $w(z)$ | $\Lambda$ higher in structure-rich epochs | $w(z) < -1$ or $w(z)$ varying detected | L3 |
+| **QC-P15** | Gravity decoherence without heat | Optomechanical (Aspelmeyer) | Position collapse without $\Delta T$ | Decoherence rate decoupled from thermalization | L3 |
+| **QC-P16** | Proton decay (GUT currency merger) | Hyper-K / DUNE | $\tau_p \sim 10^{34}$–$10^{36}$ yr | Proton decay observed in predicted rate window | L3 |
+
+**`tpr_registry.yaml` structure:**
+
+```yaml
+tpr_registry:
+  version: "1.0"
+  entries:
+    - id: "ST-P1"
+      epistemic_level: "L2"
+      observable: "Dimensional hierarchy stability"
+      instrument: "cosmological surveys"
+      o_signature: {D_macro: "[3.0, 4.0]"}
+      status: "active"
+    # ... (full entries for all 9 predictions above)
+```
+
+**Deliverable:** `tpr_registry.yaml` (full); dashboard hook in `System_Stability_Score.py` that reads TPR and annotates report output with prediction coverage.
+
+**Epistemic:** L2 for the registry structure and tagging framework; epistemic level per entry as specified above.
+
+---
+
+### ST.23.AG — PATCH AG: EPISTEMIC PROPAGATION RULES (CONFIDENCE ENVELOPES)
+
+**Problem:** Simulator outputs derived from L3 hypotheses can appear numerically precise, creating false confidence. The system has no mechanism to propagate epistemic uncertainty through calculations.
+
+**Upgrade:** Every parameter, equation, and result carries an epistemic tag. Results are computed with a **confidence envelope** reflecting the weakest epistemic link in the computation chain.
+
+**Propagation rules:**
+
+$$\text{Result}_\text{epistemic} = \min_i(\text{epistemic\_level}(P_i))$$
+
+where $P_i$ are all parameters used in the computation. One L3 input → entire output is L3.
+
+**Confidence weight mapping:**
+
+| Epistemic level | Description | Confidence weight $w$ |
+|---|---|---|
+| L1 | Mathematical tautology (definitional) | 1.00 |
+| L2 | Structural isomorphism (validated, falsifiable) | 0.70–0.90 |
+| L3 | Speculative (consistent but unconfirmed) | 0.10–0.50 |
+
+**JSON schema for simulator parameters:**
+
+```json
+{
+  "parameter": {
+    "name": "string",
+    "value": "number",
+    "epistemic_level": "L1 | L2 | L3",
+    "confidence_weight": "float [0,1]",
+    "test_dependency": ["string"]
+  }
+}
+```
+
+**Confidence report output format:**
+
+```
+RESULT: D_macro = 3.72
+  ├─ Input: o_X = 0.85 [L3, w=0.35, dep: QC-P14]
+  ├─ Input: o_Y = 0.12 [L2, w=0.80, dep: QC bell tests]
+  ├─ Formula: g(o_X,o_Y) = canonical (Patch AB) [L2, w=0.90]
+  └─ ENVELOPE: [L3, w=0.35] ← dominated by weakest input
+     Result confidence: 0.35 × 3.72 → report as "~3.7 (L3)"
+```
+
+**Rule:** Any report labelling an L3-derived quantity as a precise number without confidence envelope is non-compliant with v26.4.
+
+**Deliverable:** `epistemic_propagator.py` — utility module; integrates with all DPR Engine v1.0 outputs and `System_Stability_Score.py` report generator.
+
+**Epistemic:** L2 for the propagation framework and schema; the confidence weights themselves require calibration (L3 research program).
+
+---
+
+### ST.23.x — v26.4 Patch Map Supplement
+
+```
+PATCH SET v26.4 — INFRASTRUCTURE (ST.23)
+
+AA : Gauge-Price Dictionary formal entry — GPD-1 table + JSON
+     schema; interface between gauge physics and DPR simulator
+AB : Dimensional Clamping Standard — canonical g(o_X,o_Y) =
+     1 - exp(-o_X/max(o_Y,eps)); D_Sigma vs D_macro locked;
+     asymptote test suite
+AC : CY Property Mapping Algorithm (CPMA-1) — 4-step procedure
+     (topology → symmetry → scale → residue → test pointer);
+     reference impl cpma_v1.py
+AD : Dark Matter Formula — formal deprecation changelog;
+     U_DM=0 → U_DM=cbrt(F*P*A_grav)>0; canonical YAML
+     glossary entry
+AE : Local Field Dynamics — DPR Engine v1.0; minimal PDE
+     ∂_t o_i = I_i - Γ_i·o_i - H_i(o_i); Python update step;
+     integrates via IUniversalField API
+AF : Test Pointer Registry (TPR v1.0) — 9 predictions
+     (ST-P1..P5, QC-P12/P14/P15/P16) in machine-readable
+     tpr_registry.yaml; dashboard hooks for SSS reports
+AG : Epistemic Propagation Rules — confidence envelopes;
+     min(epistemic_level) rule; JSON schema; confidence report
+     format; epistemic_propagator.py
+```
+
+---
+
+## ST.24 — REFERENCES
 
 | # | Reference |
 |---|-----------|
@@ -1843,11 +2178,12 @@ PATCH SUPPLEMENT — v26.3 GAUGE-PRICE DICTIONARY (ST.22)
 
 ---
 
-> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.3*  
+> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.4 — FEATURE FREEZE*  
 > *ST.16: F–L | ST.17: M (Price Alphabet) | ST.18: N (DPR 1.1) | ST.19: O–V (DPR v26)*  
-> *ST.20: W–Z — Compliance Audit: multi-currency collapse, Action channel split, field API, dual-metric standard*  
-> *ST.21: Patches 9–12 — Dark Sector Vocab Lock, Residue Matrix, DPR Dark States, Diagnostic Pointers (QC-P12/P14/P15)*  
-> *ST.22: Patch 13 — Gauge-Price Dictionary: U(1)/SU(2)/SU(3)/GR ↔ DPR channels; Higgs = exchange efficiency; QC-P16 proton decay*  
-> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups as independent of DPR*  
-> *U-Model v26.3 | © 2026 Petar Nikolov | CC BY 4.0*  
+> *ST.20: W–Z — Compliance Audit: multi-currency collapse, Action channel split, field API, dual-metric*  
+> *ST.21: Patches 9–12 — Dark Sector Vocab Lock, Residue Matrix, DPR Dark States, Diagnostic Pointers*  
+> *ST.22: Patch 13 — Gauge-Price Dictionary: U(1)/SU(2)/SU(3)/GR ↔ DPR channels; QC-P16 proton decay*  
+> *ST.23: Patches AA–AG — Infrastructure: GPD, Clamping g, CPMA, DM deprecation, DPR Engine v1.0, TPR v1.0, Epistemic Propagation*  
+> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups as independent of DPR; A=0 without channel qualification*  
+> *U-Model v26.4 | © 2026 Petar Nikolov | CC BY 4.0*  
 > *Dimensional Stability Theorem | [DOI: 10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)*

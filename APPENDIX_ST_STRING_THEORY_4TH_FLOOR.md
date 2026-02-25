@@ -5,7 +5,7 @@
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
 > **Standalone appendix for U-Theory / U-Model v25**  
 > **Status:** L2 STRUCTURAL ISOMORPHISM + L3 SPECULATIVE EXTENSIONS  
-> **Version:** 26.2  
+> **Version:** 26.3  
 > **Last Updated:** February 25, 2026  
 > **Epistemic Level:** L2 (70–90%) for dimensional emergence mapping; L3 (<50%) for dark matter/energy predictions  
 > **DOI:** [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
@@ -1451,6 +1451,13 @@ PATCH SUPPLEMENT — v26.2 DARK SECTOR (ST.21)
 12    : Diagnostic Pointers — QC-P12 (sub-mm DM gravity),
          QC-P14 (dynamic Lambda / DESI), QC-P15 (gravity
          decoherence without heat / optomechanics)
+
+PATCH SUPPLEMENT — v26.3 GAUGE-PRICE DICTIONARY (ST.22)
+13    : Gauge-Price Dictionary — U(1)/SU(2)/SU(3)/GR mapped to
+         DPR Action sub-channels and currency tokens; particle
+         openness-vector table; Higgs = exchange efficiency
+         eta(E->mass); GUT bridge QC-P16 (proton decay ~10^34-
+         10^36 yr / Hyper-K); YAML schema DPR v26.3
 ```
 
 ---
@@ -1630,7 +1637,197 @@ PATCH SUPPLEMENT — v26.2 DARK SECTOR
 
 ---
 
-## ST.22 — REFERENCES
+## ST.22 — GAUGE-PRICE DICTIONARY (v26.3)
+
+> **Patch 13** | Epistemic Level: L3 (structural analogy, no experimental confirmation)  
+> **Purpose:** Map the Standard Model gauge groups U(1), SU(2), SU(3) to DPR currencies and Action sub-channels. Establishes a formal "Gauge ↔ Currency" dictionary for the simulator and provides the next L3→L2 upgrade path via collider observables.  
+> **Prerequisite:** Patch G (Action channel decomposition into $A_\text{grav}, A_\text{EM}, A_\text{weak}, A_\text{strong}$), Patch M (Price Alphabet), Patch N (DPR 1.1 multi-currency).
+
+---
+
+### ST.22.0 — MOTIVATION: WHY GAUGE GROUPS ARE PRICE STRUCTURES
+
+In U-Theory, each **property** (Form, Position, Action) carries a DPR currency that licenses access to a dimension. The **Action** property channels interactions — and the Standard Model gauge groups are precisely the classification of *which interaction license is active*:
+
+- $U(1)$: electromagnetic interaction license → **EM-coupling currency**
+- $SU(2)$: weak isospin interaction license → **Weak-coupling currency**
+- $SU(3)$: colour charge interaction license → **Strong-coupling currency**
+- Gravity (GR): gravitational coupling → **Grav-coupling currency** (not yet unified in SM)
+
+The DPR translation: **gauge symmetry = the rule that defines what currency is valid payment for a given Action channel.** A particle with no U(1) charge (i.e., zero electric charge) has $o_{A_\text{EM}} = 0$ — it *cannot pay* the EM toll. Dark Matter is the clearest macroscopic example of this economic fact at cosmological scale.
+
+---
+
+### ST.22.1 — PATCH 13: GAUGE–PRICE DICTIONARY
+
+#### Formal Mapping Table
+
+| Gauge Group | SM Interaction | Action Sub-channel | DPR Currency Token | $o$-label | When $o\approx0$ |
+|---|---|---|---|---|---|
+| $U(1)_Y$ | Electromagnetism / hypercharge | $A_\text{EM}$ | `EM-license` (photon exchange) | $o_{A_\text{EM}}$ | No EM coupling (electrically neutral, e.g., DM, neutrinos at low E) |
+| $SU(2)_L$ | Weak nuclear force | $A_\text{weak}$ | `Weak-license` (W/Z boson exchange) | $o_{A_\text{weak}}$ | No weak coupling (right-handed sterile neutrino; hypothetical) |
+| $SU(3)_c$ | Strong nuclear (QCD) | $A_\text{strong}$ | `Strong-license` (gluon exchange) | $o_{A_\text{strong}}$ | No colour charge (leptons, DM candidates, photons) |
+| GR (classical) | Gravity | $A_\text{grav}$ | `Grav-license` (graviton / curvature) | $o_{A_\text{grav}}$ | Gravitational decoupling (hypothetical; never observed) |
+| **Triadic (Form)** | **Temporal structure** | $F$ (Form) | `Time-currency` | $o_F$ | No temporal extent (point-event; instantaneous collapse) |
+| **Triadic (Position)** | **Spatial extent** | $P$ (Position) | `Space-currency` | $o_P$ | No spatial extent (fully localised; 0-dim object) |
+
+**Reading rule:** A particle's **Standard Model representation** $(Q, T_3, C)$ directly determines which $o_{A_i}$ channels are open:
+
+$$\text{particle representation} \equiv (o_{A_\text{EM}},\; o_{A_\text{weak}},\; o_{A_\text{strong}},\; o_{A_\text{grav}}) \in [0,1]^4$$
+
+**Examples:**
+
+| Particle | $o_{A_\text{EM}}$ | $o_{A_\text{weak}}$ | $o_{A_\text{strong}}$ | $o_{A_\text{grav}}$ | U-Theory label |
+|---|---|---|---|---|---|
+| Photon ($\gamma$) | $\approx 1$ | $0$ | $0$ | $\approx 0$ | EM-channel carrier |
+| Electron ($e^-$) | $\approx 1$ | $\approx 1$ | $0$ | $\approx 0$ | Leptonic triadic node |
+| Up quark ($u$) | $\approx 1$ | $\approx 1$ | $\approx 1$ | $\approx 0$ | Full-colour triadic node |
+| **DM candidate** | **$\approx 0$** | $\approx 0$ | $0$ | **$\approx 1$** | **Macro-pocket residue (A-channel residue)** |
+| Graviton (hyp.) | $0$ | $0$ | $0$ | $\approx 1$ | Pure grav-license carrier |
+| Higgs ($H^0$) | $0$ | $\approx 1$ | $0$ | $\approx 0$ | Weak-license + mass-budget mediator |
+
+---
+
+### ST.22.2 — GAUGE SYMMETRY AS CURRENCY CONSERVATION
+
+In the Standard Model, gauge symmetry enforces **charge conservation** — you cannot create or destroy electric charge, colour charge, or weak isospin in isolation. In DPR terms:
+
+$$\text{Gauge invariance} \equiv \text{Currency conservation law of the Action channel}$$
+
+Specifically:
+
+- **U(1) gauge invariance** = conservation of EM-license budget ($o_{A_\text{EM}}$ cannot be unilaterally created or destroyed in any process).
+- **SU(3) gauge invariance** = conservation of Strong-license budget (colour is always neutralised; $\sum_i o_{A_{\text{strong},i}} = \text{const}$ in any hadron).
+- **Spontaneous symmetry breaking (Higgs mechanism)** = a phase transition where the Weak-license (`SU(2)`) currency becomes costly above a critical energy scale, effectively **closing** $o_{A_\text{weak}}$ at low energies for massive W/Z bosons. The Higgs field is the **exchange mechanism** that converts vacuum energy into mass-budget.
+
+$$\text{Higgs VEV} \equiv \eta_{E \to \text{mass}}(v) \cdot E_{\text{vacuum}} \quad \text{(analogous to Patch S exchange efficiency)}$$
+
+**Epistemic note:** This is a structural analogy (L3). The DPR currency framework reproduces the *bookkeeping* of gauge theory but does not yet derive the coupling constants ($\alpha, g_s, g_w$) from first principles. That would constitute an L2 upgrade.
+
+---
+
+### ST.22.3 — L3 → L2 UPGRADE PATH (COLLIDER OBSERVABLES)
+
+The gauge-price dictionary becomes **L2** when any of the following is established:
+
+| Upgrade criterion | Observable | Current status |
+|---|---|---|
+| **U(1) EM-license** is quantised in units of $q_A \sim h$ | Photoelectric effect, Compton scattering (already known) | **L2 ✓** (retrospective confirmation) |
+| **SU(3) confinement** = Strong-license is never fractionally open ($o_{A_\text{strong}} \in \{0,1\}$ at macro scale) | No free quarks observed; quark-gluon plasma transitions | **L2 ✓** (retrospective confirmation) |
+| **DM = $(o_{A_\text{EM}}\approx0, o_{A_\text{grav}}>0)$** is the *only* consistent openness pattern for observed DM halos | Sub-mm torsion balance (QC-P12) + CMB lensing power spectrum | **L3** — prediction active |
+| **Coupling constants** $\alpha, g_s, g_w$ derivable from DPR cost-field $\mathcal{K}$ minima | Collider precision measurements + $\mathcal{K}$ model fitting | **L3** — research program |
+| **GUT unification** (SU(5) / SO(10)) = single-currency convergence at $E_\text{GUT}$ | Proton decay search (Hyper-K, DUNE) | **L3** — active experiment |
+
+**Proton decay (GUT bridge):**  
+At GUT energy $E_\text{GUT}\sim10^{15}$ GeV, the three currency channels ($A_\text{EM}, A_\text{weak}, A_\text{strong}$) are predicted to merge into a single currency. Proton decay encodes the price of crossing this channel boundary:
+
+$$p \to e^+ + \pi^0 \quad \Leftrightarrow \quad o_{A_\text{strong}} + o_{A_\text{EM}} \xrightarrow{E_\text{GUT}} \text{single merged currency}$$
+
+**Prediction (QC-P16):** If U-Theory's currency-conservation framing is correct, the proton lifetime $\tau_p$ is bounded by the cost of merging three independent currency channels into one. The DPR cost-field $\mathcal{K}$ at GUT scale should produce $\tau_p \sim 10^{34}$–$10^{36}$ yr — consistent with current Hyper-Kamiokande lower bound ($\tau_p > 10^{34}$ yr). Falsification: if $\tau_p$ is measured outside this range.
+
+---
+
+### ST.22.4 — YAML SCHEMA EXTENSION (DPR v26.3)
+
+```yaml
+gauge_price_dictionary:
+  version: "26.3"
+  epistemic_level: "L3"  # retroactive L2 where noted
+
+  entries:
+    - gauge_group: "U(1)_Y"
+      action_channel: "A_EM"
+      currency_token: "EM-license"
+      openness_label: "o_A_EM"
+      carrier: "photon"
+      conservation_law: "Electric charge conservation"
+      l2_retroactive: true        # Confirmed by photoelectric / Compton
+      test_pointer: "QC-P12"
+
+    - gauge_group: "SU(2)_L"
+      action_channel: "A_weak"
+      currency_token: "Weak-license"
+      openness_label: "o_A_weak"
+      carrier: "W+, W-, Z0"
+      conservation_law: "Weak isospin (broken below v=246 GeV)"
+      ssb_mechanism: "Higgs VEV = exchange efficiency eta(E->mass)"
+      l2_retroactive: false
+      test_pointer: null
+
+    - gauge_group: "SU(3)_c"
+      action_channel: "A_strong"
+      currency_token: "Strong-license"
+      openness_label: "o_A_strong"
+      carrier: "gluon (8 types)"
+      conservation_law: "Colour charge conservation (confinement)"
+      l2_retroactive: true        # Confirmed by colour confinement
+      test_pointer: null
+
+    - gauge_group: "GR"
+      action_channel: "A_grav"
+      currency_token: "Grav-license"
+      openness_label: "o_A_grav"
+      carrier: "graviton (hypothetical)"
+      conservation_law: "Stress-energy conservation (diffeomorphism inv.)"
+      l2_retroactive: false
+      test_pointer: "QC-P15"
+
+  gut_bridge:
+    id: "QC-P16"
+    description: "SU(5)/SO(10) unification = currency channel merger at E_GUT"
+    prediction: "tau_proton ~ 10^34-10^36 yr"
+    experiment: "Hyper-Kamiokande / DUNE proton decay search"
+    epistemic_level: "L3"
+```
+
+---
+
+### ST.22.5 — ASCII GAUGE-PRICE MIND MAP
+
+```text
+ACTION PROPERTY (A)
+├── A_EM        [U(1)] EM-license      → photon exchange
+│    o_A_EM ≈ 0 → DM candidate / neutrino (at low E)
+│    o_A_EM ≈ 1 → charged particle (e-, quark)
+│
+├── A_weak      [SU(2)] Weak-license   → W/Z exchange
+│    o_A_weak ≈ 0 below SSB scale (mass gap = Higgs cost)
+│    o_A_weak ≈ 1 above v=246 GeV (EW symmetry restored)
+│
+├── A_strong    [SU(3)] Strong-license → gluon exchange
+│    o_A_strong ∈ {0,1} at macro scale (confinement)
+│    o_A_strong fractional → quark-gluon plasma (> Tc)
+│
+└── A_grav      [GR] Grav-license      → curvature / graviton
+     o_A_grav > 0 → all massive objects (never fully closed)
+     o_A_grav ≈ 0 → hypothetical (massless + decoupled)
+
+GUT CONVERGENCE at E_GUT ~ 10^15 GeV:
+     A_EM + A_weak + A_strong → single currency
+     (proton decay = inter-channel price crossing)
+     Test: QC-P16 (Hyper-K / DUNE)
+```
+
+**Epistemic level:** L3 throughout ST.22, except where marked `l2_retroactive: true` (U(1) and SU(3) channel structure is already confirmed by experiment — the DPR framing is a *re-description*, not a new claim).
+
+---
+
+### v26.3 Patch Map Supplement
+
+```
+PATCH SUPPLEMENT — v26.3 GAUGE-PRICE DICTIONARY (ST.22)
+
+13 : Gauge-Price Dictionary — formal mapping of SM gauge
+     groups U(1)/SU(2)/SU(3)/GR to DPR Action sub-channels
+     and currency tokens; particle openness-vector table;
+     Higgs mechanism as exchange efficiency eta(E->mass);
+     GUT bridge prediction QC-P16 (proton decay);
+     YAML schema extension DPR v26.3
+```
+
+---
+
+## ST.23 — REFERENCES
 
 | # | Reference |
 |---|-----------|
@@ -1646,10 +1843,11 @@ PATCH SUPPLEMENT — v26.2 DARK SECTOR
 
 ---
 
-> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.2*  
+> *Appendix ST — String Theory as the 4th Floor | Patch Set v26.3*  
 > *ST.16: F–L | ST.17: M (Price Alphabet) | ST.18: N (DPR 1.1) | ST.19: O–V (DPR v26)*  
 > *ST.20: W–Z — Compliance Audit: multi-currency collapse, Action channel split, field API, dual-metric standard*  
 > *ST.21: Patches 9–12 — Dark Sector Vocab Lock, Residue Matrix, DPR Dark States, Diagnostic Pointers (QC-P12/P14/P15)*  
-> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"*  
-> *U-Model v26.2 | © 2026 Petar Nikolov | CC BY 4.0*  
+> *ST.22: Patch 13 — Gauge-Price Dictionary: U(1)/SU(2)/SU(3)/GR ↔ DPR channels; Higgs = exchange efficiency; QC-P16 proton decay*  
+> *Deprecated: "$U_{DM}=0$"; unbounded $3+o_X/o_Y$; single-currency $E_{local}$ collapse; "DM as 4D residue"; gauge groups as independent of DPR*  
+> *U-Model v26.3 | © 2026 Petar Nikolov | CC BY 4.0*  
 > *Dimensional Stability Theorem | [DOI: 10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)*

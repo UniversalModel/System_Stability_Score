@@ -212,6 +212,27 @@ Output includes:
 - parameter-level duality rows (`own_stability` + `export_entropy`)
 - combined war index for system-pair instability
 
+Hydro-conflict example (dam upstream, downstream flow shock):
+```bash
+python war_duality_engine.py \
+  --json subjects/war_duality_dam_water_conflict_example.json \
+  --out reports/war_duality_dam_water_conflict.json
+```
+
+Interpretation of this scenario:
+- Water balance is modeled as a Position parameter (resource/context pillar) for each state.
+- Modeling rule — parameter pillar assignment for resource types:
+  - **Position** = natural resources (water balance, arable land, minerals, energy deposits, raw materials)
+    → what the system HAS by virtue of where it exists in the world
+  - **Action** = production resources (factories, industrial capacity, processing, logistics throughput)
+    → what the system DOES to transform natural resources into outputs
+  - **Form** = institutional/structural integrity (governance, identity, rule of law)
+    → what the system IS — its stable organisational shape
+- Upstream dam parameter can increase own Position/Form stability (water security).
+- The same parameter can export strong entropy to downstream Position/Action
+  (lower river debit, irrigation and potable-water stress).
+- This is the requested duality: one stability gain becomes the other side's instability load.
+
 ---
 
 ## Context System

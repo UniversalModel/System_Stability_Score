@@ -12,14 +12,14 @@
       {
         "id": "A_P1",
         "pillar": "position",
-        "name": "Territory and Corridor Control",
+        "name": "Natural Resource Control (Water/Energy/Minerals) [Position: what the system HAS]",
         "stability": 0.66,
         "export_entropy": { "form": 0.08, "position": 0.38, "action": 0.18 }
       },
       {
         "id": "A_A1",
         "pillar": "action",
-        "name": "Mobilization Tempo",
+        "name": "Mobilization Tempo / Industrial-Military Production [Action: what the system DOES with resources]",
         "stability": 0.70,
         "export_entropy": { "form": 0.14, "position": 0.15, "action": 0.42 }
       }
@@ -45,7 +45,7 @@
       {
         "id": "B_A1",
         "pillar": "action",
-        "name": "Strike Coordination",
+        "name": "Strike Coordination / Defense Production Output [Action: what the system DOES with resources]",
         "stability": 0.63,
         "export_entropy": { "form": 0.13, "position": 0.14, "action": 0.37 }
       }

@@ -1,0 +1,78 @@
+{
+  "system_a": {
+    "name": "Upstream State (Dam Builder)",
+    "parameters": [
+      {
+        "id": "A_P1",
+        "pillar": "position",
+        "name": "Water Balance Control (Reservoir + River Flow Context)",
+        "stability": 0.82,
+        "export_entropy": {
+          "form": 0.18,
+          "position": 0.62,
+          "action": 0.41
+        }
+      },
+      {
+        "id": "A_F1",
+        "pillar": "form",
+        "name": "Water Security Infrastructure Integrity",
+        "stability": 0.78,
+        "export_entropy": {
+          "form": 0.12,
+          "position": 0.28,
+          "action": 0.19
+        }
+      },
+      {
+        "id": "A_A1",
+        "pillar": "action",
+        "name": "Water Processing and Distribution Operations [Action: industrial use of the resource]",
+        "stability": 0.74,
+        "export_entropy": {
+          "form": 0.11,
+          "position": 0.33,
+          "action": 0.24
+        }
+      }
+    ]
+  },
+  "system_b": {
+    "name": "Downstream State (Flow Dependent)",
+    "parameters": [
+      {
+        "id": "B_F1",
+        "pillar": "form",
+        "name": "Urban Water Network Integrity",
+        "stability": 0.64,
+        "export_entropy": {
+          "form": 0.14,
+          "position": 0.09,
+          "action": 0.08
+        }
+      },
+      {
+        "id": "B_P1",
+        "pillar": "position",
+        "name": "Downstream Water Balance (River Debit Availability)",
+        "stability": 0.46,
+        "export_entropy": {
+          "form": 0.08,
+          "position": 0.11,
+          "action": 0.07
+        }
+      },
+      {
+        "id": "B_A1",
+        "pillar": "action",
+        "name": "Irrigation and Potable Distribution Capacity [Action: productive use of water resource]",
+        "stability": 0.51,
+        "export_entropy": {
+          "form": 0.10,
+          "position": 0.10,
+          "action": 0.09
+        }
+      }
+    ]
+  }
+}

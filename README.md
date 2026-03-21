@@ -189,6 +189,29 @@ Output includes:
 - escalation pressure term
 - final `WAR INDEX` with severity band
 
+### War Duality Engine (constructor -> incompatibility -> entropy export)
+
+Implements the exact two-step logic for two warring systems:
+1) Constructor proposes the most relevant Form/Position/Action parameters for each side.
+2) Each parameter is evaluated for duality: it stabilizes own side and exports entropy to the opponent triad.
+
+Generate constructor scaffold (editable):
+```bash
+python war_duality_engine.py --propose --a-name "System A" --b-name "System B" --out subjects/war_duality_constructor_example.json
+```
+
+Run duality analysis:
+```bash
+python war_duality_engine.py --json subjects/war_duality_constructor_example.json --out reports/war_duality_example.json
+```
+
+Output includes:
+- per-side base F/P/A stability
+- incoming entropy to each pillar from opponent parameters
+- effective U-score under conflict pressure
+- parameter-level duality rows (`own_stability` + `export_entropy`)
+- combined war index for system-pair instability
+
 ---
 
 ## Context System

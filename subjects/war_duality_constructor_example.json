@@ -1,0 +1,54 @@
+{
+  "system_a": {
+    "name": "System A",
+    "parameters": [
+      {
+        "id": "A_F1",
+        "pillar": "form",
+        "name": "Identity Cohesion",
+        "stability": 0.72,
+        "export_entropy": { "form": 0.35, "position": 0.12, "action": 0.10 }
+      },
+      {
+        "id": "A_P1",
+        "pillar": "position",
+        "name": "Territory and Corridor Control",
+        "stability": 0.66,
+        "export_entropy": { "form": 0.08, "position": 0.38, "action": 0.18 }
+      },
+      {
+        "id": "A_A1",
+        "pillar": "action",
+        "name": "Mobilization Tempo",
+        "stability": 0.70,
+        "export_entropy": { "form": 0.14, "position": 0.15, "action": 0.42 }
+      }
+    ]
+  },
+  "system_b": {
+    "name": "System B",
+    "parameters": [
+      {
+        "id": "B_F1",
+        "pillar": "form",
+        "name": "Narrative Discipline",
+        "stability": 0.61,
+        "export_entropy": { "form": 0.29, "position": 0.16, "action": 0.11 }
+      },
+      {
+        "id": "B_P1",
+        "pillar": "position",
+        "name": "Alliance Shelf Stability",
+        "stability": 0.58,
+        "export_entropy": { "form": 0.10, "position": 0.32, "action": 0.17 }
+      },
+      {
+        "id": "B_A1",
+        "pillar": "action",
+        "name": "Strike Coordination",
+        "stability": 0.63,
+        "export_entropy": { "form": 0.13, "position": 0.14, "action": 0.37 }
+      }
+    ]
+  }
+}

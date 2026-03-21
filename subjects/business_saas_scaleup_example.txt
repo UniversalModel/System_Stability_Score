@@ -1,0 +1,81 @@
+BUSINESS SUBJECT DOSSIER
+=======================
+
+Subject Label: NovaFlow SaaS - B2B Workflow Automation - Q1 2026
+System Type: Company (SaaS scale-up)
+Evaluation Date: 2026-03-21
+Data Source: Internal KPI snapshot + board summary
+
+----------------------------------------------------------------
+1. PURPOSE
+----------------------------------------------------------------
+- Assess operational stability before expansion to 3 new EU markets.
+- Decide whether to prioritize growth or system hardening over next 2 quarters.
+
+----------------------------------------------------------------
+2. FORM EVIDENCE (Identity / Integrity over Time)
+----------------------------------------------------------------
+- Mission clarity: Strong product thesis (automation for regulated SMB workflows).
+- Product architecture: Monolith with growing service boundaries, technical debt rising.
+- Team structure: 82 FTE, high dependency on 6 senior engineers.
+- Governance: Quarterly planning exists, but incident postmortems are inconsistent.
+- Security baseline: SOC2 in progress, 61% controls implemented.
+
+Trend:
+- Product-market fit improved over last 3 quarters, but internal complexity increased.
+
+----------------------------------------------------------------
+3. POSITION EVIDENCE (Context / Fit / Placement)
+----------------------------------------------------------------
+- Market segment: Mid-market SMBs in DACH + CEE, compliance-heavy verticals.
+- Competitive pressure: 2 large incumbents lowered pricing by 12% in Q4 2025.
+- Channel health: 38% of new deals via partner channel, partner churn increased.
+- Regulatory context: New data residency demands in 2 target markets.
+- Customer concentration: Top 10 customers = 41% of ARR (concentration risk).
+
+Trend:
+- Good category fit, but external pressure and concentration risk are rising.
+
+----------------------------------------------------------------
+4. ACTION EVIDENCE (Execution / Output / Energy Cost)
+----------------------------------------------------------------
+- ARR: EUR 7.4M (+34% YoY).
+- Net Revenue Retention: 108% (down from 116% last year).
+- Gross margin: 72% (stable).
+- Burn multiple: 1.9 (target <1.5).
+- EBITDA margin: -12% (improved from -18%).
+- Deployment frequency: 21 deploys/week (good), change failure rate 12% (high).
+- MTTR: 4.8h average (target <2h).
+- Support SLA breaches: 9.6% tickets in Q1 (target <3%).
+
+Trend:
+- Output growth remains strong, but execution energy cost is high and reliability drifts.
+
+----------------------------------------------------------------
+5. RISKS / HEADWINDS
+----------------------------------------------------------------
+- Key-person risk in core engineering and enterprise sales.
+- Reliability debt may convert to churn if SLA misses persist.
+- Expansion may amplify support and compliance load beyond current capacity.
+- Customer concentration increases downside in one-contract-loss scenarios.
+
+----------------------------------------------------------------
+6. INTERVENTIONS / SCENARIOS
+----------------------------------------------------------------
+Scenario A - Growth-first:
+- Open 3 markets in parallel, maintain current engineering split.
+- Expected effect: higher ARR growth, but likely reliability deterioration.
+
+Scenario B - Stabilize-first:
+- Pause one market launch, move 25% roadmap capacity to reliability/compliance.
+- Expected effect: lower short-term growth, stronger Form/Action stability.
+
+Scenario C - Hybrid:
+- Launch 2 markets, enforce reliability gate (SLA+MTTR) before 3rd launch.
+- Expected effect: balanced growth and controlled operational risk.
+
+----------------------------------------------------------------
+7. NOTES
+----------------------------------------------------------------
+- Missing: full cohort retention by segment and root-cause coding for incidents.
+- Assumption: macro demand remains stable in core verticals through 2026.

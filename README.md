@@ -138,6 +138,14 @@ A 4-page Markdown report saved to `reports/SSS_{name}_{timestamp}.md`:
 | Human Heart (abstract) | 0.7744 | STABLE ✓ |
 | Ivan P., 55yr Male (specific) | 0.8364 | STABLE ✓ |
 
+Business (specific, document-grounded):
+```bash
+python System_Stability_Score.py "B2B SaaS Company" --domain business/saas \
+  --subject subjects/business_saas_scaleup_example.txt \
+  --subject-label "NovaFlow SaaS - Q1 2026" \
+  --models 12 --save
+```
+
 ---
 
 ## Requirements

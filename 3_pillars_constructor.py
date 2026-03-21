@@ -44,21 +44,12 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 # ── Paths & imports ───────────────────────────────────────────────────────────
-_HERE    = Path(__file__).parent.resolve()
-_BOT_DIR = _HERE.parent.parent / ".github" / "bot"
-if _BOT_DIR.exists() and str(_BOT_DIR) not in sys.path:
-    sys.path.insert(0, str(_BOT_DIR))
-
-try:
-    from ai_subagent import api_generate, OPENROUTER_API_KEY
-    _SUBAGENT_AVAILABLE = True
-except ImportError:
-    _SUBAGENT_AVAILABLE = False
-    OPENROUTER_API_KEY  = ""
+_HERE = Path(__file__).parent.resolve()
+from sss_llm_adapter import api_generate, OPENROUTER_API_KEY
 
 PRINCIPLES_DIR = _HERE / "principles"
 CONTEXT_DIR    = _HERE / "context"
-ENV_FILE       = _BOT_DIR.parent / ".env"
+ENV_FILE       = _HERE.parent.parent / ".github" / ".env"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -98,8 +89,7 @@ def _load_env() -> dict:
     return env
 
 _ENV   = _load_env()
-OR_KEY = (OPENROUTER_API_KEY if _SUBAGENT_AVAILABLE and OPENROUTER_API_KEY
-          else _ENV.get("OPENROUTER_API_KEY") or os.environ.get("OPENROUTER_API_KEY", ""))
+OR_KEY = OPENROUTER_API_KEY or _ENV.get("OPENROUTER_API_KEY") or os.environ.get("OPENROUTER_API_KEY", "")
 
 OR_BASE = "https://openrouter.ai/api/v1"
 
@@ -218,60 +208,29 @@ DOMAIN CONTEXT—reference knowledge for generating accurate principles
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3. Call the architect model  (ai_subagent.api_generate OR direct urllib)
+# 3. Call the architect model  (local adapter api_generate)
 # ─────────────────────────────────────────────────────────────────────────────
 def call_architect(prompt: str, model_id: str, timeout: int = 120) -> str | None:
     print(f"  → Calling architect: {model_id} ...", end="", flush=True)
     start = time.time()
 
-    if _SUBAGENT_AVAILABLE:
-        try:
-            result = api_generate(
-                "openrouter", prompt,
-                model=model_id, timeout=timeout,
-                max_tokens=6000, temperature=0.2,
-            )
-            elapsed = round(time.time() - start, 1)
-            if result and getattr(result, "success", False):
-                print(f" ✓ {elapsed}s")
-                return getattr(result, "text", "")
-            else:
-                err = getattr(result, "error", "unknown")
-                print(f" ✗ {err}")
-                return None
-        except Exception as e:
-            print(f" ✗ {e}")
-            return None
-
-    else:
-        # direct urllib fallback
-        payload = json.dumps({
-            "model": model_id,
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": 0.2, "max_tokens": 6000,
-            "response_format": {"type": "json_object"},
-        }).encode("utf-8")
-        req = urllib.request.Request(
-            f"{OR_BASE}/chat/completions", data=payload,
-            headers={
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {OR_KEY}",
-                "HTTP-Referer": "https://u-model.org",
-                "X-Title": "U-Model-PillarsConstructor",
-            }, method="POST"
+    try:
+        result = api_generate(
+            "openrouter", prompt,
+            model=model_id, timeout=timeout,
+            max_tokens=6000, temperature=0.2,
         )
-        try:
-            with urllib.request.urlopen(req, timeout=timeout) as r:
-                raw = json.loads(r.read())
-            elapsed = round(time.time() - start, 1)
+        elapsed = round(time.time() - start, 1)
+        if result and getattr(result, "success", False):
             print(f" ✓ {elapsed}s")
-            txt = raw["choices"][0]["message"]["content"]
-            txt = re.sub(r"^```(?:json)?\s*", "", txt.strip())
-            txt = re.sub(r"\s*```$", "", txt.strip())
-            return txt
-        except Exception as e:
-            print(f" ✗ {e}")
+            return getattr(result, "text", "")
+        else:
+            err = getattr(result, "error", "unknown")
+            print(f" ✗ {err}")
             return None
+    except Exception as e:
+        print(f" ✗ {e}")
+        return None
 
 
 # ─────────────────────────────────────────────────────────────────────────────

@@ -9,8 +9,7 @@ using the U-Model triadic framework: Form / Position / Action.
   POSITION — Where the system IS.  Stability costs SPACE  (resistance to displacement).
   ACTION   — What the system DOES. Stability costs ENERGY (expenditure leaves entropy).
 
-Uses ai_subagent.py's existing compare_models() for parallel OpenRouter calls —
-no reinvention of infrastructure.
+Uses local sss_llm_adapter.py for parallel OpenRouter calls.
 
 Usage:
   python System_Stability_Score.py "United Nations" --models 50 --save
@@ -29,24 +28,15 @@ from datetime import datetime
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-# ── Locate & import ai_subagent.py ───────────────────────────────────────────
-_HERE     = Path(__file__).parent.resolve()
-_BOT_DIR  = _HERE.parent.parent / ".github" / "bot"   # v.25 -> u-score -> .github/bot
-if _BOT_DIR.exists() and str(_BOT_DIR) not in sys.path:
-    sys.path.insert(0, str(_BOT_DIR))
-
-try:
-    from ai_subagent import compare_models, api_generate, OPENROUTER_API_KEY
-    _SUBAGENT_AVAILABLE = True
-except ImportError:
-    _SUBAGENT_AVAILABLE = False
-    OPENROUTER_API_KEY  = ""
+# ── Local LLM adapter (project-scoped) ───────────────────────────────────────
+_HERE = Path(__file__).parent.resolve()
+from sss_llm_adapter import compare_models, api_generate, OPENROUTER_API_KEY
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 PRINCIPLES_DIR = _HERE / "principles"
 REPORTS_DIR    = _HERE / "reports"
 CONTEXT_DIR    = _HERE / "context"
-ENV_FILE       = _BOT_DIR.parent / ".env"
+ENV_FILE       = _HERE.parent.parent / ".github" / ".env"
 REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -90,8 +80,7 @@ def _load_env():
     return env
 
 _ENV = _load_env()
-OR_KEY = (OPENROUTER_API_KEY if _SUBAGENT_AVAILABLE and OPENROUTER_API_KEY
-          else _ENV.get("OPENROUTER_API_KEY") or os.environ.get("OPENROUTER_API_KEY", ""))
+OR_KEY = OPENROUTER_API_KEY or _ENV.get("OPENROUTER_API_KEY") or os.environ.get("OPENROUTER_API_KEY", "")
 
 if not OR_KEY:
     print("ERROR: OPENROUTER_API_KEY not found. Set it in .github/.env", file=sys.stderr)
@@ -237,6 +226,8 @@ The U-Model has three pillars of stability — each with its own "price of exist
   POSITION = where the system IS      — stability costs SPACE  (resistance to displacement)
   ACTION   = what the system DOES     — stability costs ENERGY (expenditure leaves entropy)
 
+Use this canonical rule when scoring: stability means sufficiently prolonged existence at tolerable cost relative to the intended use described in the document. Score Form for enduring identity over the relevant time horizon, Position for contextual fitness at acceptable spatial cost, and Action for achieving outcomes at acceptable energy/resource cost.
+
 For each principle score 0–100 and provide:
 - score: integer 0-100  (base it ONLY on the document data)
 - brief_assessment: 1-2 sentences citing SPECIFIC VALUES/FINDINGS from the document + trend (⬆️ ➡️ ⬇️)
@@ -356,12 +347,11 @@ DOMAIN CONTEXT — background knowledge (use to inform your scoring)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 4. Call models — uses ai_subagent.compare_models() OR direct urllib fallback
+# 4. Call models — uses local adapter compare_models()
 # ─────────────────────────────────────────────────────────────────────────────
 def call_all_models(model_ids: list[str], prompt: str, timeout: int = 90) -> list[dict]:
     """
-    Calls compare_models() from ai_subagent.py (parallel, OpenRouter).
-    Falls back to direct urllib if ai_subagent is not importable.
+    Calls compare_models() from sss_llm_adapter.py (parallel OpenRouter).
     Returns list of dicts: {model, text, success, elapsed}
     """
     total = len(model_ids)
@@ -375,65 +365,16 @@ def call_all_models(model_ids: list[str], prompt: str, timeout: int = 90) -> lis
             extra = f"  u≈{u_approx}" if u_approx else ""
             print(f"  [{done[0]:2d}/{total}] {model_id:<52} {sym}{extra}")
 
-    if _SUBAGENT_AVAILABLE:
-        # ── Use ai_subagent.compare_models() ─────────────────────────────────
-        raw = compare_models(prompt, model_ids, provider="openrouter", timeout=timeout)
-        results = []
-        for mid, r in raw.items():
-            ok = getattr(r, "success", False)
-            txt = getattr(r, "text", "") or ""
-            elapsed = getattr(r, "elapsed", 0.0)
-            u_approx = _quick_u(txt)
-            _progress(mid, ok, u_approx)
-            results.append({"model": mid, "text": txt, "success": ok, "elapsed": elapsed})
-        return results
-
-    else:
-        # ── Direct urllib fallback (same logic as before) ─────────────────────
-        results = []
-        results_lock = threading.Lock()
-        sem = threading.Semaphore(10)
-
-        def _call(mid):
-            with sem:
-                start = time.time()
-                payload = json.dumps({
-                    "model": mid,
-                    "messages": [{"role": "user", "content": prompt}],
-                    "temperature": 0.1, "max_tokens": 4096,
-                    "response_format": {"type": "json_object"},
-                }).encode("utf-8")
-                req = urllib.request.Request(
-                    f"{OR_BASE}/chat/completions", data=payload,
-                    headers={
-                        "Content-Type": "application/json",
-                        "Authorization": f"Bearer {OR_KEY}",
-                        "HTTP-Referer": "https://u-model.org",
-                        "X-Title": "System-Stability-Score",
-                    }, method="POST"
-                )
-                try:
-                    with urllib.request.urlopen(req, timeout=timeout) as r:
-                        raw = json.loads(r.read())
-                    txt = raw["choices"][0]["message"]["content"]
-                    txt = re.sub(r"^```(?:json)?\s*", "", txt.strip())
-                    txt = re.sub(r"\s*```$", "", txt.strip())
-                    u_approx = _quick_u(txt)
-                    _progress(mid, True, u_approx)
-                    with results_lock:
-                        results.append({"model": mid, "text": txt, "success": True,
-                                        "elapsed": round(time.time() - start, 2)})
-                except Exception as e:
-                    _progress(mid, False)
-                    with results_lock:
-                        results.append({"model": mid, "text": "", "success": False,
-                                        "elapsed": round(time.time() - start, 2),
-                                        "error": str(e)[:100]})
-
-        threads = [threading.Thread(target=_call, args=(mid,), daemon=True) for mid in model_ids]
-        for t in threads: t.start()
-        for t in threads: t.join()
-        return results
+    raw = compare_models(prompt, model_ids, provider="openrouter", timeout=timeout)
+    results = []
+    for mid, r in raw.items():
+        ok = getattr(r, "success", False)
+        txt = getattr(r, "text", "") or ""
+        elapsed = getattr(r, "elapsed", 0.0)
+        u_approx = _quick_u(txt)
+        _progress(mid, ok, u_approx)
+        results.append({"model": mid, "text": txt, "success": ok, "elapsed": elapsed})
+    return results
 
 
 def _quick_u(text: str) -> str:
@@ -903,7 +844,7 @@ def generate_report(
     p(f"  ══════════════════════════════════════════════════════")
     p("```")
     br()
-    p(f"_Generated by System_Stability_Score.py · powered by ai_subagent.compare_models() · "
+    p(f"_Generated by System_Stability_Score.py · powered by sss_llm_adapter.compare_models() · "
       f"U-Model v24 · AI jury of {n_ok} models · [U-Model.org](https://u-model.org)_")
     br()
     p(f"_Please support our work: [Donate.U-Model.org](http://Donate.U-Model.org) | "
@@ -1028,7 +969,7 @@ Examples:
     model_ids = fetch_models(n)
     print(f"  Selected: {len(model_ids)} models")
 
-    infra = "ai_subagent.compare_models()" if _SUBAGENT_AVAILABLE else "direct urllib (ai_subagent not found)"
+    infra = "sss_llm_adapter.compare_models()"
     print(f"  Engine: {infra}")
 
     target = subject_label if subject_label else entity

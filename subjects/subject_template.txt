@@ -1,0 +1,65 @@
+SUBJECT DOSSIER TEMPLATE
+========================
+
+Subject Label: <name/version/date>
+System Type: <e.g., Human Heart / Company / Team / Institution>
+Evaluation Date: <YYYY-MM-DD>
+Data Source: <where data comes from>
+
+----------------------------------------------------------------
+1. PURPOSE
+----------------------------------------------------------------
+- Why this subject is evaluated now
+- Main decision this report should support
+
+----------------------------------------------------------------
+2. FORM EVIDENCE (Identity / Integrity over Time)
+----------------------------------------------------------------
+- Core structural characteristics
+- Durability and degradation indicators
+- Internal consistency / contradictions
+- Historical trend markers (up/down/stable)
+
+----------------------------------------------------------------
+3. POSITION EVIDENCE (Context / Fit / Placement)
+----------------------------------------------------------------
+- Environment and constraints
+- External dependencies
+- Competitive/institutional positioning
+- Context shift risks
+
+----------------------------------------------------------------
+4. ACTION EVIDENCE (Execution / Output / Energy Cost)
+----------------------------------------------------------------
+- Key actions and outcomes
+- Resource/energy consumption profile
+- Efficiency indicators
+- Failure modes under stress
+
+----------------------------------------------------------------
+5. METRICS (If Available)
+----------------------------------------------------------------
+- Metric A: value, period, benchmark
+- Metric B: value, period, benchmark
+- Metric C: value, period, benchmark
+
+----------------------------------------------------------------
+6. RISKS / HEADWINDS
+----------------------------------------------------------------
+- Risk 1 (probability x impact)
+- Risk 2 (probability x impact)
+- Risk 3 (probability x impact)
+
+----------------------------------------------------------------
+7. INTERVENTIONS / SCENARIOS
+----------------------------------------------------------------
+- Scenario 1: what changes, expected effect
+- Scenario 2: what changes, expected effect
+- Scenario 3: what changes, expected effect
+
+----------------------------------------------------------------
+8. NOTES
+----------------------------------------------------------------
+- Assumptions
+- Missing data
+- Known limitations

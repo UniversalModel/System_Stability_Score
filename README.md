@@ -50,12 +50,56 @@ python System_Stability_Score.py "Human Heart" --domain biology/heart --models 2
 **Specific evaluation** (document-grounded — score a REAL instance):
 ```bash
 python System_Stability_Score.py "Human Heart" --domain biology/heart \
-  --subject subjects/Ivan_55m.txt \
+  --subject subjects/heart_patient_Ivan_55m.txt \
   --subject-label "Ivan P., 55yr Male — ECG+Echo+Labs Feb2026" \
   --models 10 --save
 ```
 
 In specific mode, AI models score **exclusively** from the provided document — no internet, no general knowledge.
+
+---
+
+## Quickstart (2 Minutes)
+
+1) Set your API key in `.github/.env`:
+```env
+OPENROUTER_API_KEY=your_key_here
+```
+
+2) Generate principles for one domain:
+```bash
+python 3_pillars_constructor.py --system "Human Heart" --n 12 --domain biology/heart --yes
+```
+
+3) Run a specific, document-grounded evaluation:
+```bash
+python System_Stability_Score.py "Human Heart" --domain biology/heart \
+  --subject subjects/heart_patient_Ivan_55m.txt \
+  --subject-label "Ivan P., 55yr Male — ECG+Echo+Labs Feb2026" \
+  --models 10 --save
+```
+
+4) Open the newest report in `reports/`.
+
+---
+
+## How To Read Results
+
+- `U >= 0.618`: system is stable at tolerable combined Time/Space/Energy cost.
+- `Form` low: identity/integrity issues over time (decay, inconsistency, fragility).
+- `Position` low: poor contextual fit, displacement pressure, weak anchoring.
+- `Action` low: unsustainable execution energy, high entropy, weak outcomes.
+
+Practical triage:
+- If one pillar is < 55, improve that pillar first.
+- If all three are 60-70 but `synergy_score` is low, integration is the bottleneck.
+- If Five Goals diverge strongly, optimize policy/operations alignment before scaling.
+
+---
+
+## Reusable Subject Template
+
+Use [subjects/subject_template.txt](subjects/subject_template.txt) to prepare your own specific-case input for `--subject` mode.
 
 ---
 

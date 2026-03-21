@@ -226,8 +226,10 @@ Interpretation of this scenario:
     → what the system HAS by virtue of where it exists in the world
   - **Action** = production resources (factories, industrial capacity, processing, logistics throughput)
     → what the system DOES to transform natural resources into outputs
-  - **Form** = institutional/structural integrity (governance, identity, rule of law)
-    → what the system IS — its stable organisational shape
+  - **Form** = legislative and normative framework (laws, regulations, what is permitted/prohibited)
+    → what the system IS — the stable rules governing how resources (Position) may be managed/preserved
+      and how production (Action) may be organised; includes property rights, water law, resource codes,
+      environmental legislation, permits, standards, and institutional constraints
 - Upstream dam parameter can increase own Position/Form stability (water security).
 - The same parameter can export strong entropy to downstream Position/Action
   (lower river debit, irrigation and potable-water stress).

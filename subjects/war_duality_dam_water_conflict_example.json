@@ -16,7 +16,7 @@
       {
         "id": "A_F1",
         "pillar": "form",
-        "name": "Water Security Infrastructure Integrity",
+        "name": "Water Legislation and Resource Management Norms [Form: what use of river is permitted]",
         "stability": 0.78,
         "export_entropy": {
           "form": 0.12,
@@ -43,7 +43,7 @@
       {
         "id": "B_F1",
         "pillar": "form",
-        "name": "Urban Water Network Integrity",
+        "name": "Downstream Water Rights and Legal Framework [Form: normative protection of river access]",
         "stability": 0.64,
         "export_entropy": {
           "form": 0.14,

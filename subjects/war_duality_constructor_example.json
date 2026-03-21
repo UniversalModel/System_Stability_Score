@@ -19,7 +19,7 @@
       {
         "id": "A_A1",
         "pillar": "action",
-        "name": "Mobilization Tempo / Industrial-Military Production [Action: what the system DOES with resources]",
+        "name": "Mobilization Rights and Operational Freedoms [Action → Code/Credo/Rights: anti-entropic actions the system is enabled to perform]",
         "stability": 0.70,
         "export_entropy": { "form": 0.14, "position": 0.15, "action": 0.42 }
       }
@@ -45,7 +45,7 @@
       {
         "id": "B_A1",
         "pillar": "action",
-        "name": "Strike Coordination / Defense Production Output [Action: what the system DOES with resources]",
+        "name": "Defense Rights and Operational Freedoms [Action → Code/Credo/Rights: anti-entropic actions the system is enabled to perform]",
         "stability": 0.63,
         "export_entropy": { "form": 0.13, "position": 0.14, "action": 0.37 }
       }

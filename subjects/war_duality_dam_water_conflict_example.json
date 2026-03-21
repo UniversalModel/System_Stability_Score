@@ -27,7 +27,7 @@
       {
         "id": "A_A1",
         "pillar": "action",
-        "name": "Water Processing and Distribution Operations [Action: industrial use of the resource]",
+        "name": "Water Use Rights and Distribution Freedoms [Action → Code/Credo/Rights: anti-entropic permitted uses of water]",
         "stability": 0.74,
         "export_entropy": {
           "form": 0.11,
@@ -65,7 +65,7 @@
       {
         "id": "B_A1",
         "pillar": "action",
-        "name": "Irrigation and Potable Distribution Capacity [Action: productive use of water resource]",
+        "name": "Downstream Irrigation and Potable Rights [Action → Code/Credo/Rights: entitlements to use river flow for life-sustaining ends]",
         "stability": 0.51,
         "export_entropy": {
           "form": 0.10,

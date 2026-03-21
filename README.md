@@ -18,11 +18,11 @@ Part of [U-Model.org](https://U-Model.org) — Universal Model of System Stabili
 
 The U-Model measures how stable any system is across three inescapable dimensions:
 
-| Pillar | What it measures | Price paid |
-|---|---|---|
-| **Form** | What the system IS — structural integrity, identity | **Time** (endurance against decay) |
-| **Position** | Where the system IS — spatial/contextual placement | **Space** (resistance to displacement) |
-| **Action** | What the system DOES — purposeful function | **Energy** (expenditure leaves entropy) |
+| Pillar | What it measures | Governing layer | Price paid |
+|---|---|---|---|
+| **Form** | What the system IS NOT ALLOWED to do — normative constraints, laws, prohibitions that preserve resources and bound action | Legislative/regulatory framework: permits, resource codes, property rights, environmental law | **Time** (endurance against normative decay) |
+| **Position** | What the system HAS — natural resources available by virtue of its place in the world | Water, land, minerals, energy deposits, raw materials | **Space** (resistance to resource displacement) |
+| **Action** | What the system IS ENABLED to do — positive freedoms and rights (anti-entropic actions) | **Code** non-harm · **Credo** better allocation · **Rights** fair expectations | **Energy** (expenditure leaves entropy) |
 
 **Formula:** $U = \sqrt[3]{Form \times Position \times Action}$  
 **Threshold:** $U \geq 0.618$ (Golden Ratio) = **STABLE ✓**
@@ -224,12 +224,18 @@ Interpretation of this scenario:
 - Modeling rule — parameter pillar assignment for resource types:
   - **Position** = natural resources (water balance, arable land, minerals, energy deposits, raw materials)
     → what the system HAS by virtue of where it exists in the world
-  - **Action** = production resources (factories, industrial capacity, processing, logistics throughput)
-    → what the system DOES to transform natural resources into outputs
-  - **Form** = legislative and normative framework (laws, regulations, what is permitted/prohibited)
-    → what the system IS — the stable rules governing how resources (Position) may be managed/preserved
-      and how production (Action) may be organised; includes property rights, water law, resource codes,
-      environmental legislation, permits, standards, and institutional constraints
+  - **Action** = positive freedoms and rights — what the system is ENABLED to do (anti-entropic actions)
+    → structured across three sub-dimensions:
+      - **Code**   — non-harm principle: structuring activity without introducing chaos
+      - **Credo**  — better organisation: net benefit through improved resource allocation
+      - **Rights** — fair expectations: only the needs of anti-entropic actions are met
+    → includes: permitted production activities, civic and economic freedoms, operational rights,
+      capacity to act without destructive side-effects
+  - **Form** = normative constraints — what the system IS NOT ALLOWED to do (prohibitive framework)
+    → legislative and regulatory framework: laws, standards, permits, what is forbidden;
+      governs how Position resources may be preserved/managed and
+      how Action freedoms are bounded; includes property rights, water law,
+      environmental legislation, resource codes, institutional constraints
 - Upstream dam parameter can increase own Position/Form stability (water security).
 - The same parameter can export strong entropy to downstream Position/Action
   (lower river debit, irrigation and potable-water stress).

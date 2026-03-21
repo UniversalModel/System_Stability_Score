@@ -163,6 +163,32 @@ What to compare between reports:
 - Headwinds and residual risks
 - Five-goals movement (public costs, service continuity, mortality risk)
 
+### War Incompatibility Index (two-system calculation)
+
+When you need explicit incompatibility and conflict potential between two systems,
+use `war_incompatibility_index.py`.
+
+From JSON pair file:
+```bash
+python war_incompatibility_index.py \
+  --json subjects/war_incompatibility_pair_example.json \
+  --out reports/war_index_pair_example.json
+```
+
+Direct values (supports 0-1 or 0-100 scale):
+```bash
+python war_incompatibility_index.py \
+  --a-name "System A" --a-form 66 --a-position 63 --a-action 69 \
+  --b-name "System B" --b-form 48 --b-position 39 --b-action 52
+```
+
+Output includes:
+- `U_A`, `U_B` (internal stability)
+- triadic incompatibility (`I`)
+- joint instability (`J`)
+- escalation pressure term
+- final `WAR INDEX` with severity band
+
 ---
 
 ## Context System

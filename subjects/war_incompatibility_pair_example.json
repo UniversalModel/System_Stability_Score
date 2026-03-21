@@ -1,0 +1,14 @@
+{
+  "system_a": {
+    "name": "Rivergate Coalition",
+    "form": 0.66,
+    "position": 0.63,
+    "action": 0.69
+  },
+  "system_b": {
+    "name": "Kestrel Bloc",
+    "form": 0.48,
+    "position": 0.39,
+    "action": 0.52
+  }
+}

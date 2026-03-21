@@ -24,8 +24,31 @@ The U-Model measures how stable any system is across three inescapable dimension
 | **Position** | What the system HAS — natural resources available by virtue of its place in the world | Water, land, minerals, energy deposits, raw materials | **Space** (resistance to resource displacement) |
 | **Action** | What the system IS ENABLED to do — positive freedoms and rights (anti-entropic actions) | **Code** non-harm · **Credo** better allocation · **Rights** fair expectations | **Energy** (expenditure leaves entropy) |
 
+**Measurement pipeline — three levels:**
+
+```
+Level 1 │ Each pillar has N parameters.
+        │ Every parameter is scored individually: 0.0 → 1.0
+        │
+Level 2 │ The scores of all parameters within a pillar are aggregated
+        │ → one stability value per pillar: Form_score, Position_score, Action_score
+        │
+Level 3 │ The three pillar scores are combined via geometric mean:
+        │
+        │   U = ∛( Form_score × Position_score × Action_score )
+        │
+        │ Geometric mean is used because all three pillars are equally inescapable —
+        │ a collapse in any one brings the whole system down.
+```
+
 **Formula:** $U = \sqrt[3]{Form \times Position \times Action}$  
 **Threshold:** $U \geq 0.618$ (Golden Ratio) = **STABLE ✓**
+
+**SSS automates all three levels** using an AI jury (multiple LLM models via OpenRouter).  
+Each model scores every parameter independently → scores are aggregated per pillar →  
+geometric mean is computed → final U-score with confidence interval.  
+This is an **abstract computation**: no physical measurement required —  
+the AI evaluates each parameter from available evidence or domain knowledge.
 
 > *NOT stability at any price — stability at a TOLERABLE price.*
 

@@ -18,11 +18,13 @@ Part of [U-Model.org](https://U-Model.org) — Universal Model of System Stabili
 
 The U-Model measures how stable any system is across three inescapable dimensions:
 
-| Pillar | What it measures | Governing layer | Price paid |
-|---|---|---|---|
-| **Form** | What the system IS NOT ALLOWED to do — normative constraints, laws, prohibitions that preserve resources and bound action | Legislative/regulatory framework: permits, resource codes, property rights, environmental law | **Time** (endurance against normative decay) |
-| **Position** | What the system HAS — natural resources available by virtue of its place in the world | Water, land, minerals, energy deposits, raw materials | **Space** (resistance to resource displacement) |
-| **Action** | What the system IS ENABLED to do — positive freedoms and rights (anti-entropic actions) | **Code** non-harm · **Credo** better allocation · **Rights** fair expectations | **Energy** (expenditure leaves entropy) |
+| Pillar | Universal definition | In a company | In a state | In a human | Price paid |
+|---|---|---|---|---|---|
+| **Form** | The normative constraints governing the system — what it IS and what bounds its behaviour (rules, identity, structure) | Corporate statutes, bylaws, brand identity, compliance framework | Constitution, laws, regulation — what is permitted / forbidden | Values, personality, beliefs, health norms | **Time** (endurance against decay) |
+| **Position** | What the system HAS — its context, resources and environment | Market position, assets, capital, supply chain | Natural resources (water, land, minerals, energy), geography, alliances | Physical condition, social network, location, financial base | **Space** (resistance to displacement) |
+| **Action** | What the system DOES and is enabled to do — its positive freedoms and outputs | Products, services, operations, strategy execution | Production capacity, policy execution, civic and economic freedoms | Skills, decisions, daily behaviour, output | **Energy** (expenditure leaves entropy) |
+
+> Pillar definitions scale to ANY system. The geopolitical examples in this README are illustrations, not constraints — SSS has been applied to hearts, football clubs, cities, banks, universities, and states alike.
 
 **Measurement pipeline — three levels:**
 

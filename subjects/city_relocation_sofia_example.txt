@@ -1,0 +1,78 @@
+CITY RELOCATION SUBJECT DOSSIER
+==============================
+
+Subject Label: Sofia, Bulgaria - Relocation Decision Snapshot - Q1 2026
+System Type: City
+Evaluation Date: 2026-03-21
+Data Source: Municipal KPIs, infrastructure notes, household budget simulation
+
+----------------------------------------------------------------
+1. PURPOSE
+----------------------------------------------------------------
+- Evaluate whether Sofia is a stable destination for 5-year family relocation.
+- Decision focus: quality of life vs cost pressure vs service reliability.
+
+----------------------------------------------------------------
+2. FORM EVIDENCE (Identity / Integrity over Time)
+----------------------------------------------------------------
+- Institutional continuity: stable municipal governance cycles, but slow permit workflows.
+- Core urban structure: compact central zones + expanding ring neighborhoods.
+- Utilities baseline: electricity and water coverage high; district heating aging in parts.
+- Public safety trend: moderate crime profile with neighborhood variance.
+- Environmental stress: winter PM pollution spikes remain a chronic issue.
+
+Trend:
+- Structural continuity is acceptable, but environmental and maintenance debt persists.
+
+----------------------------------------------------------------
+3. POSITION EVIDENCE (Context / Fit / Placement)
+----------------------------------------------------------------
+- Location advantage: strong regional connectivity (airport, highways, EU mobility).
+- Labor market fit: good for IT/services, mixed for advanced manufacturing roles.
+- Neighborhood suitability: south districts show better school/access trade-offs.
+- Commute pressure: peak congestion high; metro improves predictability on key axes.
+- External dependencies: energy price sensitivity affects household volatility.
+
+Trend:
+- Context fit is strong for knowledge workers; weaker for car-dependent daily routines.
+
+----------------------------------------------------------------
+4. ACTION EVIDENCE (Execution / Output / Energy Cost)
+----------------------------------------------------------------
+- Monthly family budget simulation (2 adults + 1 child): EUR 1,950-2,450.
+- Public transport reliability: metro high reliability; bus/tram variability in rush hours.
+- Healthcare access: strong private options, public waiting times uneven.
+- Education access: quality public schools are geographically concentrated.
+- Administrative throughput: digital services improving, but in-person processes still heavy.
+
+Trend:
+- Functional capacity is good but requires higher personal coordination energy.
+
+----------------------------------------------------------------
+5. RISKS / HEADWINDS
+----------------------------------------------------------------
+- Housing affordability pressure in high-demand districts.
+- Air quality seasonality (winter) may impact long-term health comfort.
+- Service quality differs significantly by neighborhood.
+- Bureaucratic friction can consume time for newcomers.
+
+----------------------------------------------------------------
+6. INTERVENTIONS / SCENARIOS
+----------------------------------------------------------------
+Scenario A - Cost-optimized relocation:
+- Choose outer district + public transport dependence.
+- Expected effect: lower rent, higher commute uncertainty.
+
+Scenario B - Stability-first relocation:
+- Choose metro-adjacent district with stronger school and clinic access.
+- Expected effect: higher monthly cost, lower daily volatility.
+
+Scenario C - Staged move:
+- 6-month rental trial before purchase or long lease.
+- Expected effect: reduced lock-in risk and better district fit.
+
+----------------------------------------------------------------
+7. NOTES
+----------------------------------------------------------------
+- Missing: district-level longitudinal healthcare and school outcome data.
+- Assumption: no major macro shock to energy and housing markets within 12 months.

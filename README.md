@@ -103,6 +103,38 @@ Use [subjects/subject_template.txt](subjects/subject_template.txt) to prepare yo
 
 ---
 
+## Practical Examples (U-Theory v26 Style)
+
+These examples follow the v26 SSS logic: same triadic formula, document-grounded evidence, and practical decision framing.
+
+1) City relocation decision (family move):
+```bash
+python System_Stability_Score.py "City Relocation" --domain universal \
+  --subject subjects/city_relocation_sofia_example.txt \
+  --subject-label "Sofia Relocation Snapshot - Q1 2026" \
+  --models 12 --save
+```
+
+2) Bank selection for personal finance:
+```bash
+python System_Stability_Score.py "Retail Bank" --domain universal \
+  --subject subjects/bank_selection_retail_example.txt \
+  --subject-label "Retail Bank Candidate A - 2026" \
+  --models 12 --save
+```
+
+3) University choice (STEM pathway):
+```bash
+python System_Stability_Score.py "University" --domain universal \
+  --subject subjects/university_choice_stem_example.txt \
+  --subject-label "STEM University Candidate X - 2026 Intake" \
+  --models 12 --save
+```
+
+Tip: Start with `--domain universal` for immediate run. If you need higher precision, generate domain-specific principles first with `3_pillars_constructor.py`.
+
+---
+
 ## Context System
 
 Domain reference knowledge lives in `context/{domain}/general.md` and is automatically

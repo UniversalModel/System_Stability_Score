@@ -1,0 +1,78 @@
+BANK SELECTION SUBJECT DOSSIER
+==============================
+
+Subject Label: Retail Bank Candidate A - Personal Finance Choice - 2026
+System Type: Bank
+Evaluation Date: 2026-03-21
+Data Source: Public fee schedules, consumer reports, service SLAs, complaint snapshots
+
+----------------------------------------------------------------
+1. PURPOSE
+----------------------------------------------------------------
+- Select a primary bank for salary, emergency fund, and mortgage pre-approval.
+- Decision focus: trust, resilience, service reliability, hidden cost risk.
+
+----------------------------------------------------------------
+2. FORM EVIDENCE (Identity / Integrity over Time)
+----------------------------------------------------------------
+- Capital adequacy: reports indicate healthy regulatory buffers.
+- Governance and compliance: no major unresolved enforcement actions in last 24 months.
+- Product consistency: account and lending products stable, moderate policy drift.
+- Digital architecture: mature mobile platform, periodic outage windows published.
+- Transparency: fee disclosures mostly clear; some bundled terms require careful reading.
+
+Trend:
+- Structural integrity appears solid, with moderate complexity in product terms.
+
+----------------------------------------------------------------
+3. POSITION EVIDENCE (Context / Fit / Placement)
+----------------------------------------------------------------
+- Branch + ATM coverage: strong in major cities, weaker in remote areas.
+- Ecosystem fit: good salary integrations and utility payment workflows.
+- Market context: rate competition increased, promotional pricing is volatile.
+- Customer segment alignment: strong for salaried retail clients, less attractive for freelancers.
+- Cross-border usability: SEPA flows reliable, non-EU transfers less competitive.
+
+Trend:
+- Context fit is strong for domestic daily banking, mixed for international-heavy usage.
+
+----------------------------------------------------------------
+4. ACTION EVIDENCE (Execution / Output / Energy Cost)
+----------------------------------------------------------------
+- App uptime (reported): high, with rare short degradations during peak updates.
+- Support responsiveness: chat fast, branch resolution slower for complex cases.
+- Transaction execution: domestic transfers reliable, card dispute handling moderate speed.
+- Fee energy cost: base account low-cost, premium bundles can erode value if underused.
+- Onboarding friction: digital onboarding quick, KYC escalation may add delays.
+
+Trend:
+- Day-to-day action reliability is good; complexity cost appears in edge cases.
+
+----------------------------------------------------------------
+5. RISKS / HEADWINDS
+----------------------------------------------------------------
+- Hidden fee accumulation via bundled services and inactive product add-ons.
+- Service quality divergence between digital and branch channels.
+- Promotional rates may revert quickly after introductory periods.
+- Lower attractiveness for irregular-income profiles.
+
+----------------------------------------------------------------
+6. INTERVENTIONS / SCENARIOS
+----------------------------------------------------------------
+Scenario A - Full switch now:
+- Move salary + cards + savings immediately.
+- Expected effect: faster consolidation, higher switching risk if hidden costs emerge.
+
+Scenario B - Parallel 90-day test:
+- Keep old bank, run salary and payments through Candidate A only.
+- Expected effect: lower lock-in risk, better real-world service validation.
+
+Scenario C - Split strategy:
+- Candidate A for daily banking, separate institution for savings/investments.
+- Expected effect: lower concentration risk, slightly higher operational overhead.
+
+----------------------------------------------------------------
+7. NOTES
+----------------------------------------------------------------
+- Missing: audited long-term complaint-resolution metrics by product type.
+- Assumption: regulatory baseline and deposit protection remain stable.

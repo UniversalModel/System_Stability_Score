@@ -1,0 +1,110 @@
+LGP CONFLICT CASE - BEFORE INTERVENTION
+=======================================
+
+Subject Label: Rivergate-Kestrel Border Crisis - Pre-Deescalation Snapshot
+System Type: Inter-state conflict system (security and political stability)
+Evaluation Date: 2026-03-21
+Data Source: Joint observer logs, media monitoring, border incident records
+
+----------------------------------------------------------------
+0. WHY THIS CASE (U-Theory v26 linkage)
+----------------------------------------------------------------
+This case is structured explicitly by Appendix WAR and Appendix LGP:
+- FORM channel: structural cracks (identity trauma, grievance narratives)
+- POSITION channel: unstable shelf (disputed border/resource alignment)
+- ACTION channel: trigger bumps (provocations, mobilization, ultimatum dynamics)
+
+Goal: detect instability sources and build an intervention path.
+
+----------------------------------------------------------------
+1. PHASE I - RECONNAISSANCE (LGP-1/2)
+----------------------------------------------------------------
+Observed baseline state vector (0-1 scale):
+- U_F = 0.52
+- U_P = 0.41
+- U_A = 0.36
+
+Initial triadic stability:
+U = cbrt(0.52 * 0.41 * 0.36) = 0.425 (below 0.618 threshold)
+
+Detected problem set (P):
+P1: Escalating grievance propaganda in both countries.
+P2: Competing legal claims over river transport corridor.
+P3: Daily military signaling near border villages.
+P4: Information-space manipulation and rumor cascades.
+P5: Breakdown of technical communication between field commanders.
+
+----------------------------------------------------------------
+2. PHASE II - TRIADIC DECOMPOSITION (LGP-3/4/5)
+----------------------------------------------------------------
+Problem Matrix (dominant channel):
+- P1 -> Form-dominant (identity fracture and dehumanization language)
+- P2 -> Position-dominant (territorial and resource-context instability)
+- P3 -> Action-dominant (kinetic trigger probability rise)
+- P4 -> Form/Action entangled (trust erosion + rapid mobilization behavior)
+- P5 -> Action-dominant (command friction and accidental escalation risk)
+
+Estimated impact ranking (rho_j, share of instability):
+- P3: 29%
+- P2: 24%
+- P5: 18%
+- P1: 17%
+- P4: 12%
+Pareto-80 set: {P3, P2, P5, P1}
+
+Weakest pillar: Action (followed by Position)
+
+----------------------------------------------------------------
+3. PHASE III - SOLUTION SYNTHESIS (LGP-6/7)
+----------------------------------------------------------------
+Candidate interventions (high leverage):
+R1 (Action): 24/7 joint deconfliction hotline + mandatory 10-minute incident acknowledgment SLA.
+R2 (Action): 15-km temporary no-heavy-weapons corridor with neutral drone verification.
+R3 (Position): Interim corridor-sharing protocol for river access with daily traffic transparency log.
+R4 (Form): Bilateral anti-incitement communication code and weekly cross-editor fact review.
+R5 (Action/Form): Joint field command tabletop drill for misfire and false-flag scenarios.
+
+Expected triadic cost profile (relative):
+- Time cost: medium
+- Space cost: medium-high (monitoring and logistics)
+- Energy cost: medium
+
+Selection logic (max leverage per triadic cost):
+Priority sequence: R1 -> R2 -> R3 -> R5 -> R4
+
+----------------------------------------------------------------
+4. PHASE IV - EXECUTION & CONTROL PLAN (LGP-8..12)
+----------------------------------------------------------------
+Execution milestones:
+- M1 (Week 1): hotline and protocol signed
+- M2 (Week 2): buffer corridor active with neutral monitoring
+- M3 (Week 3): corridor-sharing transport protocol live
+- M4 (Week 4): first joint command drill completed
+- M5 (Week 5): anti-incitement editorial scorecard published
+
+Pulse monitoring KPIs:
+- Border incident count/week
+- Incident acknowledgment latency
+- Cross-border civilian movement delays
+- Verified misinformation events/week
+- Military posture violations in buffer zone
+
+Re-analysis triggers:
+- If escalation delta >= 0.10 -> return to leverage search (LGP-5)
+- If misinformation volatility > 0.05 sustained -> re-synthesize (LGP-6)
+- If protocol compliance < 85% -> immediate action redesign
+
+----------------------------------------------------------------
+5. FIVE GOALS CONTEXT (operational proxy)
+----------------------------------------------------------------
+- Minimize Public Costs: currently poor due to mobilization overhead.
+- Productivity & Efficiency: logistics disruption and trade delay.
+- Service to Citizens: degraded safety and mobility.
+- Minimize Mortality: risk increasing due to trigger density.
+- Maximize Happiness: trust collapse and chronic anxiety.
+
+----------------------------------------------------------------
+6. SUMMARY
+----------------------------------------------------------------
+This is a high-fragility conflict system where Action and Position channels are driving instability.
+Intervention focus should first reduce trigger frequency and response latency, then stabilize corridor context, then repair narrative Form.

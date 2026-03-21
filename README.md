@@ -135,6 +135,36 @@ Tip: Start with `--domain universal` for immediate run. If you need higher preci
 
 ---
 
+## Problem Detection -> Resolution Example (WAR + LGP)
+
+This example is based on the triadic causation logic from `APPENDIX_WAR.md` and the 12-step operational loop from `APPENDIX_LGP_Lady_Galaxy_Protocol.md`.
+
+Run the same system in two snapshots (`before` and `after`) to validate intervention impact:
+
+1) Pre-intervention detection snapshot:
+```bash
+python System_Stability_Score.py "Border Conflict System" --domain universal \
+  --subject subjects/war_lgp_conflict_case_before.txt \
+  --subject-label "Rivergate-Kestrel Crisis - Before" \
+  --models 12 --save
+```
+
+2) Post-intervention re-audit snapshot:
+```bash
+python System_Stability_Score.py "Border Conflict System" --domain universal \
+  --subject subjects/war_lgp_conflict_case_after.txt \
+  --subject-label "Rivergate-Kestrel Crisis - After" \
+  --models 12 --save
+```
+
+What to compare between reports:
+- U-score shift (fragile -> stable threshold crossing)
+- Weakest pillar before vs after
+- Headwinds and residual risks
+- Five-goals movement (public costs, service continuity, mortality risk)
+
+---
+
 ## Context System
 
 Domain reference knowledge lives in `context/{domain}/general.md` and is automatically

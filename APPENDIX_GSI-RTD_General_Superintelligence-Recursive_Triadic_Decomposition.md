@@ -531,6 +531,49 @@ The **Triadic Scheduler** (§20) is the formal bridge between these two phases: 
 
 Thus the General Intelligence described here is not only recursive and combinatorial. It is also cyclic, self-corrective, and procedurally bounded.
 
+### 5.2 Parallel-LGP Protocol — Multi-Agent Coordination Layer
+
+GSI-RTD presumes thousands of agents executing simultaneously, yet LGP-12 was designed for single-system diagnosis (Claim 7, §14). This section defines the minimal coordination protocol for N agents running LGP-12 in parallel.
+
+```text
+PARALLEL-LGP PROTOCOL:
+
+SHARED STATE (read-only during execution):
+  - SSS scores for all monitored systems (updated between generations)
+  - Impact map: impact(f,p,a) (updated by Learning Law between generations)
+  - Budget counters: (T_spent, S_spent, E_spent) (atomically incremented)
+
+EXECUTION MODEL:
+  - Each agent A_i runs LGP-12 independently on its assigned system S_i
+  - Agents share no mutable state during a single LGP cycle
+  - Results R_i = (R_f, R_p, R_a) are collected by the Aggregator after completion
+
+CONFLICT DETECTION:
+  Two agents conflict when they propose contradictory Actions on the same Position:
+    conflict(A_i, A_j) ⟺ Position(S_i) == Position(S_j) AND Action(S_i) ≠ Action(S_j)
+
+CONFLICT RESOLUTION:
+  Lexicographic priority by SI score:
+    1. Higher E[SI] wins
+    2. On tie: lower Risk wins
+    3. On tie: earlier submission timestamp wins
+  The losing agent's Action is deferred to the next generation.
+
+SYNCHRONIZATION POINTS (barrier sync across all active agents):
+  - LGP-4 (Impact Ranking):  agents share ranking data; Scheduler may re-prioritize
+  - LGP-9 (Resource Allocation): budget counters are atomically checked; agents that
+    would exceed remaining budget are paused
+  - LGP-12 (Final Audit): all agents report; Aggregator computes generation-level SI,
+    triggers Learning Law update, seeds next generation
+
+FAILURE HANDLING:
+  - Agent timeout: 2× expected LGP cycle duration → kill + reassign (FM-8)
+  - Agent crash: logged, system marked as "incomplete" for this generation
+  - Budget exhaustion mid-cycle: remaining agents gracefully terminate at next sync point
+```
+
+> **Scalability note:** The shared-nothing execution model (no mutable shared state during a cycle) is deliberately chosen for horizontal scalability. Conflicts are rare in practice when the Scheduler assigns agents to non-overlapping regions of triadic space (which is its primary function). The synchronization points are generation-level barriers, not step-level locks — this keeps coordination overhead at O(sync_points × N) per generation, not O(steps × N²).
+
 ---
 
 ## 6. Mathematical Formalization
@@ -574,7 +617,25 @@ A system achieves **General Superintelligence** when:
 
 This is not brute force — it is **structured exhaustive exploration** guided by the triadic symmetry of reality itself.
 
-> **Critical caveat (anti-brute-force principle).** Brute-force enumeration of all k^(3^d) systems is combinatorially infeasible for any non-trivial depth. GSI does NOT require exhaustive instantiation. It requires **optimal coverage of the triadic space under finite resource constraints** — a fundamentally different proposition. The Triadic Scheduler (§20) formalizes the selection logic that turns an unbounded search space into a bounded execution plan. **However, a formal theorem proving that greedy subset selection achieves "sufficient" coverage does not yet exist.** The Scheduler is empirically motivated and structurally sound, but the claim that a small selected subset adequately represents the full triadic space remains an engineering assumption to be validated in Gate 4 (§32) via the scaling curve: Coverage vs. Performance. If the curve is flat (more coverage does not improve performance), the entire selection rationale collapses.
+### 6.1 The Coverage Gap — Central Architectural Challenge
+
+> **Critical caveat (anti-brute-force principle).** Brute-force enumeration of all k^(3^d) systems is combinatorially infeasible for any non-trivial depth. GSI does NOT require exhaustive instantiation. It requires **optimal coverage of the triadic space under finite resource constraints** — a fundamentally different proposition. The Triadic Scheduler (§20) formalizes the selection logic that turns an unbounded search space into a bounded execution plan.
+
+**This is the central open problem of the architecture.** The combinatorial table above demonstrates the space's vastness, but the critical question is inverted: if the space is 10^27 and the Scheduler selects a subset of size n ≪ 10^27, what guarantees that n is *sufficient*?
+
+Currently, no such guarantee exists:
+
+1. **No formal coverage theorem.** A formal theorem proving that greedy subset selection achieves "sufficient" coverage for arbitrary triadic spaces has not been established.
+2. **No known n* threshold.** The minimum coverage level required for "good enough" performance is domain-dependent and empirically unknown.
+3. **No worst-case bound.** Unlike submodular optimization (which guarantees a (1−1/e) approximation ratio), the Scheduler's non-compensatory score does not inherit any known approximation result.
+
+**Scheduler Sufficiency Conjecture.** We formalize the implicit assumption as a testable conjecture:
+
+> Let C(n) be the system's performance (mean SI across executed queue) when coverage is n. If there exists n* such that ∂C/∂n < ε for all n > n*, then n* is the **sufficiency threshold** for that domain. Gate 4 (§32) must empirically identify n* for at least one domain and verify that n* is achievable within practical budgets.
+
+**Falsification condition:** If no saturation point n* is found (i.e., performance continues to improve linearly with coverage up to the budget limit), then the Scheduler's value proposition is undermined — the architecture degenerates into "more resources → better results" without structured selection adding value.
+
+This conjecture, even if unproven formally, provides a concrete empirical target and distinguishes GSI-RTD from systems that merely claim "more coverage = more intelligence" without specifying what "enough" means.
 
 ---
 
@@ -620,9 +681,11 @@ In plain terms: the triad does not become less valid when the analyst zooms in. 
 
 > **Note on decomposition non-uniqueness:** Recursive decomposition is not canonically unique — two analysts may decompose the same system into different triadic trees. This is **a feature, not a bug**: multiple decompositions generate exploration diversity. In the LGP feedback loop, the system re-decomposes on regression, which means alternative triadic trees are naturally explored over generations. However, this diversity creates a need for an **inter-decomposition comparison metric** — a way to evaluate which decomposition of the same problem is superior. We propose two candidate criteria: (1) **orthogonality** — minimal overlap between F, P, A at each level, and (2) **observational coverage** — no observable property is left unrepresented. A formal canonical criterion (perhaps minimizing description length or maximizing inter-axis independence) remains an open problem. Until then, coverage metrics (§21) should be understood as **relative to the chosen decomposition**, analogous to basis choice in linear algebra: the vector space is objective, but the coordinates depend on the basis.
 
-#### Decomposition Quality Index (DQI)
+#### Decomposition Quality Index (DQI) — Open Research Problem
 
-Since decomposition is not unique, a quality criterion is needed to compare alternative decompositions of the same problem. We define:
+> **⚠️ Epistemic status: research direction, not closed solution.** The DQI defined below is a proposed metric structure with undefined weights. It is included to formalize the *question* of decomposition quality, not to claim a working answer. The weights α, β, γ, δ cannot be set without empirical calibration — they are domain-dependent and may vary with decomposition depth. Until calibrated, DQI should be treated as a **measurement framework to be instantiated**, not as a ready-to-use formula. A separate appendix (APPENDIX_DQI) is reserved for the full empirical treatment once baseline data is available.
+
+Since decomposition is not unique, a quality criterion is needed to compare alternative decompositions of the same problem. We define the structure:
 
 ```text
 DQI(D) = α · Orthogonality(D) + β · Coverage(D) + γ · Compression(D) + δ · PredictiveUtility(D)
@@ -802,6 +865,27 @@ The following mapping is declared canonical as of v26 and must be used consisten
 | **Action** | **Energy** | You pay with energy to do something |
 
 > **Notation hazard.** The older v25.2 core glossary contains a legacy mirror mapping in which Space ↔ Form and Time ↔ Position. That mapping is **incompatible** with the v26 invariant and must not be used when evaluating GSI-RTD claims. All formal results in this appendix assume the v26 canonical assignment above.
+
+#### Cross-Reference Audit: v26 Compliance of Dependent Documents
+
+The following documents are referenced by GSI-RTD and must use the v26 mapping consistently. Any section still using the v25.2 mapping will produce **silently incorrect results** (e.g., a Form-Time analysis misinterpreted as a Form-Space analysis).
+
+| Document | v26 compliant? | Known risks |
+|----------|----------------|-------------|
+| **APPENDIX_TAA** (Triadic AI Agents) | ✅ Yes — TAA was written under v26 conventions | Agent role definitions (F-agent, P-agent, A-agent) use v26 mapping |
+| **APPENDIX_LGP** (Lady Galaxy Protocol) | ⚠️ Mostly — LGP predates v26 and was updated | Legacy sections may reference "Space-Form" or "Time-Position" in older subsections; implementors must verify each LGP step's triadic assignment |
+| **APPENDIX_SSS** (System Stability Score) | ✅ Yes — SSS formula (U, δ, SI) is mapping-agnostic | F, P, A enter symmetrically in the geometric mean; mapping direction does not affect SSS computation |
+| **APPENDIX_ST** (String Theory 4th Floor) | ⚠️ Caution — ST uses physical analogies that may imply v25.2 | If ST references "Space as the fundamental dimension of Form," it uses v25.2 and must be read with the inversion table below |
+
+**Inversion table (v25.2 → v26):**
+
+| v25.2 says | v26 reads as | Reason |
+|------------|-------------|--------|
+| Space ↔ Form | **Time ↔ Form** | Form = structure that endures; the cost is time, not space |
+| Time ↔ Position | **Space ↔ Position** | Position = where you are; the cost is space, not time |
+| Energy ↔ Action | **Energy ↔ Action** | ✅ Unchanged between versions |
+
+> **Recommendation to implementors:** Before using any formula or mapping from a pre-v26 document, check which version's mapping it assumes. When in doubt, the v26 table above is canonical and overrides any conflicting earlier reference.
 
 ### Consistency checkpoint: non-compensatory logic
 
@@ -1545,17 +1629,25 @@ class TriadicAgent:
         ...
 
 class TriadicScheduler:
-    """Selects which agents to run under budget constraints."""
+    """Two-stage selection: hard gates + non-compensatory ranking (§20.3)."""
     
-    def score(self, s: TriadicSystem, budget: TriadicBudget) -> float:
-        return (w1 * expected_si(s) 
-              + w2 * expected_roi(s) 
-              - w3 * cost(s) 
-              - w4 * redundancy(s))
+    def hard_gates(self, s: TriadicSystem, budget: TriadicBudget) -> bool:
+        """Stage 1: reject if any gate fails."""
+        return (expected_si(s) >= THETA_SI 
+                and risk(s) <= THETA_R
+                and cost(s) <= budget
+                and min(s.f, s.p, s.a) > 0)
+    
+    def score(self, s: TriadicSystem) -> float:
+        """Stage 2: non-compensatory geometric ranking."""
+        core = (clamp(expected_si(s)) * clamp(expected_roi(s)) 
+                * clamp(1 - risk_norm(s))) ** (1/3)
+        return core * (1 - redundancy(s)) ** GAMMA
     
     def select(self, candidates, budget) -> ExecutionQueue:
         """Greedy triadic selection (§20.4)."""
-        ...
+        survivors = [s for s in candidates if self.hard_gates(s, budget)]
+        return sorted(survivors, key=self.score, reverse=True)
 
 class TriadicBudget:
     """Budget = (T_max, S_max, E_max) — triadic resource envelope."""
@@ -1595,6 +1687,23 @@ This section addresses a legitimate gap: the preceding sections develop GSI-RTD 
 | **AutoGPT / BabyAGI** | LLM-based autonomous task generation and execution | LLM-driven agent loops | Structured decomposition (not free-form task generation); stability-aware scheduling; non-compensatory scoring prevents runaway specialization |
 | **CrewAI / LangGraph** | Multi-agent LLM orchestration with defined roles | Named agents with roles; orchestration layer | Ontologically grounded roles (F,P,A are derived from theory, not ad hoc); measurement closure via SSS; cross-domain transfer via structural isomorphism |
 | **Cybernetic Control Theory** | Feedback loops, homeostasis, requisite variety | Feedback (LGP audit cycle); stability as goal | Triadic balance as stability criterion (not just error minimization); recursive self-similarity |
+
+#### 24.1bis — Detailed Comparison with State-of-the-Art Multi-Agent Frameworks
+
+The comparison above covers classical frameworks. The following table focuses specifically on the **2024–2026 generation** of multi-agent LLM orchestration systems, which represent GSI-RTD's most direct contemporary comparison:
+
+| Property | **AutoGen** (Microsoft) | **LangGraph** (LangChain) | **CAMEL** (KAUST) | **OpenAI Swarm** | **GSI-RTD** |
+|----------|----------------------|--------------------------|-------------------|------------------|-------------|
+| **Organizational principle** | Role-based (manager/worker) | Graph state machine | Communicative agents with inception prompting | Handoff-based routing | Triadic ontology (F,P,A) |
+| **Evaluation function** | Task completion (binary) | Conditional edges (boolean) | Response quality (LLM-judged) | None (implicit) | SSS (geometric mean, non-compensatory) |
+| **Meta-coordination** | Implicit (conversation flow) | Topological (graph edges) | Role-playing + task decomposition | Agent handoffs | Triadic Scheduler (two-stage) |
+| **Decomposition method** | Ad hoc task splitting | Developer-defined graph | Role-based task distribution | Function-based routing | Recursive triadic (F,P,A at every level) |
+| **Learning / adaptation** | None built-in | None built-in | None built-in | None built-in | Triadic Learning Law (§26) |
+| **Formal evaluation metric** | None (task-specific) | None (graph-specific) | None (conversation quality) | None | SSS: U, δ, SI (domain-agnostic) |
+| **Self-falsification protocol** | No | No | No | No | Yes (Five Gates, §32) |
+| **Cross-domain transfer** | Manual re-prompting | Graph redesign | New role definitions | New function tools | Structural isomorphism (§26.4) |
+
+> **Key insight from comparison:** Existing multi-agent frameworks provide excellent *engineering infrastructure* (message passing, tool use, graph routing) but no *principled decomposition method or evaluation closure*. GSI-RTD provides the theoretical complement: a domain-agnostic decomposition coordinate system, a non-compensatory evaluation function, and a self-falsification protocol. The practical path forward is not GSI-RTD *replacing* AutoGen or LangGraph, but GSI-RTD *running on top of* them — using their engineering infrastructure while imposing triadic structure on the decomposition, scheduling, and evaluation layers.
 
 ### 24.2 What Is Specifically New in GSI-RTD
 
@@ -1637,6 +1746,7 @@ The falsification protocol (§16) specifies conditions for *disproving* the fram
 | FM-6 | **Coverage metric saturates prematurely** | Coverage (§21) | System believes it has covered the space when it hasn't (false completeness) | Medium | Compare C_w between independent decompositions of the same problem; if C_w differs by >0.2 → decomposition-dependent saturation | Restart decomposition from a different entry point (e.g., switch from AD-RTD to RTD_classic); inject adversarial probes |
 | FM-7 | **Cross-domain transfer fails** (negative transfer) | Transfer (§26.4) | Importing priors from wrong domain worsens performance | Medium | SI_with_transfer < SI_without_transfer for ≥5 candidates | Disable transfer for that domain pair; set β = 0; flag domain pair as "non-isomorphic" |
 | FM-8 | **LGP cycle stalls** (agent fails to complete a step) | LGP-12 (§5.1) | Execution queue blocks; dependent systems cannot proceed | High | LGP step timeout (default: 2× expected duration) | Kill stalled agent; reassign task to backup agent with lower priority; log failure for post-mortem |
+| FM-9 | **Adversarial decomposition gaming** (malicious or biased decomposition maximizes SSS without real stability) | RTD (§2) + SSS (§7) | System reports high SI on a decomposition that is structurally valid but semantically vacuous — e.g., trivial F/P/A assignments that achieve orthogonality without operational content | Medium | SSS-Guard disagreement (§7.2): SSS reports high SI but domain outcome metric shows no improvement; DQI PredictiveUtility near zero | Require SSS-Guard agreement for all irreversible decisions; mandate at least 2 independent decompositions per problem (§7.1 non-uniqueness); flag decompositions where DQI Compression or PredictiveUtility is below baseline |
 
 ### 25.2 Systemic Safeguards
 
@@ -2252,6 +2362,8 @@ For k = 2, 5, 10, 20, 50, 100:
 - There must exist a "sweet spot" where Efficiency peaks (confirming that GSI ≠ brute force)
 - Cost must be sublinear relative to quality improvement (proving that the Scheduler adds value)
 
+**Connection to Scheduler Sufficiency Conjecture (§6.1):** Gate 4 is the primary empirical test of the Sufficiency Conjecture. The scaling curve must identify n* — the coverage level beyond which additional coverage yields diminishing returns (∂C/∂n < ε). If n* exists and is achievable within practical budgets, the Conjecture is supported. If no saturation point is found (performance scales linearly with coverage indefinitely), the Conjecture is refuted and the Scheduler's structured selection adds no value over brute-force resource scaling.
+
 ### Gate 5 — External Replication
 
 **Requirement:** An independent team, using only the published documents (this appendix + TAA + LGP + SSS), implements the GSI runtime from scratch and runs Gates 1–4.
@@ -2565,9 +2677,37 @@ A credible empirical bridge document must include:
 
 > **Framing note:** An empirical bridge document should be described as "a worked engineering instance" or "a concrete domain implementation candidate" — not as "the first operational proof" unless independently replicated. This is consistent with the epistemic honesty standards established throughout the document (§13–§16).
 
-### 35.4 Status
+### 35.4 Worked Example: Publisher Outreach Campaign as Domain Instance
 
-No empirical bridge document has been completed as of the specification date. The first candidate domain for empirical validation is to be determined. This section serves as the **template and quality standard** for future empirical work.
+The following table populates the §35.2 template for the publisher outreach campaign that originally inspired the GSI-RTD insight (§11). This is included as a **concrete demonstration** of how the template is meant to be filled, not as formal empirical evidence (which requires the full Gate 1–5 protocol).
+
+| GSI-RTD Component | Section | Domain Instantiation | Implementation Detail |
+|-------------------|---------|---------------------|----------------------|
+| Triadic ontology (F, P, A) | §1, §12 | **F** = message content (tone, length, academic rigor, personalization depth); **P** = recipient context (publisher type, editorial focus, geographic market, submission guidelines); **A** = delivery method (email subject line, timing, follow-up strategy, attachment selection) | Each pillar has k=5–8 variants |
+| RTD decomposition | §2–§4 | Each email is a triadic system S_i = (F_i, P_i, A_i); depth d=1 (single decomposition level) | 460+ unique agent configurations generated from base variants |
+| Agent architecture (TAA) | §5 | Each "agent" is a personalized email: Form Agent = content generator, Position Agent = recipient researcher, Action Agent = delivery optimizer | LLM-assisted generation + human review |
+| Procedural engine (LGP) | §5.1 | LGP-1: Scan publisher landscape → LGP-2: Detect fit → LGP-3: Decompose into F/P/A → LGP-4: Rank by expected impact → LGP-7: Select configuration → LGP-10: Monitor responses → LGP-12: Audit results | Batch-sequential: Batch 1 (generic) → Batch 7 (ultra-deep personalization) |
+| Scheduler (TS) | §20 | Estimator: expert prior + online correction (§20.3.2e); hard gates: reject publishers outside genre scope, reject if no submission email found | Manual prioritization with heuristic scoring |
+| Coverage metric | §21 | C(Q) = unique (content_type, publisher_type, delivery_method) triples / total relevant triples | Measured across 7 batches |
+| Budget model | §22 | T = hours of research per publisher; S = email slots per day; E = LLM tokens + human effort per email | Finite daily capacity: ~20 deep emails/day |
+| Measurement (SSS) | §7 | R_f = response form (accepted/rejected/no-response/interested); R_p = who responded, response time; R_a = next action taken | Triadic feedback per agent |
+| SSS-Guard | §7.2 | Domain metric: actual publisher interest (request for manuscript, meeting, contract) vs. SSS-predicted interest | Agreement required before follow-up investment |
+| Learning Law | §26 | Batch-over-batch refinement: Batch 1 baseline → each subsequent batch incorporates previous results → Batch 7 uses full personalization stack | λ ≈ 0.3 (each batch updates 30% from new data) |
+| Environment model | §28 | Publisher responses arrive asynchronously over days–weeks; seasonal patterns (submission windows, conference cycles) | Observation frequency: daily email check |
+| Uncertainty | §29 | Response rate uncertainty: ~5–15% expected; high novelty for niche publishers | Expert prior: similar campaign benchmarks |
+
+**Preliminary observations (not formal results):**
+
+- Batch 1 (generic, minimal F/P/A variation) → lowest response rate
+- Later batches (deeper personalization, wider P variation) → measurably higher engagement
+- Coverage C_w increased monotonically across batches as more triadic regions were explored
+- This is consistent with the GSI-RTD thesis (more structured coverage → better outcomes) but does **not** constitute formal validation — no control group, no ablation, no independent replication
+
+> **Limitations:** This worked example demonstrates template usage only. To qualify as a formal empirical bridge, it would need: (1) controlled A/B testing between GSI-RTD-guided and random agent selection; (2) Gate 3 ablation (remove Form variation, measure impact); (3) Gate 4 scaling curve (coverage vs. response rate); (4) independent replication by a different campaign operator. These remain future work.
+
+### 35.5 Status
+
+The publisher outreach campaign provides a **worked example** demonstrating how the §35.2 template maps to a concrete domain. Formal empirical validation (Gates 1–5) has not been conducted. The campaign data exists and can serve as the basis for a future formal empirical bridge document once the experimental controls are established.
 
 ---
 
@@ -2586,12 +2726,12 @@ This section supersedes all previous verdicts (§19, §25) and represents the de
 
 ### What was achieved on 26 March 2026:
 
-A **complete, implementation-ready specification** for General Superintelligence — **the Universal Adaptive Intelligence Framework (UAIF)** — comprising 14 formally specified layers:
+A **complete, implementation-ready specification** for General Superintelligence — **the Universal Adaptive Intelligence Framework (UAIF)** — comprising 16 formally specified layers:
 
-1. Triadic ontology (§1, §12)
-2. Recursive search space (§2–§4, §6)
+1. Triadic ontology (§1, §12) with v26 cross-reference audit
+2. Recursive search space (§2–§4, §6) with Scheduler Sufficiency Conjecture (§6.1)
 3. Agent architecture (§5)
-4. Procedural engine (§5.1)
+4. Procedural engine (§5.1) with Parallel-LGP coordination protocol (§5.2)
 5. Measurement closure (§7), including SSS-Guard (§7.2) and DQI (§7.1)
 6. Two-stage Scheduler with hard gates, estimator family, and geometric ranking (§20)
 7. Measurable coverage metric with domain-specific extensions (§21)
@@ -2601,8 +2741,9 @@ A **complete, implementation-ready specification** for General Superintelligence
 11. Concrete representation layer (§27)
 12. Environment interaction model (§28)
 13. Uncertainty propagation and risk-aware scheduling (§29)
-14. Self-audit, falsification protocol, empirical closure gates, and Scheduler ablation suite (§13–§19, §32)
-15. Empirical bridge template for domain instantiation (§35)
+14. Related work positioning with SOTA multi-agent framework comparison (§24)
+15. Self-audit, falsification protocol, empirical closure gates, and Scheduler ablation suite (§13–§19, §32)
+16. Empirical bridge template with worked example (§35)
 
 Plus a **concrete implementation blueprint** with technology stack, agent patterns, scheduler code, repository structure, and first-benchmark protocol (§33).
 

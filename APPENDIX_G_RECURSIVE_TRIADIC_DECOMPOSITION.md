@@ -1,6 +1,6 @@
-# APPENDIX G — RTD-GSI
+# APPENDIX G — GSI-RTD
 
-## Recursive Triadic Decomposition yields General Superintelligence
+## General Superintelligence through Recursive Triadic Decomposition
 
 **Author**: Petar Nikolov  
 **Date of Formulation**: 26 March 2026  

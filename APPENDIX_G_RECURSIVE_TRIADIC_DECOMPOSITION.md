@@ -5,7 +5,28 @@
 **Author**: Petar Nikolov  
 **Date of Formulation**: 26 March 2026  
 **Framework**: U-Theory / Universal Stability Model  
-**DOI**: [https://doi.org/10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)
+**DOI**: [https://doi.org/10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
+**Status**: L2 architectural formalization; L3 scaling extrapolation  
+**Prerequisites**: Core DST Theorem, `APPENDIX_SSS_SYSTEM_STABILITY_SCORE.md`, `APPENDIX_ST_STRING_THEORY_4TH_FLOOR.md`
+
+---
+
+## Purpose and Scope
+
+This appendix introduces **GSI-RTD** as the computational corollary of U-Theory: if every finite system is exhaustively describable through **Form, Position, and Action**, then any sufficiently complex problem can be approached by recursively decomposing it into nested triadic subsystems and assigning executable agents to the resulting configurations.
+
+The purpose of the appendix is therefore not merely terminological. It is to show that the triadic ontology of U-Theory can be extended into a **general search architecture** for intelligence. In this sense, Appendix G plays for cognition and orchestration the role that Appendix SSS plays for measurement and that Appendix ST plays for dimensional interpretation.
+
+> **Relation to core theory:** U-Theory provides the ontological claim that reality is triadically complete. Appendix G proposes the engineering consequence: if triadic completeness is true, then recursive triadic decomposition is a principled way to organize intelligence, search, and coordinated action.
+
+### Relation to Prior Appendices
+
+| Appendix | Primary question | Function in the larger theory | Relation to GSI-RTD |
+|----------|------------------|-------------------------------|---------------------|
+| **Core DST / U-Theory** | What makes any system exist and remain stable? | L1-L2 ontological and mathematical core | Supplies the primitive triad `(F, P, A)` |
+| **APPENDIX SSS** | How is triadic stability measured in practice? | Measurement and evaluation engine | Provides the bounded scoring case of triadic decomposition |
+| **APPENDIX ST** | Why do dimensions open, close, and stabilize? | Structural interpretation of dimensional emergence | Provides the cosmological and structural rationale for triadic completeness |
+| **APPENDIX G** | How can triadic completeness be converted into intelligence? | Search, orchestration, and agent architecture | Extends the theory from measurement to combinatorial cognition |
 
 ---
 
@@ -229,6 +250,34 @@ The recursive decomposition preserves this completeness at every level:
 ∀ depth d: S^(d) is complete ⟺ (F^(d), P^(d), A^(d)) spans all observable properties at scale d
 ```
 
+### Proposition 7.1 — Recursive Preservation of Completeness
+
+If a system admits a complete description at level `d` in terms of `(F, P, A)`, and if each component is further refinable without loss of observational relevance, then recursive decomposition preserves descriptive completeness across levels.
+
+In plain terms: the triad does not become less valid when the analyst zooms in. It becomes more granular while retaining the same logical basis.
+
+### Proposition 7.2 — Finite Evaluation and Generative Search
+
+Appendix SSS and Appendix G describe two complementary operations over the same triadic ontology:
+
+- **SSS** is primarily an **evaluation operator**: given a concrete system, it estimates the degree to which the triad is stably realized.
+- **GSI-RTD** is primarily a **generative search operator**: given a goal or problem, it enumerates and tests candidate realizations across the triadic space.
+
+Formally:
+
+```
+SSS: S -> [0,1]
+GSI-RTD: Goal -> {S_1, S_2, ..., S_N}
+```
+
+The former measures stability; the latter generates strategic alternatives. They are not competing frameworks. They are two sides of the same triadic methodology.
+
+### Proposition 7.3 — Relation to Appendix ST
+
+Appendix ST argues that the Universe stabilizes by opening and closing dimensions according to property-realization. Appendix G translates that same intuition into epistemic and computational terms: intelligence stabilizes by opening and closing **descriptive dimensions** of a problem until a workable triadic configuration is reached.
+
+Thus, if Appendix ST is the cosmological account of how structured reality emerges, Appendix G is the methodological account of how an intelligence can navigate that structured reality.
+
 ---
 
 ## 8. Implications for Artificial Intelligence
@@ -247,6 +296,8 @@ The RTD framework proposes the opposite:
 - No single agent needs to be "superintelligent"
 - Intelligence emerges from **coverage** — every angle is explored
 - The orchestrator is just a triadic aggregator
+
+This should be understood as an architectural claim, not as a claim that brute-force enumeration is always feasible. In practical implementations, recursive decomposition will be constrained by cost, time, and relevance thresholds. The theoretical point is that the triad supplies the **canonical coordinate system** for distributed exploration.
 
 ### 8.3 The Key Insight
 
@@ -278,7 +329,18 @@ The more of the triadic space you explore, the more stable (successful, adaptive
 
 ---
 
-## 10. Historical Note
+## 10. Methodological Note
+
+The claims of this appendix should be separated into two strata:
+
+1. **L2 architectural claim**: any finite system or problem can be represented, compared, or refined in triadic form; recursive decomposition therefore yields a principled design space for analysis and orchestration.
+2. **L3 extrapolative claim**: sufficiently large-scale deployment of triadically differentiated agents may constitute a practical route toward general superintelligence.
+
+The first claim follows directly from the U-Theory ontology and is the main theoretical contribution of this appendix. The second remains a forward-looking engineering hypothesis whose validation depends on future implementations.
+
+---
+
+## 11. Historical Note
 
 > This formalization was conceived on **26 March 2026** during a practical application of U-Theory to a publisher outreach campaign. The insight emerged when analyzing the campaign through triadic lenses: the Form of the message, the Position of the recipient, and the Action of delivery — and realizing that **each element recursively decomposes into its own triad**, generating a combinatorial space of millions of unique strategies from a handful of base variants.
 >

@@ -3,13 +3,14 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 > **Copyright © 2026 Petar Nikolov. All rights reserved. Licensed under CC BY 4.0.**  
-> **Standalone appendix for U-Theory / U-Model v25**  
+> **Appendix for U-Theory / U-Model v26** | Aligned with TAA / GSI-RTD / LGP (March 2026)  
 > **Status:** L2 ENGINEERING APPLICATION — operational, open source  
-> **Version:** 25.1  
-> **Last Updated:** February 25, 2026  
+> **Version:** 26.0  
+> **Last Updated:** March 26, 2026  
 > **Epistemic Level:** L2 (70–90%) for triadic application; L1 (>90%) for geometric mean theorem  
 > **Code:** [github.com/UniversalModel/System_Stability_Score](https://github.com/UniversalModel/System_Stability_Score)  
-> **Prerequisites:** Core DST Theorem (Parts 0–IV), Appendix QC (U-Score as benchmarking standard)
+> **Prerequisites:** Core DST Theorem (Parts 0–IV), Appendix QC (U-Score as benchmarking standard)  
+> **v26 Invariant:** Form ↔ Time, Position ↔ Space, Action ↔ Energy
 
 ---
 
@@ -22,6 +23,16 @@ The SSS answers one question: **given what we know about this system, is it stab
 The Core DST establishes the theorem. This appendix shows how it runs as software — how principles are generated, how AI juries score them, and what the results look like when applied to a human heart, a nation-state, a sports team, and a physical object.
 
 > **Relation to Core Theory:** The SSS is not speculative. It is L2 — the engineering shell around the L1 mathematical core. The formula $U = \sqrt[3]{F \times P \times A}$ is the same equation; the SSS is its measurement instrument.
+
+### Relation to the U-Theory Suite (v26)
+
+| Appendix | Role | SSS provides to it | It provides to SSS |
+|----------|------|---------------------|---------------------|
+| **GSI-RTD** | Recursive search space | Stability verdict for every candidate | Scheduler that decides *when* to measure |
+| **TAA** | Agent architecture | Scoring function for agent outputs | Four-agent jury structure (F, P, A, Σ) |
+| **LGP** | Procedural cycle | Measurement at LGP-1, LGP-10, LGP-12 | Execution engine that *generates* the data SSS scores |
+
+**Canonical execution order:** `GSI-RTD → TAA (agents) → LGP-12 (cycle) → SSS (audit)`
 
 ---
 
@@ -60,9 +71,13 @@ $$U = \sqrt[3]{Form \times Position \times Action}$$
 | **Position** | Where the system *IS* — spatial, contextual, relational placement | **Space** — resistance against displacement and irrelevance | Loss of context / territorial or positional collapse |
 | **Action** | What the system *DOES* — purposeful function and output | **Energy** — expenditure that leaves irreversible entropy | Functional failure / inability to act |
 
-**Stability threshold:** $U \geq 0.618 = \varphi^{-1}$ (Golden Ratio)
+**Canonical definition (v26.11):** Stability is sufficiently prolonged existence at tolerable cost, relative to a specified observer, task, or criterion. In SSS terms, a system is stable when its Form endures long enough, its Position remains context-appropriate, and its Action remains energetically acceptable for the intended use.
 
-This is not arbitrary. The Golden Ratio appears at the boundary between ordered and disordered systems across mathematics, biology, and physics. A system at $U = 0.618$ is minimum viable stability — below it, collapse becomes probable.
+**Triadic necessity theorem (short canon, v26.12):** No realized stable system can exist without enduring as **Form** in **Time**, being distinguishable as **Position** in **Space-context**, and acting through **Energy**. Therefore the geometric mean in SSS is not meant to invent three pillars arbitrarily, but to aggregate the three minimal conditions of realized stable existence.
+
+**Default stability baseline:** $U \geq 0.618$ (provisional cross-domain default — domain-adjustable)
+
+This value is a working empirical default, not the foundation of the theory and not a fixed universal constant. The foundation is the triadic necessity of Form, Position, and Action. The exact operating threshold must be calibrated to domain, stakes, and failure tolerance. Higher-stakes systems (e.g., space infrastructure ≥ 0.75, nuclear ≥ 0.90) require higher thresholds. A system at $U = 0.618$ should therefore be read only as minimally viable under ordinary Earth-like conditions, not as universally stable in every context.
 
 **Why geometric mean?** Because $U = \sqrt[3]{F \times P \times A}$, a system with  
 $F = 1.0$, $P = 1.0$, $A = 0.0$ gives $U = 0$.  
@@ -169,7 +184,9 @@ Output: 3 files saved to `principles/biology/heart/`:
 
 ### Stage 2 — The AI Jury: Impartiality Through Aggregation
 
-Once the three files exist, the jury is called. Up to 50 AI models from OpenRouter run **in parallel** — each independently scoring every principle (0–100) using only the provided principles and (in abstract mode) the domain context. No model knows what the others scored.
+> **TAA mapping:** The jury agents mirror the four TAA roles — Form Agent, Position Agent, Action Agent, and Generalizing Agent (Σ). Each jury model scores along the triadic axes; the aggregate enforces the same non-compensatory geometric logic. See `APPENDIX_TAA` for the full agent specification.
+
+Once the three files exist, the jury is called.Up to 50 AI models from OpenRouter run **in parallel** — each independently scoring every principle (0–100) using only the provided principles and (in abstract mode) the domain context. No model knows what the others scored.
 
 **Why 50 models?** The same reason courts use juries instead of a single judge: to eliminate individual bias. A model trained predominantly on medical literature will weight cardiac parameters differently from one trained on physics or law. The aggregate of diverse models — filtered for outliers — produces a verdict more robust than any single expert.
 
@@ -347,7 +364,19 @@ U-Score is a snapshot, not a trajectory. A heart with U=0.83 today may have U=0.
 When a document is sparse, many principles score 50 (neutral), compressing the score toward 0.50. Future work: detect and flag low-evidence scorings and report confidence separately.
 
 **SSS-L5: Cross-domain comparability**  
-Is Germany's U=0.85 directly comparable to a Human Heart's U=0.77? Philosophically yes (same three prices). Practically: principle granularity differs. Formal cross-domain normalization is ongoing research.
+Is Germany's U=0.85 directly comparable to a Human Heart's U=0.77? Structurally, both are analyzed through the same three minimal conditions of stability. Metrically, direct comparison remains limited because principle granularity, evidence quality, and threshold calibration differ by domain. Formal cross-domain normalization is ongoing research.
+
+### SSS.8.5 — Integration with GSI Control Loops
+
+The single U-Score is the *first* step, not the last. In a GSI-RTD runtime (see `APPENDIX_GSI-RTD` §20–§23), SSS is called **continuously** at three synchronization points within each LGP cycle:
+
+| Sync point | LGP step | What SSS computes | Used by |
+|------------|----------|-------------------|---------|
+| **Pre-cycle** | LGP-1 (Scanning) | Baseline $U_0$, $\delta_0$ | Scheduler: decides whether intervention is needed |
+| **Mid-cycle** | LGP-10 (Pulse Monitoring) | $\dot{SI}$ (SI trend), $V_\delta$ (δ-volatility) via EWMA/CUSUM | TAA agents: early abort if SI is declining |
+| **Post-cycle** | LGP-12 (Final Audit) | Final $U_f$, $\Delta SI = SI_f - SI_0$ | Scheduler: learning law updates gate thresholds |
+
+> **SSS-Guard:** For irreversible decisions in a GSI environment, the SSS verdict **must** be verified through the SSS-Guard ensemble (see `APPENDIX_GSI-RTD` §7.2). SSS-Guard runs the same evaluation with 3 independent SSS instances and accepts only when ≥2 agree within tolerance.
 
 ---
 

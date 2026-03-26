@@ -52,6 +52,18 @@ The purpose of the appendix is therefore not merely terminological. It is to sho
 | **APPENDIX LGP** | How does a triadic system move from diagnosis to intervention? | Procedural engine and control loop | Supplies the canonical 12-step execution cycle of GSI-RTD |
 | **APPENDIX GSI-RTD** | How can triadic completeness be converted into intelligence? | Search, orchestration, and agent architecture | Extends the theory from measurement to combinatorial cognition |
 
+### Quick Navigation to Companion Appendices
+
+| If you need… | Go to | Key sections |
+|--------------|-------|-------------|
+| **Agent shell** (which 4 agents exist) | `APPENDIX_TAA` | Agent definitions, non-compensatory rule, scaling |
+| **Execution cycle** (how agents proceed in time) | `APPENDIX_LGP` | 12-step protocol, RACI matrix, Phase I–IV |
+| **Stability measurement** (how to score) | `APPENDIX_SSS` | U formula, AI Jury, SSS-Guard (§7.2 here) |
+| **Scheduler internals** (this document) | §20 (two-stage), §23 (pseudocode), §26 (learning law) |
+| **Parallel execution** (multi-team) | §5.2 (Parallel-LGP), TAA Scaling section |
+
+**Canonical execution order:** `GSI-RTD (search) → TAA (agents) → LGP-12 (cycle) → SSS (score) → Scheduler (learn)`
+
 ---
 
 ## 1. Core Definition

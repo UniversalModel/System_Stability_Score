@@ -12,7 +12,7 @@
 >
 > On **26 March 2026**, a **formal architectural derivation** of General Superintelligence (GSI) was completed from the triadic ontology of U-Theory. This document presents the complete logical chain — from the three irreducible prices of existence (**Form ↔ Time, Position ↔ Space, Action ↔ Energy**) through recursive decomposition, combinatorial agent deployment, the Lady Galaxy Protocol (LGP-12), and the System Stability Score (SSS) — to a **principled architecture and design space** for intelligence that transcends any monolithic system.
 >
-> **Epistemic status:** This is an **L2 architectural formalization** with an **L3 scaling extrapolation**. The architecture, the operational agent shell (TAA), the procedural cycle (LGP-12), and the measurement engine (SSS) are formally defined. The claim that sufficiently large deployment of triadic agents yields practical GSI remains a **forward-looking engineering hypothesis** requiring empirical validation: benchmarks, baselines, ablation, and independent replication (see §32 for the Five Gates).
+> **Epistemic status:** This is an **L3 technological architecture and operational protocol**, derived via L2 structural isomorphisms from U-Theory's triadic ontology. The architecture, the operational agent shell (TAA), the procedural cycle (LGP-12), and the measurement engine (SSS) are formally defined as L3-spec. The claim that sufficiently large deployment of triadic agents yields practical GSI remains a **forward-looking engineering hypothesis** requiring empirical validation: benchmarks, baselines, ablation, and independent replication (see §32 for the Five Gates).
 >
 > **The author's position on urgency:** As superintelligent systems — whether triadic or otherwise — approach viability, the absence of *any* universal stability framework increases systemic risk. An advanced AI ecosystem operating without explicit stability governance risks simultaneous failure across structural (Form), contextual (Position), and dynamic (Action) dimensions. The triadic stability framework proposed here is one candidate for such governance — and the author believes it is the most principled one currently available. Whether this belief is justified is an empirical question that §32 is designed to answer.
 >
@@ -24,7 +24,7 @@
 **Date of Formulation**: 26 March 2026  
 **Framework**: U-Theory / Universal Stability Model  
 **DOI**: [https://doi.org/10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
-**Status**: L2 architectural formalization; L3 scaling extrapolation  
+**Status**: L3 technological architecture and operational protocol (derived via L2 structural isomorphisms); L3 scaling extrapolation  
 **Prerequisites**: Core DST Theorem, `APPENDIX_SSS_SYSTEM_STABILITY_SCORE.md`, `APPENDIX_ST_STRING_THEORY_4TH_FLOOR.md`, `APPENDIX_TAA_TRIADIC_AI_AGENTS.md`, `APPENDIX_LGP_Lady_Galaxy_Protocol.md`
 
 ---

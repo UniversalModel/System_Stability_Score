@@ -322,16 +322,20 @@ This ensures that AD-RTD does not collapse into a narrow action-driven tunnel. T
 
 ### Connection to the Scheduler (§20)
 
-Phase 7 (Prioritize) produces a pre-sorted triage queue ordered by ΔSI/Cost. This feeds directly into the Triadic Scheduler (§20), which applies additional scoring dimensions that AD-RTD intentionally omits:
+Phase 7 (Prioritize) produces a **pre-filtered, coarsely ranked** triage queue ordered by ΔSI/Cost. This is a lightweight heuristic sort — it does **not** replace the Scheduler's formal two-stage scoring. Instead, it serves as a **candidate reduction step**: it eliminates obvious non-starters before the Scheduler applies the full scoring pipeline.
 
 ```text
-AD-RTD Triage Queue          Scheduler (§20)                    Execution Queue
-(sorted by ΔSI/Cost)   →   Stage 1: hard gates (§20.3.1)   →   final ordering
-                            Stage 2: geometric ranking (§20.3.3)
-                            + budget feasibility (§22)
+AD-RTD Triage Queue               Scheduler (§20)                   Execution Queue
+(coarsely ranked by ΔSI/Cost;     Stage 1: hard gates (§20.3.1)     final ordering
+ reduces candidate set)      →    Stage 2: geometric ranking         (budget-feasible,
+                                  (§20.3.3) + budget (§22)           risk-adjusted)
 ```
 
-In other words: **AD-RTD decides *what to work on*; the Scheduler decides *what to run now*.** AD-RTD is the strategic layer (which systems deserve attention?); the Scheduler is the tactical layer (given budget, risk, and concurrency constraints, what executes in this cycle?). This separation ensures that strategic priorities are not distorted by short-term resource constraints, and vice versa.
+The Scheduler **re-scores and re-ranks** all surviving candidates using the full non-compensatory formula. Phase 7's pre-sort is a computational convenience, not a commitment — the Scheduler is free to reorder candidates if its richer scoring function disagrees with the simple ΔSI/Cost heuristic.
+
+In other words: **AD-RTD decides *what deserves attention*; the Scheduler decides *what runs now*.** AD-RTD is the strategic layer (coarse triage); the Scheduler is the tactical layer (formal scoring under budget, risk, and concurrency constraints). This separation ensures that strategic priorities inform but do not rigidly determine runtime execution order.
+
+> **On the Scheduler's evolving nature (§20.6):** At generation 1, the Scheduler operates as a static two-stage filter (hard gates + geometric ranking). Over time, the Learning Law (§26.3) adapts the gate thresholds and the exploration injection rate ε, making the Scheduler increasingly resemble an **adaptive exploration policy** (analogous to multi-armed bandit or MCTS). The two descriptions — "static two-stage filter" and "adaptive exploration policy" — are not contradictory: the first describes the **mechanism** at any single generation; the second describes the **trajectory** across generations. §20.3 specifies the mechanism; §20.6 specifies the meta-level learning objective.
 
 > **RTD_classic describes what the system *is*; AD-RTD describes how to enter it in order to change it.**
 
@@ -1356,7 +1360,7 @@ The Scheduler prunes branches that:
 
 The goal is not to run the most agents. It is to achieve **optimal coverage of the triadic space under finite resource constraints**. This is what separates GSI from brute-force computation.
 
-> **Clarification: Scheduler as exploration policy.** The Triadic Scheduler is not a classical optimizer seeking a provably optimal solution. It is an **exploration policy** — a strategy for navigating an exponentially large search space under budget constraints. The correct analogy is not linear programming but **multi-armed bandit** or **Monte Carlo tree search**. This means the relevant performance criteria are not optimality guarantees but **regret bounds** (how much worse is the greedy policy than the best possible policy over T generations?) and **convergence rates** (how quickly does the policy learn to focus on high-value regions of the triadic space?). Formal regret analysis is deferred to empirical validation (§32), but the exploration injection (§1.1) and policy adaptation (§26.3) are designed to ensure sublinear regret.
+> **Clarification: Scheduler as exploration policy.** The Triadic Scheduler operates at two levels: (1) **within a single generation**, it is a deterministic two-stage filter — hard gates followed by geometric ranking (§20.3); (2) **across generations**, it is an **adaptive exploration policy** whose gate thresholds, exploration rate ε, and impact estimates evolve via the Learning Law (§26.3). The correct analogy for the single-generation mechanism is budgeted selection; the correct analogy for the multi-generation trajectory is **multi-armed bandit** or **Monte Carlo tree search**. This means the relevant performance criteria are not single-step optimality guarantees but **regret bounds** (how much worse is the policy than the best possible over T generations?) and **convergence rates** (how quickly does the policy learn to focus on high-value regions?). See §1.1 "Connection to the Scheduler" for how AD-RTD's coarse triage feeds into the Scheduler's formal scoring. Formal regret analysis is deferred to empirical validation (§32), but the exploration injection (§1.1) and policy adaptation (§26.3) are designed to ensure sublinear regret.
 
 ### 20.7 Multi-LGP Orchestration
 
@@ -1746,7 +1750,7 @@ The falsification protocol (§16) specifies conditions for *disproving* the fram
 | FM-6 | **Coverage metric saturates prematurely** | Coverage (§21) | System believes it has covered the space when it hasn't (false completeness) | Medium | Compare C_w between independent decompositions of the same problem; if C_w differs by >0.2 → decomposition-dependent saturation | Restart decomposition from a different entry point (e.g., switch from AD-RTD to RTD_classic); inject adversarial probes |
 | FM-7 | **Cross-domain transfer fails** (negative transfer) | Transfer (§26.4) | Importing priors from wrong domain worsens performance | Medium | SI_with_transfer < SI_without_transfer for ≥5 candidates | Disable transfer for that domain pair; set β = 0; flag domain pair as "non-isomorphic" |
 | FM-8 | **LGP cycle stalls** (agent fails to complete a step) | LGP-12 (§5.1) | Execution queue blocks; dependent systems cannot proceed | High | LGP step timeout (default: 2× expected duration) | Kill stalled agent; reassign task to backup agent with lower priority; log failure for post-mortem |
-| FM-9 | **Adversarial decomposition gaming** (malicious or biased decomposition maximizes SSS without real stability) | RTD (§2) + SSS (§7) | System reports high SI on a decomposition that is structurally valid but semantically vacuous — e.g., trivial F/P/A assignments that achieve orthogonality without operational content | Medium | SSS-Guard disagreement (§7.2): SSS reports high SI but domain outcome metric shows no improvement; DQI PredictiveUtility near zero | Require SSS-Guard agreement for all irreversible decisions; mandate at least 2 independent decompositions per problem (§7.1 non-uniqueness); flag decompositions where DQI Compression or PredictiveUtility is below baseline |
+| FM-9 | **Adversarial decomposition gaming** (malicious or biased decomposition maximizes SSS without real stability) | RTD (§2) + SSS (§7) | System reports high SI on a decomposition that is structurally valid but semantically vacuous — e.g., trivial F/P/A assignments that achieve orthogonality without operational content | Medium | SSS-Guard disagreement (§7.2): SSS reports high SI but domain outcome metric shows no improvement | Require SSS-Guard agreement for all irreversible decisions; mandate at least 2 independent decompositions per problem (§7.1 non-uniqueness); once DQI (§7.1, currently an open research problem) is calibrated, use PredictiveUtility and Compression as additional detection signals |
 
 ### 25.2 Systemic Safeguards
 
@@ -2726,13 +2730,15 @@ This section supersedes all previous verdicts (§19, §25) and represents the de
 
 ### What was achieved on 26 March 2026:
 
-A **complete, implementation-ready specification** for General Superintelligence — **the Universal Adaptive Intelligence Framework (UAIF)** — comprising 16 formally specified layers:
+A **complete, implementation-ready specification** for General Superintelligence — **the Universal Adaptive Intelligence Framework (UAIF)** — comprising 13 architectural layers and 3 methodological protocols:
+
+**Architectural layers:**
 
 1. Triadic ontology (§1, §12) with v26 cross-reference audit
 2. Recursive search space (§2–§4, §6) with Scheduler Sufficiency Conjecture (§6.1)
 3. Agent architecture (§5)
 4. Procedural engine (§5.1) with Parallel-LGP coordination protocol (§5.2)
-5. Measurement closure (§7), including SSS-Guard (§7.2) and DQI (§7.1)
+5. Measurement closure (§7), including SSS-Guard (§7.2) and DQI research direction (§7.1)
 6. Two-stage Scheduler with hard gates, estimator family, and geometric ranking (§20)
 7. Measurable coverage metric with domain-specific extensions (§21)
 8. Triadic budget model (§22)
@@ -2741,6 +2747,9 @@ A **complete, implementation-ready specification** for General Superintelligence
 11. Concrete representation layer (§27)
 12. Environment interaction model (§28)
 13. Uncertainty propagation and risk-aware scheduling (§29)
+
+**Methodological protocols:**
+
 14. Related work positioning with SOTA multi-agent framework comparison (§24)
 15. Self-audit, falsification protocol, empirical closure gates, and Scheduler ablation suite (§13–§19, §32)
 16. Empirical bridge template with worked example (§35)

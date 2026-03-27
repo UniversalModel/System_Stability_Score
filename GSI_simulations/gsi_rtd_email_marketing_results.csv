@@ -1,0 +1,6 @@
+Generation,Predicted_SI,Real_SI_Triadic,Real_SI_Random,Triadic_vs_Random,SSS_Guard,Best_Action,Best_Form,Best_Position
+1,0.4055,0.3911,0.3595,0.0316,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)
+2,0.5148,0.499,0.3772,0.1218,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)
+3,0.6505,0.6203,0.366,0.2543,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)
+4,0.8023,0.783,0.4202,0.3628,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)
+5,0.9436,0.9182,0.4703,0.4479,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)

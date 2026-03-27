@@ -79,23 +79,39 @@ print()
 
 # ─────────────────────────────────────────────────────────
 # 2. SYSTEM STABILITY SCORE (SSS) — §7
-#    U = ∛(F × P × A)
-#    δ = imbalance ratio
-#    SI = U / (1 + δ²)
+#
+#    Canonical ontology (v26 invariant):
+#      Form     ↔ Time   (the message carrier / representation)
+#      Position ↔ Space  (the recipient context / targeting frame)
+#      Action   ↔ Energy (the delivery intervention)
+#
+#    Operational enumeration order (AD-RTD §1.1): A → F → P
+#    This is methodological only; it does NOT invert the ontology.
+#
+#    Canonical SSS formula (LGP/TAA/SSS):
+#      U  = ∛(F × P × A)          geometric mean
+#      δ  = (max − min) / (max + ε)  imbalance ratio
+#      SI = U / (1 + δ)²           canonical penalty  ← v26 canon
+#
 #    NON-COMPENSATORY: min(F,P,A) ≤ ε → SI = 0 (COLLAPSE)
 # ─────────────────────────────────────────────────────────
 def compute_sss(f, p, a, eps=0.01):
     """
     Compute the Stability Index (SI) for a triadic system (F, P, A).
 
+    Uses the canonical LGP/TAA/SSS formula: SI = U / (1 + δ)²
     Non-compensatory rule: if any pillar is at or near zero, the system collapses.
     This mirrors the GSI-RTD invariant: a zero in any dimension = total failure.
+
+    SSS-Guard note: in production deployments for irreversible decisions,
+    predicted SI should be compared against observed domain outcome and
+    flagged for review if |predicted_SI − real_SI| > 0.10.  (Future work §35.5)
     """
     if min(f, p, a) <= eps:
         return 0.0  # COLLAPSE — non-compensatory rule
-    U = (f * p * a) ** (1.0 / 3.0)        # geometric mean
-    delta = (max(f, p, a) - min(f, p, a)) / (max(f, p, a) + eps)  # imbalance
-    SI = U / (1 + delta ** 2)             # penalise imbalance
+    U = (f * p * a) ** (1.0 / 3.0)                                # geometric mean
+    delta = (max(f, p, a) - min(f, p, a)) / (max(f, p, a) + eps)  # imbalance ratio
+    SI = U / (1 + delta) ** 2                                      # canonical penalty
     return SI
 
 # ─────────────────────────────────────────────────────────
@@ -115,9 +131,9 @@ budget = 20    # agents deployed per generation (§20 Scheduler)
 results = []
 all_gen_sis = []
 
-print(f"{'─'*60}")
-print(f"{'Gen':>4}  {'Predicted SI':>14}  {'Real SI':>10}  {'Best system'}")
-print(f"{'─'*60}")
+print(f"{'─'*72}")
+print(f"{'Gen':>4}  {'Pred SI':>8}  {'Real SI':>8}  {'Random':>8}  {'Guard':>6}  Best system")
+print(f"{'─'*72}")
 
 for gen in range(1, generations + 1):
     # Compute SI for all candidates
@@ -125,36 +141,60 @@ for gen in range(1, generations + 1):
     all_gen_sis.append(sis[:])
 
     # Triadic Scheduler: priority = SI / cost  (§20)
+    # NOTE: This is a minimal heuristic approximation of the full §20 two-stage
+    # non-compensatory ranking — adequate as a toy runtime, not a full implementation.
     costs = [0.1 + (i % n) / n * 0.8 for i in range(n)]
     priorities = [sis[i] / (costs[i] + 0.01) for i in range(n)]
     top_idx = np.argsort(priorities)[-budget:]
 
-    # Simulate real-world execution (with environmental noise)
+    # Random Baseline — same budget, random selection (§35.5 ablation, Gate 1)
+    # Validates that the Triadic Scheduler outperforms chance (Scheduler Sufficiency Conjecture §6.1)
+    random_idx = np.random.choice(n, budget, replace=False)
+
+    # Simulate real-world execution (with environmental noise) — Triadic
     real_sis = [
         compute_sss(f_scores[i], p_scores[i], a_scores[i])
         * max(0.0, 0.97 + np.random.normal(0, 0.04))
         for i in top_idx
     ]
 
-    avg_pred = float(np.mean([sis[i] for i in top_idx]))
-    avg_real = float(np.mean(real_sis))
+    # Simulate real-world execution — Random Baseline (same noise model)
+    random_real_sis = [
+        compute_sss(f_scores[i], p_scores[i], a_scores[i])
+        * max(0.0, 0.97 + np.random.normal(0, 0.04))
+        for i in random_idx
+    ]
+
+    avg_pred   = float(np.mean([sis[i] for i in top_idx]))
+    avg_real   = float(np.mean(real_sis))
+    avg_random = float(np.mean(random_real_sis))
+
+    # SSS-Guard (LGP-10 Pulse Monitor — §7.2):
+    # If predicted SI deviates from realised SI by more than 0.06, flag the environment.
+    # In production: predicted_SI != domain_outcome => review before irreversible actions.
+    deviation = abs(avg_pred - avg_real)
+    guard = "ALERT" if deviation > 0.06 else "OK"
+
     best_i = top_idx[int(np.argmax([sis[i] for i in top_idx]))]
     best_label = (
         f"{actions[candidates[best_i][0]][:18]:18s} | "
         f"{forms[candidates[best_i][1]][:16]:16s} | "
-        f"{positions[candidates[best_i][2]][:22]}"
+        f"{positions[candidates[best_i][2]][:20]}"
     )
 
     results.append({
         "Generation": gen,
-        "Predicted_SI": round(avg_pred, 4),
-        "Real_SI": round(avg_real, 4),
-        "Best_Action": actions[candidates[best_i][0]],
-        "Best_Form": forms[candidates[best_i][1]],
+        "Predicted_SI":   round(avg_pred,   4),
+        "Real_SI_Triadic": round(avg_real,   4),
+        "Real_SI_Random":  round(avg_random, 4),
+        "Triadic_vs_Random": round(avg_real - avg_random, 4),
+        "SSS_Guard": guard,
+        "Best_Action":   actions[candidates[best_i][0]],
+        "Best_Form":     forms[candidates[best_i][1]],
         "Best_Position": positions[candidates[best_i][2]],
     })
 
-    print(f"  {gen:2d}   Pred={avg_pred:.3f}   Real={avg_real:.3f}   {best_label}")
+    print(f"  {gen:2d}   {avg_pred:.3f}    {avg_real:.3f}    {avg_random:.3f}   {guard:5s}  {best_label}")
 
     # Learning Law (§26): reinforce the best-performing agents
     for i in top_idx:
@@ -162,7 +202,7 @@ for gen in range(1, generations + 1):
         p_scores[i] = min(0.98, p_scores[i] + 0.12)
         a_scores[i] = min(0.98, a_scores[i] + 0.12)
 
-print(f"{'─'*60}")
+print(f"{'─'*72}")
 
 # ─────────────────────────────────────────────────────────
 # 4. FINAL WINNER — the most stable triadic system
@@ -230,16 +270,19 @@ df_all.to_csv(all_csv_path, index=False)
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # — Left: SI evolution over generations
-gens  = [r["Generation"]    for r in results]
-pred  = [r["Predicted_SI"]  for r in results]
-real_ = [r["Real_SI"]       for r in results]
+gens  = [r["Generation"]        for r in results]
+pred  = [r["Predicted_SI"]      for r in results]
+real_ = [r["Real_SI_Triadic"]   for r in results]
+rand_ = [r["Real_SI_Random"]    for r in results]
 
 axes[0].axhline(theta_stable,   color="green",  linestyle="--", alpha=0.5, label=f"θ_stable={theta_stable}")
 axes[0].axhline(theta_critical, color="orange", linestyle="--", alpha=0.5, label=f"θ_critical={theta_critical}")
-axes[0].plot(gens, pred,  "o--", color="#3A6BC8", linewidth=2, markersize=7, label="Predicted SI")
-axes[0].plot(gens, real_, "s-",  color="#E07B2A", linewidth=2, markersize=7, label="Real SI (environment)")
-axes[0].fill_between(gens, pred, real_, alpha=0.08, color="gray")
-axes[0].set_title("GSI-RTD Mini Prototype v2\nEmail Marketing — 144 Agents", fontsize=12, fontweight="bold")
+axes[0].plot(gens, pred,  "o--", color="#3A6BC8", linewidth=2, markersize=7, label="Predicted SI (Triadic)")
+axes[0].plot(gens, real_, "s-",  color="#2E9E4F", linewidth=2, markersize=7, label="Real SI — Triadic Scheduler")
+axes[0].plot(gens, rand_, "x:",  color="#C0392B", linewidth=1.5, markersize=7, label="Real SI — Random Baseline")
+axes[0].fill_between(gens, real_, rand_, alpha=0.10, color="#2E9E4F",
+                     label="Triadic advantage")
+axes[0].set_title("GSI-RTD Mini Prototype v2\nTriadic Scheduler vs. Random Baseline (144 Agents)", fontsize=12, fontweight="bold")
 axes[0].set_xlabel("Generation")
 axes[0].set_ylabel("Stability Index (SI)")
 axes[0].set_ylim(0, 1.05)

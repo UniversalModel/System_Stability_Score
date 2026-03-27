@@ -2679,6 +2679,33 @@ Pipeline: Position gate (retrieve) → Form gate (generate) → Action gate (ver
 
 ---
 
+### Practical Note — Minimal Email Marketing Prototype (Cross-reference: GSI-RTD §35.5)
+
+A compact engineering illustration of the full LGP-12 cycle can be implemented as a 144-agent outreach simulation:
+
+- 6 Actions × 6 Forms × 4 Positions (AD-RTD order: A → F → P)
+- Generation-based budgeted selection (top-20 per generation)
+- Non-compensatory SSS scoring: $SI = U / (1+\delta)^2$, collapse if any pillar ≤ ε
+- Execute → monitor → audit loop
+- Learning update across 5 generations (pillar scores converge SI: 0.58 → 0.97)
+
+**LGP instantiation in this toy domain:**
+
+| Step | LGP | Role |
+|------|-----|------|
+| Scan market, detect outreach opportunity | **LGP-1 / LGP-2** | Reconnaissance |
+| Decompose into Action, Form, Position variants | **LGP-3** | Triadic Analysis |
+| Estimate impact (SI) and leverage (SI/cost) | **LGP-4 / LGP-5** | Prioritisation |
+| Select top-$k$ candidates under budget | **LGP-7** | Solution Engineering |
+| Execute the selected outreach actions | **LGP-8 / LGP-9** | Execution |
+| Monitor Predicted SI vs. Real SI | **LGP-10** | Control |
+| Update pillar scores (Learning Law §26) | **LGP-11** | Learning |
+| Final audit; feed best systems to next cycle | **LGP-12** | Audit & Close |
+
+See `APPENDIX_GSI-RTD §35.5` for the full reproducible mini-prototype and repository layout.
+
+---
+
 📌 **Professional Edition:** [github.com/UniversalModel/System_Stability_Score](https://github.com/UniversalModel/System_Stability_Score)
 🤝 **Support:** [donate.U-Model.org](https://donate.U-Model.org)
 

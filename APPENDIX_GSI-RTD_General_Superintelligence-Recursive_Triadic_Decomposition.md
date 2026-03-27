@@ -2721,9 +2721,114 @@ The following table populates the §35.2 template for the publisher outreach cam
 
 > **Limitations:** This worked example demonstrates template usage only. To qualify as a formal empirical bridge, it would need: (1) controlled A/B testing between GSI-RTD-guided and random agent selection; (2) Gate 3 ablation (remove Form variation, measure impact); (3) Gate 4 scaling curve (coverage vs. response rate); (4) independent replication by a different campaign operator. These remain future work.
 
-### 35.5 Status
+### 35.5 Mini Prototype — Email Marketing Simulation (144 Agents)
 
-The publisher outreach campaign provides a **worked example** demonstrating how the §35.2 template maps to a concrete domain. Formal empirical validation (Gates 1–5) has not been conducted. The campaign data exists and can serve as the basis for a future formal empirical bridge document once the experimental controls are established.
+This subsection provides a **worked engineering instance** of AD-RTD + SSS + Triadic Scheduler in a minimal, reproducible domain: email marketing / outreach.
+
+> **Epistemic status:** This is a **mini-prototype / domain implementation candidate**, not a formal proof of GSI and not a completed Gate 1–5 validation. Its purpose is to show that the architecture is straightforward to implement in code and produces interpretable generation-level behaviour under finite budgets.
+
+#### Domain mapping
+
+The canonical ontology remains:
+
+- **Form (F)** ↔ Time — the message carrier / representation
+- **Position (P)** ↔ Space — the recipient context / targeting frame
+- **Action (A)** ↔ Energy — the delivery intervention
+
+In operational AD-RTD order, the search is enumerated as:
+
+1. **Action** — what is done?
+2. **Form** — in what representational vehicle?
+3. **Position** — toward which contextual target?
+
+For this mini-domain:
+
+| Axis | Count | Variants |
+|------|-------|---------|
+| **Action (A)** | 6 | send email; post in forums; fill online forms; send postal letters; meet key people; pay for ads |
+| **Form (F)** | 6 | ready template; personalized report; infographic; video pitch; HTML email; PDF attachment |
+| **Position (P)** | 4 | by geography; by company/workplace; by hierarchy (CEO/Editor); by thematic interest |
+
+$$N = |A| \times |F| \times |P| = 6 \times 6 \times 4 = 144$$
+
+candidate triadic systems. Each system $S_i = (F_i, P_i, A_i)$ is a unique combination.
+
+#### SSS formula used
+
+The canonical formula (LGP/TAA/SSS):
+
+$$U = \sqrt[3]{F \cdot P \cdot A}, \quad \delta = \frac{\max(F,P,A) - \min(F,P,A)}{\max(F,P,A) + \varepsilon}, \quad SI = \frac{U}{(1+\delta)^2}$$
+
+Non-compensatory rule: $\min(F,P,A) \leq \varepsilon \Rightarrow SI = 0$ (collapse).
+
+#### Minimal runtime logic
+
+Each candidate system is assigned initial pillar scores in $[0,1]$. The mini-runtime performs:
+
+1. **SSS evaluation** — non-compensatory triadic formula
+2. **Scheduler prioritisation** — minimal heuristic: $\text{priority} = SI / \text{cost}$ (approximates §20)
+3. **Budgeted execution** — top $k=20$ candidates per generation
+4. **Observed outcome logging** — environment-perturbed feedback
+5. **Learning update** — pillar scores of selected candidates improve (§26 Learning Law)
+
+The prototype runs 5 generations and records both **Predicted SI** and **Real SI** (environment-perturbed outcome).
+
+#### Results
+
+| Generation | Predicted SI | Real SI |
+|-----------|-------------|---------|
+| 1 | 0.405 | ~0.389 |
+| 2 | 0.515 | ~0.508 |
+| 3 | 0.651 | ~0.631 |
+| 4 | 0.802 | ~0.774 |
+| 5 | 0.944 | ~0.920 |
+
+**Winner:** `Post on forums` | `Infographic` | `By hierarchy (CEO/Editor)` → $SI = 0.98$
+
+**Triage (final generation, 144 systems):** High ≥0.618: 27 | Mid 0.38–0.618: 117 | Low <0.38: 0
+
+#### Why this example matters
+
+This micro-simulation makes the abstract GSI-RTD stack concrete:
+
+- **AD-RTD** generates the candidate space (§1.1)
+- **SSS** scores candidate stability (§7)
+- **Triadic Scheduler** selects what runs under budget (§20)
+- **LGP logic** is approximated by the execute-monitor-audit loop (§5.1)
+- **Learning Law** updates the next generation based on realised results (§26)
+
+This is not yet a general superintelligence runtime, but it is a **minimal executable shell** of the architecture in a real engineering style. Intelligence emerges from structured elimination of instability: *the survivors are the solution.*
+
+#### Canonical consistency note
+
+This example preserves the v26 invariant **Form ↔ Time, Position ↔ Space, Action ↔ Energy**. The operational enumeration order A → F → P is methodological only; it does not invert the ontology.
+
+#### Reproducibility package
+
+| File | Description |
+|------|-------------|
+| `GSI_simulations/gsi_rtd_email_marketing_demo.py` | Runnable Python prototype |
+| `GSI_simulations/gsi_rtd_email_marketing_results.csv` | Per-generation stats |
+| `GSI_simulations/gsi_rtd_email_marketing_v2.png` | SI evolution + distribution plot |
+| `GSI_simulations/gsi_rtd_email_marketing_all_systems.csv` | All 144 systems with triage |
+
+Repository: https://github.com/UniversalModel/System_Stability_Score
+
+#### Validation boundary
+
+This mini-prototype demonstrates practical implementability but does **not** satisfy the full empirical bridge requirements of §35.2–§35.3. Future work should add:
+
+1. Baseline comparison against random or non-triadic selection
+2. Scheduler ablation (remove SI-priority, measure impact)
+3. Coverage / performance scaling curve (§21)
+4. Domain metric agreement with SSS-Guard (§7.2)
+5. Independent replication by a different operator
+
+---
+
+### 35.6 Status
+
+The publisher outreach campaign provides a **worked example**demonstrating how the §35.2 template maps to a concrete domain. Formal empirical validation (Gates 1–5) has not been conducted. The campaign data exists and can serve as the basis for a future formal empirical bridge document once the experimental controls are established.
 
 ---
 
@@ -2764,7 +2869,7 @@ A **complete, implementation-ready specification** for General Superintelligence
 
 14. Related work positioning with SOTA multi-agent framework comparison (§24)
 15. Self-audit, falsification protocol, empirical closure gates, and Scheduler ablation suite (§13–§19, §32)
-16. Empirical bridge template with worked example (§35)
+16. Empirical bridge template with worked examples (§35, §35.4, §35.5)
 
 Plus a **concrete implementation blueprint** with technology stack, agent patterns, scheduler code, repository structure, and first-benchmark protocol (§33).
 

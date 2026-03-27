@@ -1,6 +1,6 @@
-Generation,Predicted_SI,Real_SI_Triadic,Real_SI_Random,Triadic_vs_Random,SSS_Guard,Best_Action,Best_Form,Best_Position
-1,0.4055,0.3911,0.3595,0.0316,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)
-2,0.5148,0.499,0.3772,0.1218,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)
-3,0.6505,0.6203,0.366,0.2543,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)
-4,0.8023,0.783,0.4202,0.3628,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)
-5,0.9436,0.9182,0.4703,0.4479,OK,Post on forums,Infographic,By hierarchy (CEO / Editor)
+Generation,Predicted_SI,Real_SI_Triadic,Real_SI_Random,Triadic_Advantage,SSS_Guard,Epsilon_Explore,Best_Action,Best_Form,Best_Position
+1,0.5001,0.4793,0.3602,0.1191,OK,0.12,Pay for advertising,Ready-made template,By geographic location
+2,0.5642,0.5416,0.3221,0.2195,OK,0.084,Pay for advertising,Ready-made template,By geographic location
+3,0.6184,0.6015,0.3419,0.2597,OK,0.059,Pay for advertising,Ready-made template,By geographic location
+4,0.6801,0.6716,0.3733,0.2983,OK,0.041,Pay for advertising,Ready-made template,By geographic location
+5,0.7502,0.7244,0.3977,0.3268,OK,0.029,Pay for advertising,Ready-made template,By geographic location

@@ -1,0 +1,145 @@
+action,form,position,final_SI,cost
+Alternative & complementary therapy,Therapeutic protocol / care plan,Physiotherapy centre / natural healer,0.98,0.2924
+Alternative & complementary therapy,Prescription medication,Sanatorium / recovery resort / home,0.98,0.1817
+Dietary & nutritional therapy,Diagnostic report & lab results,Physiotherapy centre / natural healer,0.98,0.2466
+Pharmacotherapy (drug treatment),Therapeutic protocol / care plan,Sanatorium / recovery resort / home,0.98,0.2823
+Physiotherapy & rehabilitation,Herbal / plant-based remedy,Outpatient clinic / specialist,0.9637,0.3
+Psychotherapy & mental health support,Herbal / plant-based remedy,Sanatorium / recovery resort / home,0.8462,0.208
+Pharmacotherapy (drug treatment),Herbal / plant-based remedy,Sanatorium / recovery resort / home,0.842,0.189
+Alternative & complementary therapy,Nutritional supplement (vitamins),Outpatient clinic / specialist,0.8294,0.2
+Surgical intervention,Herbal / plant-based remedy,Sanatorium / recovery resort / home,0.7736,0.2726
+Dietary & nutritional therapy,Medical device or equipment,Sanatorium / recovery resort / home,0.7528,0.2313
+Pharmacotherapy (drug treatment),Nutritional supplement (vitamins),Sanatorium / recovery resort / home,0.7393,0.1651
+Dietary & nutritional therapy,Diagnostic report & lab results,Sanatorium / recovery resort / home,0.6877,0.208
+Pharmacotherapy (drug treatment),Medical device or equipment,Outpatient clinic / specialist,0.6786,0.4041
+Alternative & complementary therapy,Nutritional supplement (vitamins),Physiotherapy centre / natural healer,0.6676,0.171
+Dietary & nutritional therapy,Prescription medication,Physiotherapy centre / natural healer,0.6437,0.1957
+Dietary & nutritional therapy,Nutritional supplement (vitamins),Physiotherapy centre / natural healer,0.6386,0.1554
+Alternative & complementary therapy,Herbal / plant-based remedy,Sanatorium / recovery resort / home,0.6057,0.1651
+Dietary & nutritional therapy,Herbal / plant-based remedy,Outpatient clinic / specialist,0.5889,0.208
+Surgical intervention,Medical device or equipment,Outpatient clinic / specialist,0.5655,0.5828
+Psychotherapy & mental health support,Diagnostic report & lab results,Physiotherapy centre / natural healer,0.5573,0.342
+Pharmacotherapy (drug treatment),Herbal / plant-based remedy,Hospital (inpatient),0.5512,0.3302
+Pharmacotherapy (drug treatment),Therapeutic protocol / care plan,Physiotherapy centre / natural healer,0.5506,0.3347
+Surgical intervention,Prescription medication,Hospital (inpatient),0.5315,0.5241
+Physiotherapy & rehabilitation,Therapeutic protocol / care plan,Sanatorium / recovery resort / home,0.5146,0.3232
+Pharmacotherapy (drug treatment),Medical device or equipment,Hospital (inpatient),0.5123,0.5092
+Physiotherapy & rehabilitation,Diagnostic report & lab results,Sanatorium / recovery resort / home,0.5078,0.3
+Psychotherapy & mental health support,Prescription medication,Outpatient clinic / specialist,0.5008,0.3175
+Surgical intervention,Prescription medication,Physiotherapy centre / natural healer,0.484,0.3557
+Alternative & complementary therapy,Nutritional supplement (vitamins),Sanatorium / recovery resort / home,0.4793,0.1442
+Dietary & nutritional therapy,Medical device or equipment,Physiotherapy centre / natural healer,0.4756,0.2742
+Psychotherapy & mental health support,Therapeutic protocol / care plan,Hospital (inpatient),0.4611,0.5429
+Dietary & nutritional therapy,Nutritional supplement (vitamins),Sanatorium / recovery resort / home,0.4607,0.131
+Surgical intervention,Medical device or equipment,Sanatorium / recovery resort / home,0.4447,0.4203
+Physiotherapy & rehabilitation,Nutritional supplement (vitamins),Hospital (inpatient),0.4357,0.3302
+Surgical intervention,Prescription medication,Outpatient clinic / specialist,0.4308,0.416
+Physiotherapy & rehabilitation,Therapeutic protocol / care plan,Physiotherapy centre / natural healer,0.4261,0.3832
+Surgical intervention,Medical device or equipment,Hospital (inpatient),0.4158,0.7343
+Physiotherapy & rehabilitation,Herbal / plant-based remedy,Physiotherapy centre / natural healer,0.4154,0.2565
+Physiotherapy & rehabilitation,Prescription medication,Sanatorium / recovery resort / home,0.4032,0.2381
+Physiotherapy & rehabilitation,Medical device or equipment,Physiotherapy centre / natural healer,0.4009,0.3955
+Physiotherapy & rehabilitation,Prescription medication,Physiotherapy centre / natural healer,0.3994,0.2823
+Dietary & nutritional therapy,Medical device or equipment,Hospital (inpatient),0.398,0.4041
+Surgical intervention,Therapeutic protocol / care plan,Physiotherapy centre / natural healer,0.3979,0.4827
+Pharmacotherapy (drug treatment),Therapeutic protocol / care plan,Hospital (inpatient),0.3974,0.4932
+Dietary & nutritional therapy,Therapeutic protocol / care plan,Hospital (inpatient),0.3965,0.3915
+Psychotherapy & mental health support,Nutritional supplement (vitamins),Outpatient clinic / specialist,0.3954,0.252
+Alternative & complementary therapy,Therapeutic protocol / care plan,Sanatorium / recovery resort / home,0.3923,0.2466
+Dietary & nutritional therapy,Therapeutic protocol / care plan,Physiotherapy centre / natural healer,0.3899,0.2657
+Surgical intervention,Diagnostic report & lab results,Physiotherapy centre / natural healer,0.3864,0.4481
+Psychotherapy & mental health support,Therapeutic protocol / care plan,Outpatient clinic / specialist,0.3801,0.4309
+Surgical intervention,Nutritional supplement (vitamins),Physiotherapy centre / natural healer,0.3762,0.2823
+Psychotherapy & mental health support,Nutritional supplement (vitamins),Hospital (inpatient),0.3756,0.3175
+Physiotherapy & rehabilitation,Herbal / plant-based remedy,Hospital (inpatient),0.3693,0.378
+Physiotherapy & rehabilitation,Herbal / plant-based remedy,Sanatorium / recovery resort / home,0.361,0.2163
+Surgical intervention,Therapeutic protocol / care plan,Outpatient clinic / specialist,0.3573,0.5646
+Surgical intervention,Prescription medication,Sanatorium / recovery resort / home,0.3556,0.3
+Alternative & complementary therapy,Diagnostic report & lab results,Hospital (inpatient),0.3524,0.4
+Physiotherapy & rehabilitation,Medical device or equipment,Sanatorium / recovery resort / home,0.3444,0.3336
+Alternative & complementary therapy,Therapeutic protocol / care plan,Outpatient clinic / specialist,0.3435,0.342
+Physiotherapy & rehabilitation,Diagnostic report & lab results,Outpatient clinic / specialist,0.3369,0.416
+Physiotherapy & rehabilitation,Medical device or equipment,Hospital (inpatient),0.333,0.5828
+Psychotherapy & mental health support,Medical device or equipment,Physiotherapy centre / natural healer,0.332,0.3803
+Pharmacotherapy (drug treatment),Medical device or equipment,Sanatorium / recovery resort / home,0.3311,0.2914
+Alternative & complementary therapy,Medical device or equipment,Outpatient clinic / specialist,0.3304,0.353
+Physiotherapy & rehabilitation,Therapeutic protocol / care plan,Outpatient clinic / specialist,0.3295,0.4481
+Pharmacotherapy (drug treatment),Diagnostic report & lab results,Sanatorium / recovery resort / home,0.3284,0.2621
+Alternative & complementary therapy,Medical device or equipment,Hospital (inpatient),0.3274,0.4448
+Psychotherapy & mental health support,Prescription medication,Sanatorium / recovery resort / home,0.3263,0.2289
+Dietary & nutritional therapy,Therapeutic protocol / care plan,Sanatorium / recovery resort / home,0.3234,0.2241
+Dietary & nutritional therapy,Medical device or equipment,Outpatient clinic / specialist,0.3231,0.3208
+Dietary & nutritional therapy,Nutritional supplement (vitamins),Hospital (inpatient),0.3227,0.2289
+Physiotherapy & rehabilitation,Prescription medication,Outpatient clinic / specialist,0.3221,0.3302
+Pharmacotherapy (drug treatment),Therapeutic protocol / care plan,Outpatient clinic / specialist,0.321,0.3915
+Alternative & complementary therapy,Herbal / plant-based remedy,Physiotherapy centre / natural healer,0.3181,0.1957
+Alternative & complementary therapy,Nutritional supplement (vitamins),Hospital (inpatient),0.3089,0.252
+Psychotherapy & mental health support,Herbal / plant-based remedy,Physiotherapy centre / natural healer,0.3088,0.2466
+Physiotherapy & rehabilitation,Nutritional supplement (vitamins),Outpatient clinic / specialist,0.3061,0.2621
+Alternative & complementary therapy,Therapeutic protocol / care plan,Hospital (inpatient),0.3047,0.4309
+Alternative & complementary therapy,Herbal / plant-based remedy,Hospital (inpatient),0.3045,0.2884
+Psychotherapy & mental health support,Nutritional supplement (vitamins),Sanatorium / recovery resort / home,0.3024,0.1817
+Psychotherapy & mental health support,Medical device or equipment,Outpatient clinic / specialist,0.3013,0.4448
+Alternative & complementary therapy,Diagnostic report & lab results,Outpatient clinic / specialist,0.2992,0.3175
+Physiotherapy & rehabilitation,Nutritional supplement (vitamins),Sanatorium / recovery resort / home,0.2984,0.189
+Surgical intervention,Diagnostic report & lab results,Outpatient clinic / specialist,0.2979,0.5241
+Dietary & nutritional therapy,Nutritional supplement (vitamins),Outpatient clinic / specialist,0.2965,0.1817
+Surgical intervention,Nutritional supplement (vitamins),Sanatorium / recovery resort / home,0.2949,0.2381
+Alternative & complementary therapy,Diagnostic report & lab results,Physiotherapy centre / natural healer,0.2944,0.2714
+Psychotherapy & mental health support,Diagnostic report & lab results,Hospital (inpatient),0.2915,0.504
+Psychotherapy & mental health support,Herbal / plant-based remedy,Outpatient clinic / specialist,0.2912,0.2884
+Psychotherapy & mental health support,Prescription medication,Hospital (inpatient),0.2874,0.4
+Surgical intervention,Herbal / plant-based remedy,Hospital (inpatient),0.2864,0.4762
+Physiotherapy & rehabilitation,Nutritional supplement (vitamins),Physiotherapy centre / natural healer,0.286,0.2241
+Surgical intervention,Diagnostic report & lab results,Sanatorium / recovery resort / home,0.2853,0.378
+Surgical intervention,Nutritional supplement (vitamins),Outpatient clinic / specialist,0.2845,0.3302
+Pharmacotherapy (drug treatment),Diagnostic report & lab results,Outpatient clinic / specialist,0.2812,0.3634
+Pharmacotherapy (drug treatment),Nutritional supplement (vitamins),Outpatient clinic / specialist,0.2785,0.2289
+Alternative & complementary therapy,Herbal / plant-based remedy,Outpatient clinic / specialist,0.278,0.2289
+Pharmacotherapy (drug treatment),Prescription medication,Hospital (inpatient),0.2756,0.3634
+Pharmacotherapy (drug treatment),Nutritional supplement (vitamins),Hospital (inpatient),0.2751,0.2884
+Psychotherapy & mental health support,Medical device or equipment,Hospital (inpatient),0.2747,0.5604
+Surgical intervention,Nutritional supplement (vitamins),Hospital (inpatient),0.274,0.416
+Pharmacotherapy (drug treatment),Medical device or equipment,Physiotherapy centre / natural healer,0.2736,0.3455
+Psychotherapy & mental health support,Herbal / plant-based remedy,Hospital (inpatient),0.2732,0.3634
+Surgical intervention,Therapeutic protocol / care plan,Sanatorium / recovery resort / home,0.2709,0.4072
+Alternative & complementary therapy,Prescription medication,Physiotherapy centre / natural healer,0.2693,0.2154
+Dietary & nutritional therapy,Diagnostic report & lab results,Outpatient clinic / specialist,0.2687,0.2884
+Alternative & complementary therapy,Prescription medication,Hospital (inpatient),0.2682,0.3175
+Pharmacotherapy (drug treatment),Herbal / plant-based remedy,Outpatient clinic / specialist,0.2679,0.2621
+Psychotherapy & mental health support,Diagnostic report & lab results,Outpatient clinic / specialist,0.266,0.4
+Dietary & nutritional therapy,Prescription medication,Sanatorium / recovery resort / home,0.265,0.1651
+Physiotherapy & rehabilitation,Prescription medication,Hospital (inpatient),0.2639,0.416
+Psychotherapy & mental health support,Nutritional supplement (vitamins),Physiotherapy centre / natural healer,0.2636,0.2154
+Pharmacotherapy (drug treatment),Prescription medication,Outpatient clinic / specialist,0.2631,0.2884
+Surgical intervention,Herbal / plant-based remedy,Outpatient clinic / specialist,0.2622,0.378
+Pharmacotherapy (drug treatment),Prescription medication,Physiotherapy centre / natural healer,0.2608,0.2466
+Alternative & complementary therapy,Medical device or equipment,Physiotherapy centre / natural healer,0.2598,0.3018
+Pharmacotherapy (drug treatment),Diagnostic report & lab results,Hospital (inpatient),0.259,0.4579
+Surgical intervention,Therapeutic protocol / care plan,Hospital (inpatient),0.2582,0.7114
+Physiotherapy & rehabilitation,Diagnostic report & lab results,Physiotherapy centre / natural healer,0.258,0.3557
+Psychotherapy & mental health support,Prescription medication,Physiotherapy centre / natural healer,0.2578,0.2714
+Dietary & nutritional therapy,Herbal / plant-based remedy,Physiotherapy centre / natural healer,0.2578,0.1778
+Pharmacotherapy (drug treatment),Diagnostic report & lab results,Physiotherapy centre / natural healer,0.2573,0.3107
+Surgical intervention,Diagnostic report & lab results,Hospital (inpatient),0.2573,0.6604
+Surgical intervention,Herbal / plant-based remedy,Physiotherapy centre / natural healer,0.2563,0.3232
+Pharmacotherapy (drug treatment),Prescription medication,Sanatorium / recovery resort / home,0.2539,0.208
+Dietary & nutritional therapy,Therapeutic protocol / care plan,Outpatient clinic / specialist,0.2538,0.3107
+Dietary & nutritional therapy,Diagnostic report & lab results,Hospital (inpatient),0.2533,0.3634
+Psychotherapy & mental health support,Medical device or equipment,Sanatorium / recovery resort / home,0.2528,0.3208
+Dietary & nutritional therapy,Prescription medication,Hospital (inpatient),0.2525,0.2884
+Physiotherapy & rehabilitation,Medical device or equipment,Outpatient clinic / specialist,0.2464,0.4626
+Alternative & complementary therapy,Prescription medication,Outpatient clinic / specialist,0.2456,0.252
+Pharmacotherapy (drug treatment),Herbal / plant-based remedy,Physiotherapy centre / natural healer,0.2439,0.2241
+Psychotherapy & mental health support,Diagnostic report & lab results,Sanatorium / recovery resort / home,0.2407,0.2884
+Physiotherapy & rehabilitation,Diagnostic report & lab results,Hospital (inpatient),0.2392,0.5241
+Dietary & nutritional therapy,Herbal / plant-based remedy,Sanatorium / recovery resort / home,0.2392,0.15
+Psychotherapy & mental health support,Therapeutic protocol / care plan,Sanatorium / recovery resort / home,0.237,0.3107
+Physiotherapy & rehabilitation,Therapeutic protocol / care plan,Hospital (inpatient),0.2254,0.5646
+Alternative & complementary therapy,Diagnostic report & lab results,Sanatorium / recovery resort / home,0.224,0.2289
+Pharmacotherapy (drug treatment),Nutritional supplement (vitamins),Physiotherapy centre / natural healer,0.223,0.1957
+Psychotherapy & mental health support,Therapeutic protocol / care plan,Physiotherapy centre / natural healer,0.2215,0.3684
+Dietary & nutritional therapy,Herbal / plant-based remedy,Hospital (inpatient),0.2207,0.2621
+Surgical intervention,Medical device or equipment,Physiotherapy centre / natural healer,0.2166,0.4983
+Alternative & complementary therapy,Medical device or equipment,Sanatorium / recovery resort / home,0.2156,0.2546
+Dietary & nutritional therapy,Prescription medication,Outpatient clinic / specialist,0.2136,0.2289

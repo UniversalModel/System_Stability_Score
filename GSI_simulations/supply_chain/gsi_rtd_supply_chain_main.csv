@@ -1,0 +1,6 @@
+Generation,Predicted_SI,Real_SI_Triadic,Real_SI_Random,Triadic_Advantage,SSS_Guard,Epsilon_Explore,Best_Action,Best_Form,Best_Position
+1,0.4753,0.4631,0.337,0.1261,OK,0.12,Automate demand-based reorder,Demand forecast model,By product category / SKU
+2,0.516,0.4746,0.3391,0.1356,OK,0.084,Automate demand-based reorder,Demand forecast model,By product category / SKU
+3,0.5665,0.5435,0.3761,0.1675,OK,0.059,Automate demand-based reorder,Demand forecast model,By product category / SKU
+4,0.6396,0.6091,0.3642,0.2449,OK,0.041,Expedite shipping,Inventory reallocation manifest,By supplier tier (T1/T2/T3)
+5,0.6792,0.662,0.4011,0.2609,OK,0.029,Expedite shipping,Inventory reallocation manifest,By supplier tier (T1/T2/T3)

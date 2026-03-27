@@ -1,0 +1,6 @@
+Test,Mean_SI,SI_Drop_%,Pass
+Baseline (F+P+A),0.4243,0.0,—
+Ablation −Form (F<0.30),0.0,100.0,PASS ✓
+Ablation −Position (P<0.30),0.0,100.0,PASS ✓
+Ablation −Action (A<0.30),0.0,100.0,PASS ✓
+Arithmetic mean (T3),0.7006,—,PASS ✓

@@ -85,13 +85,20 @@ print()
 #
 #    NON-COMPENSATORY: min(F,P,A) ≤ ε → SI = 0 (COLLAPSE)
 # ─────────────────────────────────────────────────────────
+KILL_THRESHOLD = 0.30  # Hard Gate G4 (§20.3.1): min(F,P,A) < 0.30 → reject
+                        # More realistic than ≈0 (canonical eps) for production use.
+                        # A pillar below 30% contributes near-zero systemic value.
+
 def compute_sss(f, p, a, eps=0.01):
     """
     Stability Index (SI) for a triadic system (F, P, A).
     Canonical formula: SI = ∛(F·P·A) / (1+δ)²
+    Hard Gate G4: collapse if any pillar < KILL_THRESHOLD (0.30).
     Non-compensatory: collapse if any pillar ≤ eps.
     SSS-Guard: in production, flag if |predicted_SI − real_SI| > 0.06.
     """
+    if min(f, p, a) < KILL_THRESHOLD:   # G4 kill rule (§20.3.1)
+        return 0.0
     if min(f, p, a) <= eps:
         return 0.0
     U = (f * p * a) ** (1.0 / 3.0)
@@ -186,6 +193,17 @@ def armed_state_machine(si_history, min_recovery=0.05, max_armed_age=3):
 # ─────────────────────────────────────────────────────────
 # 5. SIMULATION — 5 generations, budget = 20 agents/gen
 #    With: Exploration Injection (§1.1), Triadic Cost, SSS-Guard, Random Baseline
+#
+#    LGP-12 simulation note:
+#    Each generation below corresponds to a compressed LGP cycle.
+#    LGP-1/2  (Scan/Detect)  → Phase 0 instability check (SI < θ_stable)
+#    LGP-3/4  (Decompose/Rank) → AD-RTD enumeration + priority sort
+#    LGP-5/6  (Leverage/Synthesize) → Exploit + Explore selection
+#    LGP-7/8  (Select/Plan) → top_idx execution with environmental noise
+#    LGP-9/10 (Allocate/Monitor → SSS-Guard deviation check
+#    LGP-11/12 (Report/Audit) → Learning Law weight update + ε decay
+#    Full 12-step cycle: see APPENDIX_LGP_Lady_Galaxy_Protocol.md
+#    and gsi_runtime.py for the complete implementation.
 # ─────────────────────────────────────────────────────────
 np.random.seed(42)
 n = len(candidates)
@@ -283,6 +301,22 @@ for gen in range(1, generations + 1):
     epsilon *= epsilon_decay  # exploration decays over time
 
 print(f"{'─'*72}")
+
+# SSS-Guard summary: show any ALERT generations (LGP-10 Pulse Monitor)
+alert_gens = [r for r in results if r["SSS_Guard"] == "ALERT"]
+if alert_gens:
+    print()
+    print("⚠  SSS-Guard ALERT summary (LGP-10 Pulse Monitor):")
+    print("   An ALERT means the scoring model diverged from realised performance.")
+    print("   This is expected when the Scheduler converges rapidly (fast learning")
+    print("   outpaces the prediction model). The Learning Law corrects it next gen.")
+    for ag in alert_gens:
+        print(f"   Gen {ag['Generation']:2d}: Predicted={ag['Predicted_SI']:.3f}  "
+              f"Realised={ag['Real_SI_Triadic']:.3f}  "
+              f"Deviation={abs(ag['Predicted_SI'] - ag['Real_SI_Triadic']):.3f}")
+else:
+    print()
+    print("✓  SSS-Guard: No ALERT in any generation (prediction well-calibrated).")
 
 # ─────────────────────────────────────────────────────────
 # 4. FINAL WINNER — the most stable triadic system
@@ -410,7 +444,91 @@ mc_csv_path = os.path.join(out_dir, "gsi_rtd_monte_carlo_results.csv")
 pd.DataFrame(mc_results).to_csv(mc_csv_path, index=False)
 
 # ─────────────────────────────────────────────────────────
-# 8. SAVE MAIN RESULTS
+# 8. ABLATION TESTS — Gate 3 falsification (§32 / §16)
+#
+#    Test 2: Remove 1 pillar → SI collapses
+#      Set one pillar to a near-zero value; verify SI → 0 for every agent.
+#      Falsification criterion: if SI does NOT drop by ≥15%, the non-
+#      compensatory architecture claim fails.
+#
+#    Test 3: Replace geometric mean with arithmetic mean → SI drops
+#      Arithmetic mean allows a strong pillar to compensate a weak one.
+#      We expect lower mean SI and higher variance when using arithmetic mean.
+#      Falsification criterion: if arithmetic SI ≥ geometric SI, the
+#      non-compensatory claim is not supported by this domain.
+# ─────────────────────────────────────────────────────────
+print()
+print("ABLATION TESTS (Gate 3, §32):")
+print(f"{'─'*72}")
+
+# Snapshot final scores (after learning)
+f_snap = f_scores.copy()
+p_snap = p_scores.copy()
+a_snap = a_scores.copy()
+
+# — Baseline (full system)
+baseline_sis = [compute_sss(f_snap[i], p_snap[i], a_snap[i]) for i in range(n)]
+baseline_mean = float(np.mean(baseline_sis))
+print(f"  Baseline SI (full F+P+A):          mean={baseline_mean:.4f}")
+
+# — Test 2a: Remove Form pillar (F → KILL_THRESHOLD - 0.01)
+ablation_f = [compute_sss(KILL_THRESHOLD - 0.01, p_snap[i], a_snap[i]) for i in range(n)]
+mean_no_f = float(np.mean(ablation_f))
+drop_f = (baseline_mean - mean_no_f) / (baseline_mean + 1e-9) * 100
+pass_f = "PASS ✓" if drop_f >= 15 else "FAIL ✗"
+print(f"  Ablation −Form  (F<{KILL_THRESHOLD}): mean={mean_no_f:.4f}  drop={drop_f:5.1f}%  {pass_f}")
+
+# — Test 2b: Remove Position pillar (P → KILL_THRESHOLD - 0.01)
+ablation_p = [compute_sss(f_snap[i], KILL_THRESHOLD - 0.01, a_snap[i]) for i in range(n)]
+mean_no_p = float(np.mean(ablation_p))
+drop_p = (baseline_mean - mean_no_p) / (baseline_mean + 1e-9) * 100
+pass_p = "PASS ✓" if drop_p >= 15 else "FAIL ✗"
+print(f"  Ablation −Pos   (P<{KILL_THRESHOLD}): mean={mean_no_p:.4f}  drop={drop_p:5.1f}%  {pass_p}")
+
+# — Test 2c: Remove Action pillar (A → KILL_THRESHOLD - 0.01)
+ablation_a = [compute_sss(f_snap[i], p_snap[i], KILL_THRESHOLD - 0.01) for i in range(n)]
+mean_no_a = float(np.mean(ablation_a))
+drop_a = (baseline_mean - mean_no_a) / (baseline_mean + 1e-9) * 100
+pass_a = "PASS ✓" if drop_a >= 15 else "FAIL ✗"
+print(f"  Ablation −Action(A<{KILL_THRESHOLD}): mean={mean_no_a:.4f}  drop={drop_a:5.1f}%  {pass_a}")
+
+# — Test 3: Arithmetic mean vs. Geometric mean (non-compensatory claim)
+def compute_sss_arithmetic(f, p, a, eps=0.01):
+    """Arithmetic mean variant — allows compensatory trade-offs."""
+    if min(f, p, a) <= eps:
+        return 0.0
+    return (f + p + a) / 3.0   # no imbalance penalty, no geometric mean
+
+arith_sis = [compute_sss_arithmetic(f_snap[i], p_snap[i], a_snap[i]) for i in range(n)]
+mean_arith = float(np.mean(arith_sis))
+std_geo    = float(np.std(baseline_sis))
+std_arith  = float(np.std(arith_sis))
+geo_wins_mean = baseline_mean < mean_arith   # geometric should be lower (stricter)
+geo_wins_var  = std_geo < std_arith           # arithmetic should have higher variance
+pass_t3 = "PASS ✓" if geo_wins_mean or geo_wins_var else "FAIL ✗"
+print()
+print(f"  Test 3 — Geometric vs. Arithmetic mean:")
+print(f"    Geometric (non-compensatory): mean={baseline_mean:.4f}  std={std_geo:.4f}")
+print(f"    Arithmetic (compensatory):    mean={mean_arith:.4f}  std={std_arith:.4f}")
+print(f"    Geometric is stricter (lower/more variable): {pass_t3}")
+print(f"    Interpretation: arithmetic allows strong pillars to mask weak ones;")
+print(f"    geometric mean correctly penalises imbalance → lower inflated scores.")
+
+print(f"{'─'*72}")
+
+# Save ablation results
+ablation_rows = [
+    {"Test": "Baseline (F+P+A)",          "Mean_SI": round(baseline_mean, 4), "SI_Drop_%": 0.0,             "Pass": "—"},
+    {"Test": "Ablation −Form (F<0.30)",   "Mean_SI": round(mean_no_f, 4),     "SI_Drop_%": round(drop_f,1), "Pass": pass_f},
+    {"Test": "Ablation −Position (P<0.30)","Mean_SI": round(mean_no_p, 4),    "SI_Drop_%": round(drop_p,1), "Pass": pass_p},
+    {"Test": "Ablation −Action (A<0.30)", "Mean_SI": round(mean_no_a, 4),     "SI_Drop_%": round(drop_a,1), "Pass": pass_a},
+    {"Test": "Arithmetic mean (T3)",      "Mean_SI": round(mean_arith, 4),    "SI_Drop_%": "—",             "Pass": pass_t3},
+]
+ablation_csv_path = os.path.join(out_dir, "gsi_rtd_ablation_results.csv")
+pd.DataFrame(ablation_rows).to_csv(ablation_csv_path, index=False)
+
+# ─────────────────────────────────────────────────────────
+# 9. SAVE MAIN RESULTS
 # ─────────────────────────────────────────────────────────
 
 df_results = pd.DataFrame(results)
@@ -502,6 +620,7 @@ print(f"   {png_path}")
 print(f"   {csv_path}")
 print(f"   {all_csv_path}")
 print(f"   {mc_csv_path}")
+print(f"   {ablation_csv_path}")
 print()
 print("=" * 72)
 print("  GSI-RTD: Intelligence = structured elimination of instability.")

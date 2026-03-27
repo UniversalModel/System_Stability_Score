@@ -1,0 +1,145 @@
+Action,Form,Position,SI,Triage
+Reorder from primary supplier,Purchase order (PO),By geographic region,0.9794,High
+Reorder from primary supplier,Purchase order (PO),By product category / SKU,0.5947,Mid
+Reorder from primary supplier,Purchase order (PO),By supplier tier (T1/T2/T3),0.5264,Mid
+Reorder from primary supplier,Purchase order (PO),By lead time risk (days overdue),0.4508,Mid
+Reorder from primary supplier,Emergency requisition form,By geographic region,0.2245,Low
+Reorder from primary supplier,Emergency requisition form,By product category / SKU,0.2762,Low
+Reorder from primary supplier,Emergency requisition form,By supplier tier (T1/T2/T3),0.5997,Mid
+Reorder from primary supplier,Emergency requisition form,By lead time risk (days overdue),0.2233,Low
+Reorder from primary supplier,Supplier performance report,By geographic region,0.4324,Mid
+Reorder from primary supplier,Supplier performance report,By product category / SKU,0.244,Low
+Reorder from primary supplier,Supplier performance report,By supplier tier (T1/T2/T3),0.4251,Mid
+Reorder from primary supplier,Supplier performance report,By lead time risk (days overdue),0.98,High
+Reorder from primary supplier,Inventory reallocation manifest,By geographic region,0.3292,Low
+Reorder from primary supplier,Inventory reallocation manifest,By product category / SKU,0.6863,High
+Reorder from primary supplier,Inventory reallocation manifest,By supplier tier (T1/T2/T3),0.3147,Low
+Reorder from primary supplier,Inventory reallocation manifest,By lead time risk (days overdue),0.6955,High
+Reorder from primary supplier,Demand forecast model,By geographic region,0.4417,Mid
+Reorder from primary supplier,Demand forecast model,By product category / SKU,0.3446,Low
+Reorder from primary supplier,Demand forecast model,By supplier tier (T1/T2/T3),0.271,Low
+Reorder from primary supplier,Demand forecast model,By lead time risk (days overdue),0.4192,Mid
+Reorder from primary supplier,Contract amendment document,By geographic region,0.2919,Low
+Reorder from primary supplier,Contract amendment document,By product category / SKU,0.2513,Low
+Reorder from primary supplier,Contract amendment document,By supplier tier (T1/T2/T3),0.3271,Low
+Reorder from primary supplier,Contract amendment document,By lead time risk (days overdue),0.2949,Low
+Activate backup supplier,Purchase order (PO),By geographic region,0.98,High
+Activate backup supplier,Purchase order (PO),By product category / SKU,0.2753,Low
+Activate backup supplier,Purchase order (PO),By supplier tier (T1/T2/T3),0.2503,Low
+Activate backup supplier,Purchase order (PO),By lead time risk (days overdue),0.2822,Low
+Activate backup supplier,Emergency requisition form,By geographic region,0.4418,Mid
+Activate backup supplier,Emergency requisition form,By product category / SKU,0.2864,Low
+Activate backup supplier,Emergency requisition form,By supplier tier (T1/T2/T3),0.3603,Low
+Activate backup supplier,Emergency requisition form,By lead time risk (days overdue),0.2664,Low
+Activate backup supplier,Supplier performance report,By geographic region,0.2712,Low
+Activate backup supplier,Supplier performance report,By product category / SKU,0.2743,Low
+Activate backup supplier,Supplier performance report,By supplier tier (T1/T2/T3),0.2784,Low
+Activate backup supplier,Supplier performance report,By lead time risk (days overdue),0.2291,Low
+Activate backup supplier,Inventory reallocation manifest,By geographic region,0.3435,Low
+Activate backup supplier,Inventory reallocation manifest,By product category / SKU,0.3303,Low
+Activate backup supplier,Inventory reallocation manifest,By supplier tier (T1/T2/T3),0.4249,Mid
+Activate backup supplier,Inventory reallocation manifest,By lead time risk (days overdue),0.3748,Low
+Activate backup supplier,Demand forecast model,By geographic region,0.5192,Mid
+Activate backup supplier,Demand forecast model,By product category / SKU,0.2042,Low
+Activate backup supplier,Demand forecast model,By supplier tier (T1/T2/T3),0.5372,Mid
+Activate backup supplier,Demand forecast model,By lead time risk (days overdue),0.2289,Low
+Activate backup supplier,Contract amendment document,By geographic region,0.4227,Mid
+Activate backup supplier,Contract amendment document,By product category / SKU,0.2864,Low
+Activate backup supplier,Contract amendment document,By supplier tier (T1/T2/T3),0.2636,Low
+Activate backup supplier,Contract amendment document,By lead time risk (days overdue),0.3762,Low
+Expedite shipping,Purchase order (PO),By geographic region,0.4537,Mid
+Expedite shipping,Purchase order (PO),By product category / SKU,0.6114,Mid
+Expedite shipping,Purchase order (PO),By supplier tier (T1/T2/T3),0.4544,Mid
+Expedite shipping,Purchase order (PO),By lead time risk (days overdue),0.3263,Low
+Expedite shipping,Emergency requisition form,By geographic region,0.3463,Low
+Expedite shipping,Emergency requisition form,By product category / SKU,0.426,Mid
+Expedite shipping,Emergency requisition form,By supplier tier (T1/T2/T3),0.2593,Low
+Expedite shipping,Emergency requisition form,By lead time risk (days overdue),0.3993,Mid
+Expedite shipping,Supplier performance report,By geographic region,0.3845,Mid
+Expedite shipping,Supplier performance report,By product category / SKU,0.4834,Mid
+Expedite shipping,Supplier performance report,By supplier tier (T1/T2/T3),0.6626,High
+Expedite shipping,Supplier performance report,By lead time risk (days overdue),0.2734,Low
+Expedite shipping,Inventory reallocation manifest,By geographic region,0.4532,Mid
+Expedite shipping,Inventory reallocation manifest,By product category / SKU,0.5403,Mid
+Expedite shipping,Inventory reallocation manifest,By supplier tier (T1/T2/T3),0.98,High
+Expedite shipping,Inventory reallocation manifest,By lead time risk (days overdue),0.2778,Low
+Expedite shipping,Demand forecast model,By geographic region,0.2514,Low
+Expedite shipping,Demand forecast model,By product category / SKU,0.3715,Low
+Expedite shipping,Demand forecast model,By supplier tier (T1/T2/T3),0.2296,Low
+Expedite shipping,Demand forecast model,By lead time risk (days overdue),0.3113,Low
+Expedite shipping,Contract amendment document,By geographic region,0.378,Low
+Expedite shipping,Contract amendment document,By product category / SKU,0.4743,Mid
+Expedite shipping,Contract amendment document,By supplier tier (T1/T2/T3),0.2797,Low
+Expedite shipping,Contract amendment document,By lead time risk (days overdue),0.2365,Low
+Redistribute existing inventory,Purchase order (PO),By geographic region,0.2229,Low
+Redistribute existing inventory,Purchase order (PO),By product category / SKU,0.2352,Low
+Redistribute existing inventory,Purchase order (PO),By supplier tier (T1/T2/T3),0.6791,High
+Redistribute existing inventory,Purchase order (PO),By lead time risk (days overdue),0.2989,Low
+Redistribute existing inventory,Emergency requisition form,By geographic region,0.2228,Low
+Redistribute existing inventory,Emergency requisition form,By product category / SKU,0.2827,Low
+Redistribute existing inventory,Emergency requisition form,By supplier tier (T1/T2/T3),0.3145,Low
+Redistribute existing inventory,Emergency requisition form,By lead time risk (days overdue),0.7444,High
+Redistribute existing inventory,Supplier performance report,By geographic region,0.2581,Low
+Redistribute existing inventory,Supplier performance report,By product category / SKU,0.5011,Mid
+Redistribute existing inventory,Supplier performance report,By supplier tier (T1/T2/T3),0.5051,Mid
+Redistribute existing inventory,Supplier performance report,By lead time risk (days overdue),0.34,Low
+Redistribute existing inventory,Inventory reallocation manifest,By geographic region,0.2575,Low
+Redistribute existing inventory,Inventory reallocation manifest,By product category / SKU,0.268,Low
+Redistribute existing inventory,Inventory reallocation manifest,By supplier tier (T1/T2/T3),0.2668,Low
+Redistribute existing inventory,Inventory reallocation manifest,By lead time risk (days overdue),0.3466,Low
+Redistribute existing inventory,Demand forecast model,By geographic region,0.4575,Mid
+Redistribute existing inventory,Demand forecast model,By product category / SKU,0.4037,Mid
+Redistribute existing inventory,Demand forecast model,By supplier tier (T1/T2/T3),0.6945,High
+Redistribute existing inventory,Demand forecast model,By lead time risk (days overdue),0.3908,Mid
+Redistribute existing inventory,Contract amendment document,By geographic region,0.2818,Low
+Redistribute existing inventory,Contract amendment document,By product category / SKU,0.4256,Mid
+Redistribute existing inventory,Contract amendment document,By supplier tier (T1/T2/T3),0.2699,Low
+Redistribute existing inventory,Contract amendment document,By lead time risk (days overdue),0.3181,Low
+Negotiate contract revision,Purchase order (PO),By geographic region,0.3429,Low
+Negotiate contract revision,Purchase order (PO),By product category / SKU,0.4269,Mid
+Negotiate contract revision,Purchase order (PO),By supplier tier (T1/T2/T3),0.7974,High
+Negotiate contract revision,Purchase order (PO),By lead time risk (days overdue),0.3015,Low
+Negotiate contract revision,Emergency requisition form,By geographic region,0.3765,Low
+Negotiate contract revision,Emergency requisition form,By product category / SKU,0.3812,Mid
+Negotiate contract revision,Emergency requisition form,By supplier tier (T1/T2/T3),0.2515,Low
+Negotiate contract revision,Emergency requisition form,By lead time risk (days overdue),0.357,Low
+Negotiate contract revision,Supplier performance report,By geographic region,0.4432,Mid
+Negotiate contract revision,Supplier performance report,By product category / SKU,0.4002,Mid
+Negotiate contract revision,Supplier performance report,By supplier tier (T1/T2/T3),0.375,Low
+Negotiate contract revision,Supplier performance report,By lead time risk (days overdue),0.287,Low
+Negotiate contract revision,Inventory reallocation manifest,By geographic region,0.3019,Low
+Negotiate contract revision,Inventory reallocation manifest,By product category / SKU,0.3117,Low
+Negotiate contract revision,Inventory reallocation manifest,By supplier tier (T1/T2/T3),0.3048,Low
+Negotiate contract revision,Inventory reallocation manifest,By lead time risk (days overdue),0.4985,Mid
+Negotiate contract revision,Demand forecast model,By geographic region,0.3665,Low
+Negotiate contract revision,Demand forecast model,By product category / SKU,0.2711,Low
+Negotiate contract revision,Demand forecast model,By supplier tier (T1/T2/T3),0.672,High
+Negotiate contract revision,Demand forecast model,By lead time risk (days overdue),0.6956,High
+Negotiate contract revision,Contract amendment document,By geographic region,0.4278,Mid
+Negotiate contract revision,Contract amendment document,By product category / SKU,0.298,Low
+Negotiate contract revision,Contract amendment document,By supplier tier (T1/T2/T3),0.2602,Low
+Negotiate contract revision,Contract amendment document,By lead time risk (days overdue),0.2333,Low
+Automate demand-based reorder,Purchase order (PO),By geographic region,0.9699,High
+Automate demand-based reorder,Purchase order (PO),By product category / SKU,0.2517,Low
+Automate demand-based reorder,Purchase order (PO),By supplier tier (T1/T2/T3),0.5973,Mid
+Automate demand-based reorder,Purchase order (PO),By lead time risk (days overdue),0.2692,Low
+Automate demand-based reorder,Emergency requisition form,By geographic region,0.3146,Low
+Automate demand-based reorder,Emergency requisition form,By product category / SKU,0.8438,High
+Automate demand-based reorder,Emergency requisition form,By supplier tier (T1/T2/T3),0.4094,Mid
+Automate demand-based reorder,Emergency requisition form,By lead time risk (days overdue),0.3234,Low
+Automate demand-based reorder,Supplier performance report,By geographic region,0.2587,Low
+Automate demand-based reorder,Supplier performance report,By product category / SKU,0.3342,Low
+Automate demand-based reorder,Supplier performance report,By supplier tier (T1/T2/T3),0.2928,Low
+Automate demand-based reorder,Supplier performance report,By lead time risk (days overdue),0.7747,High
+Automate demand-based reorder,Inventory reallocation manifest,By geographic region,0.2565,Low
+Automate demand-based reorder,Inventory reallocation manifest,By product category / SKU,0.4528,Mid
+Automate demand-based reorder,Inventory reallocation manifest,By supplier tier (T1/T2/T3),0.2931,Low
+Automate demand-based reorder,Inventory reallocation manifest,By lead time risk (days overdue),0.3183,Low
+Automate demand-based reorder,Demand forecast model,By geographic region,0.3659,Low
+Automate demand-based reorder,Demand forecast model,By product category / SKU,0.98,High
+Automate demand-based reorder,Demand forecast model,By supplier tier (T1/T2/T3),0.2923,Low
+Automate demand-based reorder,Demand forecast model,By lead time risk (days overdue),0.2687,Low
+Automate demand-based reorder,Contract amendment document,By geographic region,0.499,Mid
+Automate demand-based reorder,Contract amendment document,By product category / SKU,0.5472,Mid
+Automate demand-based reorder,Contract amendment document,By supplier tier (T1/T2/T3),0.3497,Low
+Automate demand-based reorder,Contract amendment document,By lead time risk (days overdue),0.2276,Low

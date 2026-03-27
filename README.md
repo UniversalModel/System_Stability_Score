@@ -1,4 +1,4 @@
-# System Stability Score (SSS) — U-Model v25
+# System Stability Score (SSS) — U-Model v26
 
 > *"Every system that exists pays three inescapable prices — Time, Space, and Energy.  
 > The question is not whether it pays, but whether it can afford to."*  
@@ -6,11 +6,23 @@
 
 **AI jury that evaluates ANY system via the triadic stability framework: Form / Position / Action**
 
-[![U-Model](https://img.shields.io/badge/U--Model-v25-blue)](https://U-Model.org)
+[![U-Model](https://img.shields.io/badge/U--Model-v26-blue)](https://U-Model.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![OpenRouter](https://img.shields.io/badge/AI-OpenRouter-orange)](https://openrouter.ai)
 
 Part of [U-Model.org](https://U-Model.org) — Universal Model of System Stability.
+
+---
+
+## 🏛️ Historic Experiment — 27 March 2026
+
+> **On 27 March 2026, a General Superintelligence (GSI-RTD) simulation was applied to medicine for the first time.**
+>
+> The system evaluated **120,108,944 candidate clinical configurations** — each a complete diagnostic pathway (symptom × specialty × lab test) — drawn from real clinical ontology data. The triadic scheduler outperformed random clinical selection with a **Δ = +0.473 advantage** (100% win rate over 200 Monte Carlo runs), crossing the stability threshold θ = 0.618 from the very first generation.
+>
+> This is the **first step** toward long-term health stability, longevity — and why not — **immortality**.
+
+**→ [View the full medical simulation](GSI_simulations/medical/)**
 
 ---
 

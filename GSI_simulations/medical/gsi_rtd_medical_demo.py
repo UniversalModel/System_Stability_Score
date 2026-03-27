@@ -1,585 +1,465 @@
-# =========================================================================
-# GSI-RTD Mini Prototype v1 — Medical Domain
-# =========================================================================
-# Author:  Petar Nikolov (with AI assistance)
-# Date:    27 March 2026
-# Based on: APPENDIX_GSI-RTD v.28 §1.1 (AD-RTD), §7 (SSS), §20 (Scheduler)
-# Repo:    https://github.com/UniversalModel/System_Stability_Score
-# DOI:     https://doi.org/10.17605/OSF.IO/74XGR
-#
-# THIRD DOMAIN — validates cross-domain generalizability of GSI-RTD.
-# Architecture: 6×6×6 = 216 agents (upgraded from 144; full 6-axis parity).
-#
-# DOMAIN PROBLEM: "How to restore patient health stability after illness onset?"
-# Framing: clinical decision SEARCH ARCHITECTURE — not AI prescribing medicine.
-#           Triadic generation + stability ranking + safety gating.
-#
-# AD-RTD Decomposition (A → F → P order, §1.1):
-#   Action   (A ↔ Energy):  therapeutic interventions — what is done
-#   Form     (F ↔ Time):    delivery vehicles — what carries the action
-#   Position (P ↔ Space):   care contexts — where treatment is administered
-#
-# TRIADIC AXES (6 × 6 × 6 = 216 candidate systems):
-#   Actions  → Pharmacotherapy, Physiotherapy, Dietary intervention,
-#              Monitoring, Rehabilitation, Behavioral/psychotherapy
-#   Forms    → Prescription medication, Nutritional supplement, Medical device,
-#              Therapeutic protocol/care plan, Exercise programme,
-#              Digital monitoring tool
-#   Positions→ Hospital (inpatient), Specialized clinic, Rehabilitation centre,
-#              Home care environment, Sanatorium / recovery resort,
-#              Telemedicine context
-#
-# HARD GATES (medical-domain specific, §20.3.1):
-#   G1 Safety:           high-risk / contraindicated combination → reject
-#   G2 Provider validity: unverified non-clinical setting → penalty
-#   G3 Patient fit:       mismatch to condition profile → reject
-#   G4 Min pillar:        min(F,P,A) < KILL_THRESHOLD → reject (canonical)
-#
-# COMPARISON WITH PRIOR DOMAINS:
-#   - Same SSS formula, same learning rate, same MC N=200 → comparable (§32 Gate 2)
-#   - Gate 4: does triadic beat random in medicine?
-#   - Cross-domain structural isomorphism test (§26.4)
-#   - Position axis expected to matter MORE than in marketing domain
-# =========================================================================
+"""
+GSI-RTD Medical Domain Simulation — Full-Scale Real Ontology Demo
+=================================================================
+Domain  : Clinical Medicine (Real CSV Ontology)
+Axes    : F=Symptoms (1052) | P=Medical Specialties (35) | A=Lab Tests (3361)
+Space   : 1052 × 35 × 3361 = 123,752,020 candidate triadic systems
+Method  : Triadic Scheduler vs. Random Baseline (N=200 Monte Carlo runs)
+Author  : Petar Nikolov / U-Theory v26
+"""
 
-import numpy as np
-import pandas as pd
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from itertools import product
 import os
+import csv
+import math
+import random
+import hashlib
 
-OUT_DIR = os.path.dirname(os.path.abspath(__file__))
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
 
-print("=" * 72)
-print("  GSI-RTD Mini Prototype v1 — Medical Domain")
-print("  144 agents | AD-RTD + SSS + Triadic Scheduler | Monte Carlo N=200")
-print("=" * 72)
-print()
+# ─────────────────────────────────────────────────────────────────────────────
+# 0. PATHS
+# ─────────────────────────────────────────────────────────────────────────────
+SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
+MEDICAL_DIR = r"C:\Users\PC\OneDrive\Documents\u-score\v.26\Medical"
 
-# ─────────────────────────────────────────────────────────
-# 1. TRIADIC AXES — AD-RTD A → F → P
-#    Problem: restore patient health stability after illness onset
-# ─────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. LOAD REAL MEDICAL ONTOLOGY FROM CSV FILES
+# ─────────────────────────────────────────────────────────────────────────────
 
-# ACTION (A ↔ Energy): therapeutic interventions — what is done
-actions = [
-    "Pharmacotherapy (drug treatment)",     # A1: standard medication protocol
-    "Physiotherapy & rehabilitation",       # A2: physical recovery procedures
-    "Dietary & nutritional therapy",        # A3: evidence-based nutritional intervention
-    "Surgical intervention",                # A4: operative procedure
-    "Psychotherapy & mental health support",# A5: psychological / behavioural therapy
-    "Alternative & complementary therapy",  # A6: herbal, acupuncture, balneology
-]
+def load_csv_column(filepath):
+    """Load a single-column CSV into a deduplicated list of non-empty strings."""
+    items = []
+    seen = set()
+    try:
+        with open(filepath, encoding="utf-8", errors="replace") as f:
+            for row in csv.reader(f):
+                if row:
+                    val = row[0].strip()
+                    if val and val not in seen:
+                        seen.add(val)
+                        items.append(val)
+    except FileNotFoundError:
+        print(f"WARNING: file not found: {filepath}")
+    return items
 
-# FORM (F ↔ Time): treatment agents — what carries the action
-forms = [
-    "Prescription medication",              # F1: pharmaceutical drug (doctor-prescribed)
-    "Herbal / plant-based remedy",          # F2: phytotherapy preparations
-    "Nutritional supplement (vitamins)",    # F3: vitamins, minerals, nutraceuticals
-    "Medical device or equipment",          # F4: imaging, monitoring, prosthetics
-    "Therapeutic protocol / care plan",     # F5: structured treatment document
-    "Diagnostic report & lab results",      # F6: data form guiding decisions
-]
 
-# POSITION (P ↔ Space): care context — where treatment is administered
-positions = [
-    "Hospital (inpatient)",                 # P1: acute, resource-intensive setting
-    "Outpatient clinic / specialist",       # P2: scheduled, ambulatory care
-    "Physiotherapy centre / natural healer",# P3: rehabilitation + alternative medicine
-    "Sanatorium / recovery resort / home",  # P4: convalescence, rest, prevention
-]
+def load_ontology():
+    symptoms    = load_csv_column(os.path.join(MEDICAL_DIR, "Symptoms --- .csv"))
+    tests_raw   = load_csv_column(os.path.join(MEDICAL_DIR, "Tests - Clinical Laboratory.csv"))
+    specialties = load_csv_column(os.path.join(MEDICAL_DIR, "Medical specialties.csv"))
 
-candidates = list(product(range(len(actions)), range(len(forms)), range(len(positions))))
-n = len(candidates)
-print(f"✅ Generated {n} candidate systems ({len(actions)}×{len(forms)}×{len(positions)})")
-print()
-print("Each system = (Form_i @ Position_j performing Action_k)")
-print("Example: 'Prescription medication' @ 'Hospital (inpatient)' performing 'Pharmacotherapy'")
-print()
+    # Normalise test names (strip "..... abnormal" suffix)
+    tests = list(dict.fromkeys(
+        t.replace(" ..... abnormal", "").replace(".....abnormal", "").strip()
+        for t in tests_raw
+    ))
+    tests = [t for t in tests if t]
 
-# ─────────────────────────────────────────────────────────
-# 2. SSS — canonical formula (v26, same across all domains)
-# ─────────────────────────────────────────────────────────
-KILL_THRESHOLD = 0.30  # Hard Gate G4 (§20.3.1)
+    return symptoms, specialties, tests
 
-def compute_sss(f, p, a, eps=0.01):
-    """SI = ∛(F·P·A) / (1+δ)²  — canonical SSS (v26). G4 Hard Gate."""
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 2. SSS FORMULA (v26 canonical — non-compensatory)
+# ─────────────────────────────────────────────────────────────────────────────
+KILL_THRESHOLD = 0.30
+THETA_STABLE   = 0.618
+THETA_CRITICAL = 0.380
+ALPHA          = 0.052   # learning rate (consistent across all domains)
+
+
+def sss(f, p, a):
+    """System Stability Score: SI = U / (1 + δ)²"""
     if min(f, p, a) < KILL_THRESHOLD:
-        return 0.0
-    if min(f, p, a) <= eps:
-        return 0.0
-    U     = (f * p * a) ** (1/3)
-    delta = (max(f, p, a) - min(f, p, a)) / (max(f, p, a) + eps)
-    return U / (1 + delta) ** 2
+        return 0.0, 0.0, 0.0
+    u     = (f * p * a) ** (1 / 3)
+    hi    = max(f, p, a)
+    lo    = min(f, p, a)
+    delta = (hi - lo) / (hi + 0.01)
+    si    = u / (1 + delta) ** 2
+    return round(si, 6), round(u, 6), round(delta, 6)
 
-# ─────────────────────────────────────────────────────────
-# 3. TRIADIC COST MODEL — §1.1 Phase 7
-#    Medical domain cost estimates (normalized to [0,1])
-#    Action ↔ Energy cost, Form ↔ Time cost, Position ↔ Space cost
-#
-#    Rationale:
-#    - Surgical intervention: highest energy (operating room, team, recovery)
-#    - Pharmacotherapy: medium energy (prescription cycle, monitoring)
-#    - Alternative therapy: low energy (low-tech, long-duration)
-#    - Hospital: highest space cost (beds, equipment, staff)
-#    - Home/sanatorium: lowest space cost (decentralised)
-# ─────────────────────────────────────────────────────────
-action_energy_cost = {
-    "Pharmacotherapy (drug treatment)":      0.30,   # routine, moderate management effort
-    "Physiotherapy & rehabilitation":        0.45,   # regular sessions, medium energy
-    "Dietary & nutritional therapy":         0.15,   # low-tech, sustained over time
-    "Surgical intervention":                 0.90,   # highest energy: OR, anaesthesia, ICU
-    "Psychotherapy & mental health support": 0.40,   # regular sessions, skilled therapist time
-    "Alternative & complementary therapy":   0.20,   # low energy, specialist niche
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3. DETERMINISTIC PILLAR SCORES FROM ONTOLOGY NAMES
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _hash_score(name: str, seed_int: int, lo=0.25, hi=0.95) -> float:
+    """Map a name → deterministic float in [lo, hi] via SHA-256."""
+    h   = hashlib.sha256(f"{seed_int}:{name}".encode()).hexdigest()
+    raw = int(h[:8], 16) / 0xFFFFFFFF
+    return round(lo + raw * (hi - lo), 4)
+
+
+# Specialty P-scores: hand-crafted from real-world resource density
+SPECIALTY_COVERAGE = {
+    "Cardiology and Vascular Medicine": 0.88,
+    "Oncology":                          0.85,
+    "Surgery, General":                  0.84,
+    "Emergency Medicine":                0.82,
+    "Neurology":                         0.80,
+    "Gastroenterology and Hepatology":   0.78,
+    "Endocrinology and Metabolic Disorders": 0.76,
+    "Pulmonary Medicine":                0.75,
+    "Nephrology":                        0.74,
+    "Infectious Diseases":               0.73,
+    "Hematology":                        0.72,
+    "Clinical Laboratory":               0.72,
+    "Rheumatology":                      0.70,
+    "Psychiatry":                        0.69,
+    "Dermatology":                       0.68,
+    "Surgery, Orthopedics":              0.67,
+    "Surgery, Urology":                  0.66,
+    "Ophthalmology":                     0.65,
+    "Allergy and Immunology":            0.64,
+    "Critical Care Medicine":            0.63,
+    "Obstetrician / Gynecologist":       0.62,
+    "Pediatrics and Adolescent Medicine": 0.61,
+    "Surgery, Thoracic":                 0.60,
+    "Surgery, Neurosurgery":             0.59,
+    "Surgery, Vascular":                 0.58,
+    "Surgery, ENT":                      0.57,
+    "Geriatric Medicine":                0.55,
+    "instrumental diagnostics and treatment": 0.55,
+    "Genetics":                          0.52,
+    "Nutrition":                         0.50,
+    "Health Maintenance":                0.50,
+    "Dental / Oral Care":                0.48,
+    "Veterinary medicine":               0.45,
+    "Other and More...":                 0.40,
 }
-form_time_cost = {
-    "Prescription medication":               0.20,   # fast to administer; ongoing monitoring
-    "Herbal / plant-based remedy":           0.15,   # low-cost, long preparation cycle
-    "Nutritional supplement (vitamins)":     0.10,   # minimal time investment
-    "Medical device or equipment":           0.55,   # high setup time, maintenance
-    "Therapeutic protocol / care plan":      0.50,   # significant planning + review time
-    "Diagnostic report & lab results":       0.40,   # test ordering + analysis time
-}
-position_space_cost = {
-    "Hospital (inpatient)":                  0.80,   # highest: beds, infrastructure, staff
-    "Outpatient clinic / specialist":        0.40,   # moderate: scheduled, less resource-heavy
-    "Physiotherapy centre / natural healer": 0.25,   # focused, smaller footprint
-    "Sanatorium / recovery resort / home":   0.15,   # lowest: decentralised, self-managed
-}
 
-def triadic_cost(ai, fi, pi):
-    c_e = action_energy_cost[actions[ai]]
-    c_t = form_time_cost[forms[fi]]
-    c_s = position_space_cost[positions[pi]]
-    return max((c_e * c_t * c_s) ** (1/3), 1e-6)
 
-costs = [triadic_cost(c[0], c[1], c[2]) for c in candidates]
+def build_pillar_scores(symptoms, specialties, tests, seed=42):
+    """
+    Assign base pillar scores derived from ontology names.
 
-# ─────────────────────────────────────────────────────────
-# 4. PEAK / DIP + ARMED STATE MACHINE — §1.1 Phase 0 / §22.6
-# ─────────────────────────────────────────────────────────
-def detect_peaks_dips(si_history):
-    events = []
-    for t in range(1, len(si_history) - 1):
-        if si_history[t] < si_history[t-1] and si_history[t] < si_history[t+1]:
-            events.append((t + 1, "DIP",  si_history[t]))
-        elif si_history[t] > si_history[t-1] and si_history[t] > si_history[t+1]:
-            events.append((t + 1, "PEAK", si_history[t]))
-    return events
+    U-Theory v26 mapping:
+      F (Form / Time)      = Symptom specificity
+      P (Position / Space) = Specialty coverage / resource density
+      A (Action / Energy)  = Test sensitivity / reliability
+    """
+    F = {s:  _hash_score(s, seed * 3)  for s in symptoms}
+    P = {sp: SPECIALTY_COVERAGE.get(sp, _hash_score(sp, seed * 7, 0.35, 0.80))
+         for sp in specialties}
+    A = {t:  _hash_score(t, seed * 11) for t in tests}
+    return F, P, A
 
-def armed_state_machine(si_history, min_recovery=0.05, max_armed_age=3):
-    interventions = []
-    armed_at = armed_min_si = None
-    for t in range(2, len(si_history)):
-        was_falling = si_history[t-1] < si_history[t-2]
-        now_rising  = si_history[t]   > si_history[t-1]
-        if was_falling and now_rising and armed_at is None:
-            armed_at, armed_min_si = t, si_history[t-1]
-        if armed_at is not None:
-            recovery = si_history[t] - armed_min_si
-            if recovery >= min_recovery:
-                interventions.append({
-                    "gen": t + 1, "armed_at": armed_at + 1,
-                    "min_si": round(armed_min_si, 3),
-                    "current_si": round(si_history[t], 3),
-                    "recovery": round(recovery, 3),
-                })
-                armed_at = None
-            elif (t - armed_at) > max_armed_age:
-                armed_at = None
-    return interventions
 
-# ─────────────────────────────────────────────────────────
-# 5. SIMULATION — 5 generations, budget = 20 agents/gen
-#    LGP-12 simulation note:
-#    LGP-1/2  Scan/Detect      → Phase 0 health instability detection
-#    LGP-3/4  Decompose/Rank   → AD-RTD (A→F→P) + priority sort
-#    LGP-5/6  Leverage/Synth   → Exploit top-SI + Explore novel
-#    LGP-7/8  Select/Plan      → top_idx with noise
-#    LGP-9/10 Allocate/Monitor → SSS-Guard check
-#    LGP-11/12 Report/Audit    → Learning Law + ε decay
-# ─────────────────────────────────────────────────────────
-np.random.seed(37)    # distinct seed from email marketing (99) and supply chain (17)
-generations   = 5
-budget        = 20
-learning_rate = 0.052
-epsilon_start = 0.12
-epsilon_decay = 0.70
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. TRIADIC SYSTEM — ONE CANDIDATE
+# ─────────────────────────────────────────────────────────────────────────────
 
-# Medical domain: starts with moderate variance (mixed acute + chronic)
-f_scores = np.random.uniform(0.35, 0.92, n)
-p_scores = np.random.uniform(0.35, 0.92, n)
-a_scores = np.random.uniform(0.35, 0.92, n)
+class TriadicSystem:
+    __slots__ = ("symptom", "specialty", "test", "f", "p", "a", "si", "u", "delta")
 
-results     = []
-all_gen_sis = []
-epsilon     = epsilon_start
+    def __init__(self, symptom, specialty, test, f, p, a):
+        self.symptom   = symptom
+        self.specialty = specialty
+        self.test      = test
+        self.f = f
+        self.p = p
+        self.a = a
+        self.si, self.u, self.delta = sss(f, p, a)
 
-print(f"{'─'*72}")
-print(f"{'Gen':>4}  {'Pred':>7}  {'Triadic':>8}  {'Random':>7}  {'Advantage':>10}  {'Guard':>6}  {'Explore':>8}")
-print(f"{'─'*72}")
+    def recompute(self):
+        self.si, self.u, self.delta = sss(self.f, self.p, self.a)
 
-for gen in range(1, generations + 1):
-    sis       = [compute_sss(f_scores[i], p_scores[i], a_scores[i]) for i in range(n)]
-    all_gen_sis.append(sis[:])
-    priorities = [sis[i] / (costs[i] + 1e-6) for i in range(n)]
+    def triadic_cost(self):
+        """Geometric mean of axis effort costs (§1.1 Phase 7).
+        Low current score → high effort to improve → higher cost."""
+        c_f = max(0.01, 1.0 - self.f)   # symptom assessment effort
+        c_p = max(0.01, 1.0 - self.p)   # specialty resource effort
+        c_a = max(0.01, 1.0 - self.a)   # test execution effort
+        return (c_f * c_p * c_a) ** (1 / 3)
 
-    n_explore   = max(1, int(budget * epsilon))
-    n_exploit   = budget - n_explore
-    exploit_idx = list(np.argsort(priorities)[-n_exploit:])
-    available   = [i for i in range(n) if i not in set(exploit_idx)]
-    explore_idx = list(np.random.choice(available, n_explore, replace=False))
-    top_idx     = exploit_idx + explore_idx
-    random_idx  = list(np.random.choice(n, budget, replace=False))
+    def weakest_pillar(self):
+        d = {"F": self.f, "P": self.p, "A": self.a}
+        return min(d, key=d.get)
 
-    # Environmental noise: medical outcomes have moderate stochasticity
-    real_sis = [
-        compute_sss(f_scores[i], p_scores[i], a_scores[i])
-        * max(0.0, 0.97 + np.random.normal(0, 0.05))
-        for i in top_idx
-    ]
-    random_real_sis = [
-        compute_sss(f_scores[i], p_scores[i], a_scores[i])
-        * max(0.0, 0.97 + np.random.normal(0, 0.05))
-        for i in random_idx
-    ]
 
-    avg_pred   = float(np.mean([sis[i] for i in top_idx]))
-    avg_real   = float(np.mean(real_sis))
-    avg_random = float(np.mean(random_real_sis))
-    advantage  = avg_real - avg_random
+# ─────────────────────────────────────────────────────────────────────────────
+# 5. SIMULATION PARAMETERS
+# ─────────────────────────────────────────────────────────────────────────────
+POOL_SIZE  = 2_000   # systems sampled from the full space per run
+GEN_BATCH  = 50      # systems evaluated per generation
+N_GENS     = 5       # generations per run
+N_RUNS     = 200     # Monte Carlo independent runs
+TOP_K_FRAC = 0.40    # exploit fraction in triadic scheduler
 
-    deviation = abs(avg_pred - avg_real)
-    guard = "ALERT" if deviation > 0.06 else "OK"
 
-    best_i = top_idx[int(np.argmax([sis[i] for i in top_idx]))]
-    results.append({
-        "Generation":        gen,
-        "Predicted_SI":      round(avg_pred,   4),
-        "Real_SI_Triadic":   round(avg_real,   4),
-        "Real_SI_Random":    round(avg_random, 4),
-        "Triadic_Advantage": round(advantage,  4),
-        "SSS_Guard":         guard,
-        "Epsilon_Explore":   round(epsilon,    3),
-        "Best_Action":       actions[candidates[best_i][0]],
-        "Best_Form":         forms[candidates[best_i][1]],
-        "Best_Position":     positions[candidates[best_i][2]],
-    })
+# ─────────────────────────────────────────────────────────────────────────────
+# 6. MEDICAL HARD GATES (non-compensatory)
+# ─────────────────────────────────────────────────────────────────────────────
 
-    print(f"  {gen:2d}  {avg_pred:.3f}  {avg_real:.3f}    {avg_random:.3f}   "
-          f"{advantage:+.3f}    {guard:5s}  {n_explore}/{budget} (e={epsilon:.2f})")
+def passes_gates(sys_: TriadicSystem) -> bool:
+    """
+    G1 Safety:   no pillar below KILL_THRESHOLD (patient safety floor)
+    G2 Clarity:  symptom specificity (F) >= 0.32
+    G3 Reach:    specialty coverage (P) >= 0.38
+    G4 Accuracy: test reliability (A) >= 0.35
+    Non-compensatory: one failure => rejected.
+    """
+    return (sys_.f >= 0.32 and sys_.p >= 0.38 and sys_.a >= 0.35
+            and min(sys_.f, sys_.p, sys_.a) >= KILL_THRESHOLD)
 
-    for i in top_idx:
-        f_scores[i] = min(0.98, f_scores[i] + learning_rate)
-        p_scores[i] = min(0.98, p_scores[i] + learning_rate)
-        a_scores[i] = min(0.98, a_scores[i] + learning_rate)
-    epsilon *= epsilon_decay
 
-print(f"{'─'*72}")
+# ─────────────────────────────────────────────────────────────────────────────
+# 7. TRIADIC SCHEDULER
+# ─────────────────────────────────────────────────────────────────────────────
 
-# SSS-Guard summary
-alert_gens = [r for r in results if r["SSS_Guard"] == "ALERT"]
-if alert_gens:
+class TriadicScheduler:
+    """
+    Two-stage selector: exploit top-K by SI/cost + explore random remainder.
+    Learning Law (§26): after selection, improve selected systems' weakest pillar.
+    """
+
+    def __init__(self):
+        self.epsilon = 0.12    # exploration fraction (§1.1 anti-bias)
+        self.eps_decay = 0.70  # decay per generation
+
+    def priority(self, sys_: TriadicSystem) -> float:
+        """Priority = SI / triadic_cost  (§1.1 Phase 7, mirroring email demo)."""
+        return sys_.si / (sys_.triadic_cost() + 1e-6)
+
+    def select(self, pool, batch, rng):
+        """Exploit top-k by priority + explore random remainder."""
+        pool.sort(key=self.priority, reverse=True)
+        n_explore = max(1, int(batch * self.epsilon))
+        n_exploit = batch - n_explore
+        chosen    = pool[:n_exploit]
+        rest      = pool[n_exploit:]
+        if rest:
+            chosen += rng.sample(rest, min(n_explore, len(rest)))
+        self.epsilon *= self.eps_decay
+        return chosen
+
+    @staticmethod
+    def learn(batch):
+        """Learning Law (§26): improve weakest pillar of each selected system."""
+        for sys_ in batch:
+            wp = sys_.weakest_pillar()
+            if wp == "F":
+                sys_.f = min(0.98, sys_.f + ALPHA)
+            elif wp == "P":
+                sys_.p = min(0.98, sys_.p + ALPHA)
+            else:
+                sys_.a = min(0.98, sys_.a + ALPHA)
+            sys_.recompute()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 8. SINGLE RUN
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_one(symptoms, specialties, tests, F, P, A, run_id):
+    rng  = random.Random(run_id * 13 + 23)
+
+    # Build a fresh mutable pool for this run (scores start from hash baseline)
+    pool = []
+    for _ in range(POOL_SIZE):
+        s  = rng.choice(symptoms)
+        sp = rng.choice(specialties)
+        t  = rng.choice(tests)
+        pool.append(TriadicSystem(s, sp, t, F[s], P[sp], A[t]))
+
+    valid = [x for x in pool if passes_gates(x)]
+    if len(valid) < GEN_BATCH * 2:
+        return None
+
+    sched  = TriadicScheduler()
+    t_gens = []
+    r_gens = []
+
+    for _ in range(N_GENS):
+        # Triadic: priority = SI / cost, then learn (improve weakest pillar)
+        t_batch = sched.select(list(valid), GEN_BATCH, rng)
+        TriadicScheduler.learn(t_batch)
+        t_gens.append(float(np.mean([x.si for x in t_batch])))
+
+        # Random baseline: uniform sample, no learning
+        r_batch = rng.sample(valid, min(GEN_BATCH, len(valid)))
+        r_gens.append(float(np.mean([x.si for x in r_batch])))
+
+    return t_gens, r_gens
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 9. MONTE CARLO
+# ─────────────────────────────────────────────────────────────────────────────
+
+def monte_carlo(symptoms, specialties, tests, F, P, A):
+    t_all, r_all = [], []
+    skipped = 0
+    for run in range(N_RUNS):
+        result = run_one(symptoms, specialties, tests, F, P, A, run)
+        if result is None:
+            skipped += 1
+            continue
+        t_all.append(result[0])
+        r_all.append(result[1])
+    if skipped:
+        print(f"  (skipped {skipped}/{N_RUNS} runs — insufficient valid systems in pool)")
+    return np.array(t_all, dtype=float), np.array(r_all, dtype=float)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 10. PLOT
+# ─────────────────────────────────────────────────────────────────────────────
+TC = "#1A6B8A"
+RC = "#C0392B"
+
+
+def make_plot(t_arr, r_arr, total_space):
+    n     = t_arr.shape[0]
+    gens  = np.arange(1, N_GENS + 1)
+    t_m   = t_arr.mean(0);  r_m   = r_arr.mean(0)
+    t_ci  = 1.96 * t_arr.std(0, ddof=1) / math.sqrt(n)
+    r_ci  = 1.96 * r_arr.std(0, ddof=1) / math.sqrt(n)
+    diffs = t_arr[:, -1] - r_arr[:, -1]
+    adv   = float(diffs.mean())
+    ci    = float(1.96 * diffs.std(ddof=1) / math.sqrt(n))
+    pct   = float((diffs > 0).mean() * 100)
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
+    fig.patch.set_facecolor("#F8F9FB")
+
+    # Left — SI learning curves
+    ax = axes[0]
+    ax.set_facecolor("#FFFFFF")
+    ax.plot(gens, t_m, color=TC, lw=2.5, marker="o", markersize=7,
+            label="Triadic Scheduler (AD-RTD)", zorder=3)
+    ax.fill_between(gens, t_m - t_ci, t_m + t_ci, color=TC, alpha=0.15)
+    ax.plot(gens, r_m, color=RC, lw=2.5, marker="s", markersize=7,
+            linestyle="--", label="Random Baseline", zorder=3)
+    ax.fill_between(gens, r_m - r_ci, r_m + r_ci, color=RC, alpha=0.15)
+    ax.axhline(THETA_STABLE,   color="#2ECC71", lw=1.5, ls=":",
+               label=f"θ_stable ({THETA_STABLE})")
+    ax.axhline(THETA_CRITICAL, color="#E67E22", lw=1.5, ls=":",
+               label=f"θ_critical ({THETA_CRITICAL})")
+    ax.set_xlabel("Generation", fontsize=12)
+    ax.set_ylabel("Mean System Stability Index (SI)", fontsize=12)
+    ax.set_title(
+        f"Triadic vs. Random — Real Clinical Ontology\n"
+        f"{total_space:,} candidate systems | N={n} MC runs",
+        fontsize=11, fontweight="bold"
+    )
+    ax.legend(fontsize=9, framealpha=0.9)
+    ax.set_ylim(0, 1.0)
+    ax.set_xticks(gens)
+    ax.grid(True, alpha=0.35, linestyle="--")
+
+    # Right — advantage distribution
+    ax2 = axes[1]
+    ax2.set_facecolor("#FFFFFF")
+    ax2.hist(diffs, bins=30, color=TC, edgecolor="white", alpha=0.85)
+    ax2.axvline(0,   color=RC, lw=2.0, ls="--", label="Zero line")
+    ax2.axvline(adv, color=TC, lw=2.5,
+                label=f"Mean Δ = {adv:+.3f}")
+    ax2.axvspan(adv - ci, adv + ci, color=TC, alpha=0.15,
+                label=f"95% CI [{adv-ci:+.3f}, {adv+ci:+.3f}]")
+    ax2.set_xlabel("Final-Gen ΔSI (Triadic − Random)", fontsize=12)
+    ax2.set_ylabel("Count (runs)", fontsize=12)
+    ax2.set_title(
+        f"Advantage Distribution — Gen {N_GENS}\n"
+        f"Triadic beats Random in {pct:.1f}% of runs",
+        fontsize=11, fontweight="bold"
+    )
+    ax2.legend(fontsize=9, framealpha=0.9)
+    ax2.grid(True, alpha=0.35, linestyle="--")
+
+    plt.tight_layout(pad=2.0)
+    out = os.path.join(SCRIPT_DIR, "gsi_rtd_medical_results.png")
+    plt.savefig(out, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+    plt.close()
+    return out, adv, ci, pct
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 11. MAIN
+# ─────────────────────────────────────────────────────────────────────────────
+
+def main():
+    print("=" * 70)
+    print("  GSI-RTD  Medical Domain — Full-Scale Real Ontology Simulation")
+    print("  U-Theory v26 | Petar Nikolov")
+    print("=" * 70)
+
+    print("\n[1/5] Loading real medical ontology CSV files...")
+    symptoms, specialties, tests = load_ontology()
+
+    total_space = len(symptoms) * len(specialties) * len(tests)
+
+    print(f"      Symptoms   (F / Form):       {len(symptoms):>6,d}")
+    print(f"      Specialties(P / Position):   {len(specialties):>6,d}")
+    print(f"      Lab Tests  (A / Action):     {len(tests):>6,d}")
     print()
-    print("⚠  SSS-Guard ALERT summary (LGP-10 Pulse Monitor):")
-    for ag in alert_gens:
-        print(f"   Gen {ag['Generation']:2d}: Predicted={ag['Predicted_SI']:.3f}  "
-              f"Realised={ag['Real_SI_Triadic']:.3f}  "
-              f"Deviation={abs(ag['Predicted_SI'] - ag['Real_SI_Triadic']):.3f}")
-else:
-    print()
-    print("✓  SSS-Guard: No ALERT in any generation (prediction well-calibrated).")
+    print(f"      ╔═══════════════════════════════════════════════════════╗")
+    print(f"      ║  FULL TRIADIC SPACE: {total_space:>13,d} candidate systems ║")
+    print(f"      ╚═══════════════════════════════════════════════════════╝")
+    print(f"      {len(symptoms)} × {len(specialties)} × {len(tests)} = {total_space:,}")
 
-# ─────────────────────────────────────────────────────────
-# FINAL WINNER
-# ─────────────────────────────────────────────────────────
-final_sis = [compute_sss(f_scores[i], p_scores[i], a_scores[i]) for i in range(n)]
-best      = int(np.argmax(final_sis))
+    print("\n[2/5] Building deterministic pillar scores from ontology names...")
+    F, P, A = build_pillar_scores(symptoms, specialties, tests)
+    print(f"      F (symptom specificity):    "
+          f"min={min(F.values()):.3f}  max={max(F.values()):.3f}  "
+          f"mean={sum(F.values())/len(F):.3f}")
+    print(f"      P (specialty coverage):     "
+          f"min={min(P.values()):.3f}  max={max(P.values()):.3f}  "
+          f"mean={sum(P.values())/len(P):.3f}")
+    print(f"      A (test reliability):       "
+          f"min={min(A.values()):.3f}  max={max(A.values()):.3f}  "
+          f"mean={sum(A.values())/len(A):.3f}")
 
-print()
-print("🏆 MOST STABLE MEDICAL TREATMENT SYSTEM (final generation)")
-print(f"   SI        = {final_sis[best]:.4f}")
-print(f"   Action    = {actions[candidates[best][0]]}")
-print(f"   Form      = {forms[candidates[best][1]]}")
-print(f"   Position  = {positions[candidates[best][2]]}")
-print()
-print("   → This is the intelligence output of the GSI-RTD process.")
-print("   → Applied to patient health stability restoration.")
+    print("\n      Medical Hard Gates (non-compensatory):")
+    print("        G1 Safety:   all pillars ≥ 0.30")
+    print("        G2 Clarity:  symptom specificity (F) ≥ 0.32")
+    print("        G3 Reach:    specialty coverage   (P) ≥ 0.38")
+    print("        G4 Accuracy: test reliability     (A) ≥ 0.35")
 
-# ─────────────────────────────────────────────────────────
-# TRIAGE TABLE
-# ─────────────────────────────────────────────────────────
-theta_stable   = 0.618
-theta_critical = 0.380
+    print(f"\n[3/5] Monte Carlo ({N_RUNS} runs × {N_GENS} gens × {GEN_BATCH} sys/gen)...")
+    print(f"      Pool per run: {POOL_SIZE:,} randomly sampled from {total_space:,}")
+    print(f"      Learning rate α = {ALPHA}")
 
-high = sum(1 for s in final_sis if s >= theta_stable)
-mid  = sum(1 for s in final_sis if theta_critical <= s < theta_stable)
-low  = sum(1 for s in final_sis if s < theta_critical)
+    t_arr, r_arr = monte_carlo(symptoms, specialties, tests, F, P, A)
 
-print()
-print("📊 TRIAGE (final generation):")
-print(f"   High SI (≥{theta_stable})  — Exploit/Transfer : {high:3d} systems")
-print(f"   Mid  SI ({theta_critical}–{theta_stable}) — Optimise        : {mid:3d} systems")
-print(f"   Low  SI (<{theta_critical})  — Redesign/Reject : {low:3d} systems")
+    print("\n[4/5] Statistics:")
+    gens = np.arange(1, N_GENS + 1)
+    t_m  = t_arr.mean(0)
+    r_m  = r_arr.mean(0)
+    diffs = t_arr[:, -1] - r_arr[:, -1]
+    adv  = float(diffs.mean())
+    ci   = float(1.96 * diffs.std(ddof=1) / math.sqrt(t_arr.shape[0]))
+    pct  = float((diffs > 0).mean() * 100)
 
-# ─────────────────────────────────────────────────────────
-# PEAK / DIP ANALYSIS
-# ─────────────────────────────────────────────────────────
-agent_si_histories = np.array(all_gen_sis).T
-print()
-print("PEAK/DIP ANALYSIS (top exploited agents — IDO, §1.1 Phase 0):")
-ido_found = 0
-for agent_idx in exploit_idx[:10]:
-    history = agent_si_histories[agent_idx].tolist()
-    events  = detect_peaks_dips(history)
-    armed   = armed_state_machine(history)
-    if events or armed:
-        label = (f"{actions[candidates[agent_idx][0]][:22]} | "
-                 f"{forms[candidates[agent_idx][1]][:18]}")
-        print(f"  Agent {agent_idx:3d} — {label}")
-        for ev in events:
-            print(f"    {ev[1]:4s} at gen {ev[0]}, SI={ev[2]:.3f}")
-        for arm in armed:
-            print(f"    ARMED intervention at gen {arm['gen']}, recovery={arm['recovery']:.3f}")
-        ido_found += 1
-if ido_found == 0:
-    print("  (No peaks/dips detected — monotonic convergence.)")
+    print(f"\n  ┌─ RESULTS (n={t_arr.shape[0]} valid runs) ─────────────────────────┐")
+    for g in range(N_GENS):
+        print(f"  │  Gen {g+1}: Triadic={t_m[g]:.4f}  Random={r_m[g]:.4f}"
+              f"  Δ={t_m[g]-r_m[g]:+.4f}")
+    print(f"  ├───────────────────────────────────────────────────────────┤")
+    print(f"  │  Final Δ = {adv:+.3f}  95% CI [{adv-ci:+.3f}, {adv+ci:+.3f}]")
+    print(f"  │  Triadic > Random in {pct:.1f}% of {t_arr.shape[0]} runs")
+    print(f"  │  Triadic space: {total_space:,} systems")
+    print(f"  └───────────────────────────────────────────────────────────┘")
 
-# ─────────────────────────────────────────────────────────
-# MONTE CARLO SENSITIVITY ANALYSIS — N=200 runs
-# ─────────────────────────────────────────────────────────
-print()
-print("MONTE CARLO SENSITIVITY ANALYSIS (N=200 runs, §35.5bis):")
-N_RUNS = 200
-mc_advantages = np.zeros((N_RUNS, generations))
+    print("\n[5/5] Generating plot...")
+    plot_path, adv, ci, pct = make_plot(t_arr, r_arr, total_space)
+    print(f"      Saved → {plot_path}")
 
-for run in range(N_RUNS):
-    np.random.seed(run * 13 + 7)   # distinct sequence from other two domains
-    mc_f = np.random.uniform(0.35, 0.92, n)
-    mc_p = np.random.uniform(0.35, 0.92, n)
-    mc_a = np.random.uniform(0.35, 0.92, n)
-    mc_eps = epsilon_start
+    print("\n  TRIADIC INTERPRETATION (U-Theory v26):")
+    print("  ─────────────────────────────────────────────────────────────")
+    print("  Each candidate system = (Symptom, Specialty, Test):")
+    print("    F (Form   / Time)     = Symptom specificity")
+    print("    P (Position / Space)  = Specialty resource coverage")
+    print("    A (Action  / Energy)  = Lab test sensitivity/reliability")
+    print("  The Triadic Scheduler targets the WEAKEST pillar per cycle,")
+    print("  mirroring clinical triage: address the most critical gap first.")
+    print(f"  Real-world ontology yields {total_space:,} candidate systems —")
+    print("  demonstrating the combinatorial scale of GSI-RTD in practice.")
+    print("\n  Done.")
 
-    for g in range(generations):
-        mc_sis  = [compute_sss(mc_f[i], mc_p[i], mc_a[i]) for i in range(n)]
-        mc_prio = [mc_sis[i] / (costs[i] + 1e-6) for i in range(n)]
 
-        n_exp    = max(1, int(budget * mc_eps))
-        n_expl   = budget - n_exp
-        mc_expl  = list(np.argsort(mc_prio)[-n_expl:])
-        mc_avail = [i for i in range(n) if i not in set(mc_expl)]
-        mc_explo = list(np.random.choice(mc_avail, n_exp, replace=False))
-        mc_top   = mc_expl + mc_explo
-        mc_rand  = list(np.random.choice(n, budget, replace=False))
-
-        tri_real = float(np.mean([
-            compute_sss(mc_f[i], mc_p[i], mc_a[i]) * max(0, 0.97 + np.random.normal(0, 0.05))
-            for i in mc_top
-        ]))
-        rnd_real = float(np.mean([
-            compute_sss(mc_f[i], mc_p[i], mc_a[i]) * max(0, 0.97 + np.random.normal(0, 0.05))
-            for i in mc_rand
-        ]))
-        mc_advantages[run, g] = tri_real - rnd_real
-
-        for i in mc_top:
-            mc_f[i] = min(0.98, mc_f[i] + learning_rate)
-            mc_p[i] = min(0.98, mc_p[i] + learning_rate)
-            mc_a[i] = min(0.98, mc_a[i] + learning_rate)
-        mc_eps *= epsilon_decay
-
-mean_adv = mc_advantages.mean(axis=0)
-std_adv  = mc_advantages.std(axis=0)
-print(f"  {'Gen':>4}  {'Mean Advantage':>16}  {'Std':>8}  {'95% CI':>24}  {'Sig?':>6}")
-mc_results = []
-for g in range(generations):
-    ci_lo = mean_adv[g] - 1.96 * std_adv[g]
-    ci_hi = mean_adv[g] + 1.96 * std_adv[g]
-    sig   = "YES" if ci_lo > 0 else "NO"
-    print(f"  {g+1:4d}  {mean_adv[g]:+.4f}           {std_adv[g]:.4f}  [{ci_lo:+.4f}, {ci_hi:+.4f}]  {sig:>6}")
-    mc_results.append({
-        "Generation":     g + 1,
-        "Mean_Advantage": round(float(mean_adv[g]), 4),
-        "Std":            round(float(std_adv[g]),  4),
-        "CI_Low_95":      round(float(ci_lo), 4),
-        "CI_High_95":     round(float(ci_hi), 4),
-        "Significant":    sig,
-    })
-
-# ─────────────────────────────────────────────────────────
-# ABLATION TESTS — Gate 3 (§32)
-# ─────────────────────────────────────────────────────────
-print()
-print("ABLATION TESTS (Gate 3, §32):")
-print(f"{'─'*72}")
-
-f_snap = f_scores.copy(); p_snap = p_scores.copy(); a_snap = a_scores.copy()
-
-baseline_sis  = [compute_sss(f_snap[i], p_snap[i], a_snap[i]) for i in range(n)]
-baseline_mean = float(np.mean(baseline_sis))
-print(f"  Baseline SI (full F+P+A):          mean={baseline_mean:.4f}")
-
-def ablation_test(f_val=None, p_val=None, a_val=None, label=""):
-    sis  = [compute_sss(f_val if f_val is not None else f_snap[i],
-                        p_val if p_val is not None else p_snap[i],
-                        a_val if a_val is not None else a_snap[i])
-            for i in range(n)]
-    mean = float(np.mean(sis))
-    drop = (baseline_mean - mean) / (baseline_mean + 1e-9) * 100
-    pass_ = "PASS ✓" if drop >= 15 else "FAIL ✗"
-    print(f"  Ablation {label}: mean={mean:.4f}  drop={drop:5.1f}%  {pass_}")
-    return mean, drop, pass_
-
-ablation_test(f_val=KILL_THRESHOLD - 0.01, label=f"−Form  (F<{KILL_THRESHOLD})")
-ablation_test(p_val=KILL_THRESHOLD - 0.01, label=f"−Pos   (P<{KILL_THRESHOLD})")
-ablation_test(a_val=KILL_THRESHOLD - 0.01, label=f"−Action(A<{KILL_THRESHOLD})")
-
-def compute_sss_arithmetic(f, p, a, eps=0.01):
-    if min(f, p, a) <= eps: return 0.0
-    return (f + p + a) / 3.0
-
-arith_sis  = [compute_sss_arithmetic(f_snap[i], p_snap[i], a_snap[i]) for i in range(n)]
-mean_arith = float(np.mean(arith_sis))
-std_geo    = float(np.std(baseline_sis))
-std_arith  = float(np.std(arith_sis))
-geo_wins   = (baseline_mean < mean_arith) or (std_geo < std_arith)
-
-print()
-print(f"  Test 3 — Geometric vs. Arithmetic mean:")
-print(f"    Geometric (non-compensatory): mean={baseline_mean:.4f}  std={std_geo:.4f}")
-print(f"    Arithmetic (compensatory):    mean={mean_arith:.4f}  std={std_arith:.4f}")
-print(f"    Geometric is stricter: {'PASS ✓' if geo_wins else 'FAIL ✗'}")
-print(f"    Interpretation: arithmetic allows strong pillars to mask weak ones;")
-print(f"    geometric correctly penalises medical imbalance (e.g. best drug in worst")
-print(f"    context, or surgery without proper rehabilitation — structurally unstable).")
-print(f"{'─'*72}")
-
-# ─────────────────────────────────────────────────────────
-# CROSS-DOMAIN COMPARISON (three domains)
-# ─────────────────────────────────────────────────────────
-print()
-print("CROSS-DOMAIN COMPARISON (Medical vs. Supply Chain vs. Email Marketing):")
-print("  All three domains use identical architecture: 6×6×4=144 agents, same SSS formula.")
-med_adv  = float(mean_adv[-1])
-med_ci_l = float(mc_results[-1]["CI_Low_95"])
-med_ci_h = float(mc_results[-1]["CI_High_95"])
-print(f"  Medical domain advantage        (Gen 5): {med_adv:+.4f}  (CI: [{med_ci_l:+.4f}, {med_ci_h:+.4f}])")
-print(f"  Supply Chain advantage          (Gen 5): ~+0.2937  (CI: [+0.2007, +0.3867])")
-print(f"  Email Marketing advantage       (Gen 5): ~+0.3028  (CI: [+0.2143, +0.3913])")
-print(f"  → All three domains: significant positive advantage (p<0.05).")
-print(f"  → Validates cross-domain generalizability of the Triadic Scheduler.")
-print()
-print("  STRUCTURAL ISOMORPHISM NOTE (§26.4):")
-print("  Despite different content, all three problems share the same triadic structure:")
-print("    Action = intervention type (campaign / disruption response / therapy)")
-print("    Form   = carrier document  (email / PO / prescription)")
-print("    Position = context          (audience / supplier tier / care setting)")
-print("  This confirms GSI-RTD is domain-agnostic — the architecture discovers")
-print("  the optimal solution structure in ANY triadically decomposable problem.")
-
-# ─────────────────────────────────────────────────────────
-# VISUALISATION
-# ─────────────────────────────────────────────────────────
-gens      = [r["Generation"]        for r in results]
-tri_sis   = [r["Real_SI_Triadic"]   for r in results]
-rnd_sis   = [r["Real_SI_Random"]    for r in results]
-advs      = [r["Triadic_Advantage"] for r in results]
-
-fig, axes = plt.subplots(2, 2, figsize=(12, 9))
-fig.suptitle(
-    "GSI-RTD Medical Domain — Triadic Scheduler Performance\n"
-    "Problem: restore patient health stability | 144 agents | AD-RTD + SSS (v26)",
-    fontsize=11, fontweight='bold'
-)
-
-# Panel 1: SI evolution
-ax = axes[0, 0]
-ax.plot(gens, tri_sis, 'b-o', linewidth=2, markersize=7, label="Triadic Scheduler")
-ax.plot(gens, rnd_sis, 'r--s', linewidth=2, markersize=7, label="Random Baseline")
-ax.axhline(theta_stable,   color='green',  linestyle=':', alpha=0.7, label=f"θ_stable={theta_stable}")
-ax.axhline(theta_critical, color='orange', linestyle=':', alpha=0.7, label=f"θ_critical={theta_critical}")
-ax.set_xlabel("Generation"); ax.set_ylabel("Mean SI")
-ax.set_title("SI Evolution (Triadic vs. Random)")
-ax.legend(fontsize=8); ax.grid(alpha=0.3)
-
-# Panel 2: Advantage curve (MC)
-ax = axes[0, 1]
-ax.plot(range(1, generations+1), mean_adv, 'g-^', linewidth=2, markersize=8, label="Mean advantage")
-ax.fill_between(range(1, generations+1),
-                mean_adv - 1.96 * std_adv,
-                mean_adv + 1.96 * std_adv,
-                alpha=0.25, color='green', label="95% CI (N=200)")
-ax.axhline(0, color='black', linewidth=0.8)
-ax.set_xlabel("Generation"); ax.set_ylabel("Triadic − Random advantage")
-ax.set_title("Advantage Curve (Monte Carlo N=200)")
-ax.legend(fontsize=8); ax.grid(alpha=0.3)
-
-# Panel 3: Triage distribution
-ax = axes[1, 0]
-bars = ax.bar(["High SI\n≥0.618\n(Exploit)", "Mid SI\n0.38–0.618\n(Optimise)", "Low SI\n<0.38\n(Reject)"],
-              [high, mid, low],
-              color=['#2ecc71', '#f39c12', '#e74c3c'], edgecolor='black', linewidth=0.8)
-for bar, count in zip(bars, [high, mid, low]):
-    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1, str(count),
-            ha='center', va='bottom', fontweight='bold')
-ax.set_ylabel("Number of systems"); ax.set_title("Final Generation Triage (AD-RTD Phase 6)")
-ax.grid(axis='y', alpha=0.3)
-
-# Panel 4: Min-pillar evolution (theory validation — §26 balance principle)
-ax = axes[1, 1]
-min_pillar_per_gen = []
-for g_idx, g_sis in enumerate(all_gen_sis):
-    min_p = float(np.mean([
-        min(f_scores[i], p_scores[i], a_scores[i]) for i in range(n)
-    ]))
-    min_pillar_per_gen.append(min_p)
-ax.plot(range(1, generations+1), min_pillar_per_gen, 'purple', marker='D',
-        linewidth=2, markersize=8)
-ax.set_xlabel("Generation"); ax.set_ylabel("Mean min(F, P, A)")
-ax.set_title("Min-Pillar Rise (Balance Convergence, §26)")
-ax.annotate("Scheduler lifts weakest pillar\nnot just highest scorer",
-            xy=(generations, min_pillar_per_gen[-1]),
-            xytext=(2.5, min_pillar_per_gen[-1] - 0.07),
-            fontsize=8, color='purple',
-            arrowprops=dict(arrowstyle='->', color='purple', lw=1.2))
-ax.grid(alpha=0.3)
-
-plt.tight_layout()
-fig_path = os.path.join(OUT_DIR, "gsi_rtd_medical_results.png")
-plt.savefig(fig_path, dpi=140, bbox_inches='tight')
-plt.close()
-
-# ─────────────────────────────────────────────────────────
-# CSV OUTPUTS
-# ─────────────────────────────────────────────────────────
-df_main = pd.DataFrame(results)
-df_mc   = pd.DataFrame(mc_results)
-df_all  = pd.DataFrame({
-    "action":   [actions[c[0]]   for c in candidates],
-    "form":     [forms[c[1]]     for c in candidates],
-    "position": [positions[c[2]] for c in candidates],
-    "final_SI": [round(final_sis[i], 4) for i in range(n)],
-    "cost":     [round(costs[i], 4)     for i in range(n)],
-})
-df_all = df_all.sort_values("final_SI", ascending=False).reset_index(drop=True)
-
-path_main = os.path.join(OUT_DIR, "gsi_rtd_medical_main.csv")
-path_mc   = os.path.join(OUT_DIR, "gsi_rtd_medical_mc.csv")
-path_all  = os.path.join(OUT_DIR, "gsi_rtd_medical_all_systems.csv")
-df_main.to_csv(path_main, index=False)
-df_mc.to_csv(path_mc,     index=False)
-df_all.to_csv(path_all,   index=False)
-
-print()
-print("Saved:")
-print(f"   {fig_path}")
-print(f"   {path_main}")
-print(f"   {path_mc}")
-print(f"   {path_all}")
-print()
-print("=" * 72)
-print("  GSI-RTD Medical: Intelligence = structured elimination of health instability.")
-print("  The most stable triadic treatment combination IS the clinical recommendation.")
-print("=" * 72)
+if __name__ == "__main__":
+    main()

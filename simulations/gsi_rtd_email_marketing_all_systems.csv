@@ -1,0 +1,145 @@
+Action,Form,Position,SI,Triage
+Send email,Ready-made template,By geographic location,0.98,High
+Send email,Ready-made template,By workplace / company,0.98,High
+Send email,Ready-made template,By hierarchy (CEO / Editor),0.98,High
+Send email,Ready-made template,By thematic interest,0.98,High
+Send email,Personalized report,By geographic location,0.98,High
+Send email,Personalized report,By workplace / company,0.98,High
+Send email,Personalized report,By hierarchy (CEO / Editor),0.98,High
+Send email,Personalized report,By thematic interest,0.98,High
+Send email,Infographic,By geographic location,0.98,High
+Send email,Infographic,By workplace / company,0.98,High
+Send email,Infographic,By hierarchy (CEO / Editor),0.98,High
+Send email,Video pitch,By geographic location,0.98,High
+Send email,Video pitch,By hierarchy (CEO / Editor),0.98,High
+Send email,Video pitch,By workplace / company,0.98,High
+Send email,Video pitch,By thematic interest,0.98,High
+Send email,HTML email,By geographic location,0.98,High
+Post on forums,Infographic,By hierarchy (CEO / Editor),0.98,High
+Send email,HTML email,By workplace / company,0.98,High
+Send email,HTML email,By hierarchy (CEO / Editor),0.98,High
+Post on forums,Ready-made template,By workplace / company,0.98,High
+Pay for advertising,Ready-made template,By geographic location,0.8715,High
+Fill online media forms,PDF attachment,By hierarchy (CEO / Editor),0.8277,High
+Meet key people in person,HTML email,By workplace / company,0.827,High
+Send letters by post,Personalized report,By geographic location,0.8092,High
+Meet key people in person,Personalized report,By workplace / company,0.8076,High
+Pay for advertising,Personalized report,By hierarchy (CEO / Editor),0.8014,High
+Send letters by post,Ready-made template,By workplace / company,0.7937,High
+Send letters by post,HTML email,By geographic location,0.7911,High
+Fill online media forms,HTML email,By thematic interest,0.7825,High
+Fill online media forms,Ready-made template,By geographic location,0.7813,High
+Post on forums,HTML email,By thematic interest,0.7682,High
+Send letters by post,PDF attachment,By hierarchy (CEO / Editor),0.7675,High
+Send letters by post,Ready-made template,By thematic interest,0.7588,High
+Fill online media forms,Personalized report,By workplace / company,0.7571,High
+Post on forums,Video pitch,By hierarchy (CEO / Editor),0.7551,High
+Meet key people in person,Ready-made template,By geographic location,0.7514,High
+Fill online media forms,Personalized report,By geographic location,0.7369,High
+Pay for advertising,Personalized report,By thematic interest,0.7333,High
+Meet key people in person,Ready-made template,By workplace / company,0.7215,High
+Fill online media forms,Personalized report,By thematic interest,0.7213,High
+Meet key people in person,Infographic,By geographic location,0.7114,High
+Send letters by post,Ready-made template,By hierarchy (CEO / Editor),0.7095,High
+Meet key people in person,HTML email,By hierarchy (CEO / Editor),0.7066,High
+Post on forums,Video pitch,By thematic interest,0.6967,High
+Meet key people in person,Infographic,By thematic interest,0.6954,High
+Post on forums,Infographic,By workplace / company,0.6893,High
+Fill online media forms,Video pitch,By thematic interest,0.6699,High
+Pay for advertising,Infographic,By hierarchy (CEO / Editor),0.6695,High
+Meet key people in person,Personalized report,By thematic interest,0.6653,High
+Post on forums,Personalized report,By geographic location,0.6637,High
+Pay for advertising,Video pitch,By workplace / company,0.6607,High
+Send letters by post,Video pitch,By workplace / company,0.6538,High
+Pay for advertising,PDF attachment,By geographic location,0.6507,High
+Meet key people in person,PDF attachment,By geographic location,0.647,High
+Send letters by post,HTML email,By thematic interest,0.6469,High
+Pay for advertising,HTML email,By workplace / company,0.6456,High
+Meet key people in person,Video pitch,By geographic location,0.6374,High
+Meet key people in person,Infographic,By workplace / company,0.6373,High
+Pay for advertising,Infographic,By workplace / company,0.6309,High
+Send letters by post,Video pitch,By thematic interest,0.6301,High
+Fill online media forms,Video pitch,By geographic location,0.6301,High
+Pay for advertising,Video pitch,By thematic interest,0.6286,High
+Pay for advertising,PDF attachment,By thematic interest,0.6278,High
+Fill online media forms,Ready-made template,By hierarchy (CEO / Editor),0.6276,High
+Meet key people in person,PDF attachment,By workplace / company,0.6185,High
+Pay for advertising,HTML email,By hierarchy (CEO / Editor),0.6135,Mid
+Meet key people in person,Personalized report,By hierarchy (CEO / Editor),0.6084,Mid
+Pay for advertising,Personalized report,By workplace / company,0.6068,Mid
+Post on forums,Ready-made template,By hierarchy (CEO / Editor),0.5999,Mid
+Post on forums,HTML email,By workplace / company,0.5988,Mid
+Pay for advertising,Ready-made template,By hierarchy (CEO / Editor),0.5964,Mid
+Fill online media forms,PDF attachment,By workplace / company,0.5939,Mid
+Fill online media forms,Ready-made template,By workplace / company,0.5903,Mid
+Post on forums,Video pitch,By geographic location,0.5895,Mid
+Send email,HTML email,By thematic interest,0.5866,Mid
+Pay for advertising,Infographic,By thematic interest,0.5863,Mid
+Meet key people in person,Infographic,By hierarchy (CEO / Editor),0.5852,Mid
+Send email,PDF attachment,By hierarchy (CEO / Editor),0.5829,Mid
+Meet key people in person,HTML email,By geographic location,0.582,Mid
+Pay for advertising,Video pitch,By geographic location,0.5772,Mid
+Post on forums,Personalized report,By hierarchy (CEO / Editor),0.5748,Mid
+Fill online media forms,Personalized report,By hierarchy (CEO / Editor),0.5745,Mid
+Pay for advertising,HTML email,By thematic interest,0.5717,Mid
+Meet key people in person,HTML email,By thematic interest,0.5682,Mid
+Meet key people in person,Video pitch,By thematic interest,0.5666,Mid
+Send letters by post,PDF attachment,By thematic interest,0.5611,Mid
+Pay for advertising,Personalized report,By geographic location,0.5601,Mid
+Pay for advertising,Ready-made template,By thematic interest,0.5571,Mid
+Pay for advertising,Ready-made template,By workplace / company,0.554,Mid
+Pay for advertising,PDF attachment,By hierarchy (CEO / Editor),0.551,Mid
+Pay for advertising,Video pitch,By hierarchy (CEO / Editor),0.5481,Mid
+Send letters by post,Video pitch,By hierarchy (CEO / Editor),0.5451,Mid
+Send email,PDF attachment,By geographic location,0.5392,Mid
+Fill online media forms,PDF attachment,By thematic interest,0.535,Mid
+Send letters by post,Infographic,By geographic location,0.532,Mid
+Fill online media forms,Video pitch,By hierarchy (CEO / Editor),0.5287,Mid
+Meet key people in person,Video pitch,By hierarchy (CEO / Editor),0.5279,Mid
+Meet key people in person,PDF attachment,By hierarchy (CEO / Editor),0.5277,Mid
+Post on forums,Infographic,By geographic location,0.5213,Mid
+Send letters by post,Personalized report,By thematic interest,0.5132,Mid
+Fill online media forms,Infographic,By geographic location,0.5121,Mid
+Post on forums,Infographic,By thematic interest,0.5108,Mid
+Send email,PDF attachment,By workplace / company,0.5094,Mid
+Post on forums,HTML email,By geographic location,0.5093,Mid
+Pay for advertising,HTML email,By geographic location,0.509,Mid
+Fill online media forms,HTML email,By workplace / company,0.5062,Mid
+Send letters by post,Personalized report,By workplace / company,0.5056,Mid
+Post on forums,Personalized report,By thematic interest,0.5055,Mid
+Fill online media forms,Ready-made template,By thematic interest,0.5053,Mid
+Send letters by post,PDF attachment,By geographic location,0.5037,Mid
+Send letters by post,PDF attachment,By workplace / company,0.5029,Mid
+Post on forums,PDF attachment,By thematic interest,0.5011,Mid
+Send letters by post,Personalized report,By hierarchy (CEO / Editor),0.5009,Mid
+Meet key people in person,Video pitch,By workplace / company,0.4997,Mid
+Send letters by post,Infographic,By hierarchy (CEO / Editor),0.4995,Mid
+Post on forums,PDF attachment,By workplace / company,0.4987,Mid
+Send letters by post,HTML email,By workplace / company,0.4961,Mid
+Send letters by post,Video pitch,By geographic location,0.4951,Mid
+Meet key people in person,PDF attachment,By thematic interest,0.4949,Mid
+Post on forums,Ready-made template,By thematic interest,0.493,Mid
+Meet key people in person,Ready-made template,By thematic interest,0.4897,Mid
+Send letters by post,HTML email,By hierarchy (CEO / Editor),0.4883,Mid
+Send letters by post,Infographic,By workplace / company,0.4796,Mid
+Send email,PDF attachment,By thematic interest,0.4795,Mid
+Send email,Infographic,By thematic interest,0.4786,Mid
+Fill online media forms,Infographic,By workplace / company,0.4782,Mid
+Post on forums,HTML email,By hierarchy (CEO / Editor),0.4767,Mid
+Fill online media forms,Infographic,By thematic interest,0.4756,Mid
+Send letters by post,Ready-made template,By geographic location,0.4696,Mid
+Post on forums,Video pitch,By workplace / company,0.4661,Mid
+Fill online media forms,HTML email,By hierarchy (CEO / Editor),0.4644,Mid
+Post on forums,Personalized report,By workplace / company,0.464,Mid
+Meet key people in person,Ready-made template,By hierarchy (CEO / Editor),0.4601,Mid
+Post on forums,PDF attachment,By geographic location,0.4597,Mid
+Fill online media forms,Video pitch,By workplace / company,0.4567,Mid
+Fill online media forms,HTML email,By geographic location,0.4555,Mid
+Fill online media forms,Infographic,By hierarchy (CEO / Editor),0.4549,Mid
+Pay for advertising,Infographic,By geographic location,0.4543,Mid
+Pay for advertising,PDF attachment,By workplace / company,0.4506,Mid
+Post on forums,PDF attachment,By hierarchy (CEO / Editor),0.4502,Mid
+Send letters by post,Infographic,By thematic interest,0.4321,Mid
+Fill online media forms,PDF attachment,By geographic location,0.4312,Mid
+Post on forums,Ready-made template,By geographic location,0.4294,Mid
+Meet key people in person,Personalized report,By geographic location,0.4168,Mid

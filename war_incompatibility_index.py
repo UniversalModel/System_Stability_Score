@@ -169,6 +169,8 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--w-action", type=float, default=1 / 3)
 
     parser.add_argument("--out", type=str, default="", help="Optional output JSON path")
+    parser.add_argument("--multi", type=str, default="",
+                        help="Patch 6.3: JSON file with N systems (list of {name,form,position,action})")
     return parser.parse_args()
 
 
@@ -202,8 +204,52 @@ def _systems_from_args(args: argparse.Namespace) -> tuple:
     return system_a, system_b
 
 
+# ── Patch 6.3: Multi-party war extension ─────────────────────────────────────
+def _run_multi_party(args: argparse.Namespace) -> None:
+    """Compute pairwise war indices for N systems and derive coalition stability."""
+    data = json.loads(Path(args.multi).read_text(encoding="utf-8"))
+    systems = [_normalize_system(s, s.get("name", f"System_{i}")) for i, s in enumerate(data)]
+
+    print(f"\n{'='*60}")
+    print(f"  MULTI-PARTY WAR INDEX — {len(systems)} systems")
+    print(f"{'='*60}")
+
+    # Pairwise matrix
+    pairs = []
+    for i in range(len(systems)):
+        for j in range(i + 1, len(systems)):
+            result = compute_indices(systems[i], systems[j])
+            pw = result["pairwise"]
+            pairs.append({
+                "a": systems[i]["name"],
+                "b": systems[j]["name"],
+                "war_index": pw["war_index"],
+                "band": pw["band"],
+            })
+            print(f"  {systems[i]['name']:<20} vs {systems[j]['name']:<20}: "
+                  f"W={pw['war_index']:.3f} [{pw['band']}]")
+
+    # Coalition stability: average pairwise compatibility
+    if pairs:
+        avg_war = sum(p["war_index"] for p in pairs) / len(pairs)
+        avg_compat = 1.0 - avg_war
+        critical = sum(1 for p in pairs if p["band"] in ("CRITICAL", "HIGH"))
+        print(f"\n  Coalition stability: {avg_compat:.3f}  (avg war index: {avg_war:.3f})")
+        print(f"  Critical/High pairs: {critical}/{len(pairs)}")
+
+    if args.out:
+        Path(args.out).write_text(json.dumps(pairs, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"\nSaved multi-party report: {args.out}")
+
+
 def main() -> None:
     args = _parse_args()
+
+    # Patch 6.3: multi-party mode
+    if hasattr(args, 'multi') and args.multi:
+        _run_multi_party(args)
+        return
+
     system_a, system_b = _systems_from_args(args)
 
     result = compute_indices(

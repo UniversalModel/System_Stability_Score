@@ -27,3 +27,6 @@ Thumbs.db
 
 # VS Code
 .vscode/
+
+# Checkpoints (interim model results)
+.checkpoints/

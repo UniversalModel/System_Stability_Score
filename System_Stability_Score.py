@@ -170,7 +170,16 @@ def load_principles(domain: str = "universal") -> dict[str, list[str]]:
                     result[cat] = [p.strip() for p in raw[:15]]
                 break
         if cat not in result:
-            raise FileNotFoundError(f"No {cat} principles in {base}. Run 3_pillars_constructor.py to generate them.")
+            # Patch 2.5: fuzzy domain suggestion
+            available = [d.name for d in PRINCIPLES_DIR.iterdir() if d.is_dir()] if PRINCIPLES_DIR.exists() else []
+            if available:
+                # Simple substring matching for suggestions
+                domain_lower = domain.lower().replace("/", "").replace("\\", "").replace("_", "")
+                matches = [a for a in available if domain_lower in a.lower().replace("_", "") or a.lower().replace("_", "") in domain_lower]
+                hint = f"  Did you mean: {', '.join(matches[:3])}?" if matches else f"  Available: {', '.join(available[:10])}"
+            else:
+                hint = "  No principle directories found. Run 3_pillars_constructor.py first."
+            raise FileNotFoundError(f"No {cat} principles in {base}. {hint}")
     return result
 
 
@@ -349,10 +358,40 @@ DOMAIN CONTEXT — background knowledge (use to inform your scoring)
 # ─────────────────────────────────────────────────────────────────────────────
 # 4. Call models — uses local adapter compare_models()
 # ─────────────────────────────────────────────────────────────────────────────
-def call_all_models(model_ids: list[str], prompt: str, timeout: int = 90) -> list[dict]:
+_CHECKPOINT_DIR = _HERE / ".checkpoints"
+_CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def _checkpoint_path(entity: str) -> Path:
+    safe = re.sub(r'[^\w\s-]', '', entity).strip().replace(' ', '_')[:40]
+    return _CHECKPOINT_DIR / f"sss_{safe}.json"
+
+
+def _save_checkpoint(entity: str, results: list[dict]):
+    """Persist interim results so a crash doesn't lose all model responses."""
+    path = _checkpoint_path(entity)
+    path.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _load_checkpoint(entity: str) -> list[dict] | None:
+    """Load previous checkpoint if it exists."""
+    path = _checkpoint_path(entity)
+    if path.exists():
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(data, list) and data:
+                return data
+        except Exception:
+            pass
+    return None
+
+
+def call_all_models(model_ids: list[str], prompt: str, timeout: int = 90,
+                    entity: str = "", checkpoint_every: int = 10) -> list[dict]:
     """
     Calls compare_models() from sss_llm_adapter.py (parallel OpenRouter).
     Returns list of dicts: {model, text, success, elapsed}
+    Supports incremental checkpointing (Patch 2.3).
     """
     total = len(model_ids)
     done  = [0]
@@ -374,6 +413,13 @@ def call_all_models(model_ids: list[str], prompt: str, timeout: int = 90) -> lis
         u_approx = _quick_u(txt)
         _progress(mid, ok, u_approx)
         results.append({"model": mid, "text": txt, "success": ok, "elapsed": elapsed})
+        # Checkpoint every N results
+        if entity and len(results) % checkpoint_every == 0:
+            _save_checkpoint(entity, results)
+
+    # Final checkpoint
+    if entity:
+        _save_checkpoint(entity, results)
     return results
 
 
@@ -381,9 +427,9 @@ def _quick_u(text: str) -> str:
     """Fast approximate U-score from raw JSON text for progress display."""
     try:
         data = json.loads(text)
-        form_scores     = [float(p["score"]) for p in data.get("Form", []) if "score" in p]
-        position_scores = [float(p["score"]) for p in data.get("Position", []) if "score" in p]
-        action_scores   = [float(p["score"]) for p in data.get("Action", []) if "score" in p]
+        form_scores     = [_clamp_score(p["score"])[0] for p in data.get("Form", []) if "score" in p]
+        position_scores = [_clamp_score(p["score"])[0] for p in data.get("Position", []) if "score" in p]
+        action_scores   = [_clamp_score(p["score"])[0] for p in data.get("Action", []) if "score" in p]
         if form_scores and position_scores and action_scores:
             f = sum(form_scores)/len(form_scores)/100
             po = sum(position_scores)/len(position_scores)/100
@@ -408,12 +454,43 @@ def _iqr(values: list) -> list:
     return [v for v in values if lo <= v <= hi]
 
 def _parse(text: str) -> dict | None:
+    """Parse LLM JSON with progressive repair fallback."""
+    text = re.sub(r"^```(?:json)?\s*", "", text.strip())
+    text = re.sub(r"\s*```$", "", text.strip())
+    # Attempt 1: direct parse
     try:
-        text = re.sub(r"^```(?:json)?\s*", "", text.strip())
-        text = re.sub(r"\s*```$", "", text.strip())
         return json.loads(text)
-    except Exception:
-        return None
+    except json.JSONDecodeError:
+        pass
+    # Attempt 2: strip trailing commas before } or ]
+    repaired = re.sub(r",\s*([}\]])", r"\1", text)
+    try:
+        return json.loads(repaired)
+    except json.JSONDecodeError:
+        pass
+    # Attempt 3: extract largest {...} block
+    m = re.search(r"\{[\s\S]*\}", text)
+    if m:
+        try:
+            return json.loads(m.group())
+        except json.JSONDecodeError:
+            repaired2 = re.sub(r",\s*([}\]])", r"\1", m.group())
+            try:
+                return json.loads(repaired2)
+            except json.JSONDecodeError:
+                pass
+    return None
+
+
+def _clamp_score(score, lo=0, hi=100) -> tuple:
+    """Clamp score to [lo, hi]; returns (clamped_value, was_suspicious)."""
+    try:
+        v = float(score)
+    except (TypeError, ValueError):
+        return 50.0, True
+    if v < lo or v > hi:
+        return max(lo, min(hi, v)), True
+    return v, False
 
 def aggregate(raw_results: list[dict], principles: dict) -> dict:
     parsed = [(r, _parse(r["text"])) for r in raw_results if r.get("success") and r.get("text")]
@@ -980,9 +1057,14 @@ Examples:
                           context_text=context_text)
     print(f"  Prompt: {len(prompt):,} chars")
 
+    # Patch 1.5: cost estimation
+    from sss_llm_adapter import estimate_batch_cost
+    est_cost = estimate_batch_cost(model_ids, len(prompt), max_tokens=4096)
+    print(f"  Est. cost: ~${est_cost:.4f} USD")
+
     print(f"\n  Calling {len(model_ids)} models in parallel...")
     print("-"*68)
-    raw = call_all_models(model_ids, prompt, timeout=args.timeout)
+    raw = call_all_models(model_ids, prompt, timeout=args.timeout, entity=target)
     print("-"*68)
 
     print(f"\n  Aggregating...")

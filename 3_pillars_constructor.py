@@ -391,6 +391,81 @@ def interactive_wizard() -> tuple[str, int, str]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# 8b. Principle validation & deduplication (Patches 5.1, 5.2)
+# ─────────────────────────────────────────────────────────────────────────────
+def _validate_principles(data: dict, system_name: str) -> dict[str, list[int]]:
+    """
+    Patch 5.2: Score each principle 1-5 on specificity, actionability, U-Theory alignment.
+    Uses simple heuristics (no extra LLM call to save cost).
+    """
+    result = {}
+    for pillar in ["Form", "Position", "Action"]:
+        scores = []
+        for p in data.get(pillar, []):
+            desc = p.get("description", "")
+            name = p.get("name", "")
+            combined = f"{name} {desc}".lower()
+            score = 3  # baseline
+            # Specificity: longer, more detailed descriptions score higher
+            if len(desc) > 100:
+                score += 1
+            if len(desc) > 200:
+                score += 0.5
+            # Actionability: contains measurable/observable language
+            if any(w in combined for w in ["measure", "observe", "detect", "threshold", "ratio", "percent", "rate"]):
+                score += 1
+            # U-Theory alignment: references the pillar's price dimension
+            price_words = {
+                "Form": ["time", "endure", "decay", "identity", "structure", "persist"],
+                "Position": ["space", "place", "context", "location", "resist", "displace"],
+                "Action": ["energy", "act", "execute", "process", "entropy", "expend"],
+            }
+            if any(w in combined for w in price_words.get(pillar, [])):
+                score += 0.5
+            # System-specific: mentions the system name
+            if system_name.lower() in combined:
+                score += 0.5
+            scores.append(min(5, round(score)))
+        result[pillar] = scores
+    return result
+
+
+def _deduplicate_principles(data: dict) -> dict:
+    """
+    Patch 5.1: Remove near-duplicate principles based on name similarity.
+    Simple word-overlap heuristic (no embeddings needed).
+    """
+    def _word_set(text: str) -> set:
+        return set(re.findall(r'\b\w+\b', text.lower()))
+
+    result = {}
+    for pillar in ["Form", "Position", "Action"]:
+        principles = data.get(pillar, [])
+        seen = []
+        for p in principles:
+            name = p.get("name", "")
+            desc = p.get("description", "")
+            words = _word_set(f"{name} {desc}")
+            is_dup = False
+            for prev in seen:
+                prev_words = _word_set(f"{prev.get('name', '')} {prev.get('description', '')}")
+                # Jaccard similarity on words
+                if words and prev_words:
+                    overlap = len(words & prev_words) / len(words | prev_words)
+                    if overlap > 0.85:
+                        is_dup = True
+                        break
+            if not is_dup:
+                seen.append(p)
+        result[pillar] = seen
+    # Preserve non-pillar keys
+    for k, v in data.items():
+        if k not in result:
+            result[k] = v
+    return result
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # 9. Main
 # ─────────────────────────────────────────────────────────────────────────────
 def main():
@@ -409,6 +484,11 @@ def main():
         default=None,
         help="Override path to domain context file (default: context/{domain}/general.md). "
              "Context is injected into the construction prompt to ground principle generation."
+    )
+    ap.add_argument(
+        "--lang",
+        default="en",
+        help="Language for generated principles (default: en). Use 'bg' for Bulgarian, etc."
     )
     args = ap.parse_args()
 
@@ -448,6 +528,11 @@ def main():
     else:
         print(f"  Context: none  (tip: create context/{domain}/general.md for grounded principles)")
     prompt = build_construction_prompt(system_name, n, context_text=context_text)
+    # Patch 5.3: multi-language support
+    if args.lang != "en":
+        lang_names = {"bg": "Bulgarian", "de": "German", "fr": "French", "es": "Spanish", "zh": "Chinese"}
+        lang_label = lang_names.get(args.lang, args.lang)
+        prompt += f"\n\nIMPORTANT: Generate ALL principle names and descriptions in {lang_label}."
     print(f"  Prompt: {len(prompt):,} chars")
 
     # ── Try architect models until one works
@@ -479,6 +564,23 @@ def main():
         print(f"  {pillar:10}: {count} principles")
         if count == 0:
             print(f"  WARNING: {pillar} returned 0 principles — model may have failed.")
+
+    # Patch 5.2: Principle validation scoring
+    print(f"\n  Validating principles (specificity, actionability, U-Theory alignment)...")
+    validation = _validate_principles(data, system_name)
+    for pillar, scores in validation.items():
+        avg = sum(scores) / len(scores) if scores else 0
+        print(f"  {pillar:10}: avg quality = {avg:.1f}/5")
+
+    # Patch 5.1: Principle deduplication
+    print(f"\n  Checking for duplicate principles...")
+    deduped = _deduplicate_principles(data)
+    for pillar in ["Form", "Position", "Action"]:
+        orig = len(data.get(pillar, []))
+        after = len(deduped.get(pillar, []))
+        if orig != after:
+            print(f"  {pillar}: {orig} → {after} (removed {orig - after} duplicates)")
+    data = deduped
 
     # ── Preview
     preview_principles(data, system_name)

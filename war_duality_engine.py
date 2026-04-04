@@ -226,6 +226,116 @@ def _load_json(path: str) -> dict:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+# ── Patch 6.1: Time-series simulation ────────────────────────────────────────
+def simulate_rounds(payload: dict, n_rounds: int = 10,
+                    damage_rate: float = 0.05, repair_rate: float = 0.03,
+                    seed: int | None = None) -> list[dict]:
+    """
+    Simulate N rounds of conflict with damage/repair dynamics.
+    Each round: each side exports entropy to the other (damage),
+    then repairs its own pillars slightly (repair).
+    Returns list of per-round snapshots.
+    """
+    import random as _rng
+    if seed is not None:
+        _rng.seed(seed)
+
+    a = payload["system_a"]
+    b = payload["system_b"]
+    pa = list(a["parameters"])  # deep copy via list()
+    pb = list(b["parameters"])
+
+    trajectory = []
+    for rnd in range(1, n_rounds + 1):
+        # Compute effective scores
+        base_a = _pillar_base(pa)
+        base_b = _pillar_base(pb)
+        incoming_a = _incoming_entropy(pb)
+        incoming_b = _incoming_entropy(pa)
+        eff_a = _effective(base_a, incoming_a)
+        eff_b = _effective(base_b, incoming_b)
+        u_a = _geom3(eff_a["form"], eff_a["position"], eff_a["action"])
+        u_b = _geom3(eff_b["form"], eff_b["position"], eff_b["action"])
+
+        trajectory.append({
+            "round": rnd,
+            "u_a": round(u_a, 4),
+            "u_b": round(u_b, 4),
+            "eff_a": {k: round(v, 4) for k, v in eff_a.items()},
+            "eff_b": {k: round(v, 4) for k, v in eff_b.items()},
+        })
+
+        # Apply damage: reduce stability by damage_rate + noise
+        for p in pa + pb:
+            p["stability"] = max(0.01, p["stability"] * (1 - damage_rate + _rng.uniform(-0.02, 0.02)))
+            # Increase export entropy slightly (escalation)
+            for pillar in PILLARS:
+                if pillar in p.get("export_entropy", {}):
+                    p["export_entropy"][pillar] = min(0.95, p["export_entropy"][pillar] * (1 + 0.02))
+
+        # Apply repair: boost stability by repair_rate
+        for p in pa + pb:
+            p["stability"] = min(1.0, p["stability"] * (1 + repair_rate + _rng.uniform(-0.01, 0.01)))
+
+    return trajectory
+
+
+# ── Patch 6.2: LLM-powered parameter estimation ──────────────────────────────
+def estimate_params(conflict_description: str, side_a: str = "Side A",
+                    side_b: str = "Side B") -> dict:
+    """
+    Use LLM to estimate realistic stability/entropy parameters from a
+    text description of a conflict. Falls back to defaults if no API key.
+    """
+    try:
+        from sss_llm_adapter import api_generate, OPENROUTER_API_KEY
+        if not OPENROUTER_API_KEY:
+            return propose_constructor_output(side_a, side_b)
+    except ImportError:
+        return propose_constructor_output(side_a, side_b)
+
+    prompt = f"""Given this conflict description:
+"{conflict_description}"
+
+Estimate stability (0-1) and export_entropy (0-1 per pillar) for each side.
+Side A: {side_a}
+Side B: {side_b}
+
+For each side, provide 6 parameters (2 per pillar: Form, Position, Action):
+- stability: how stable is this aspect (0=collapsed, 1=perfect)
+- export_entropy: how much entropy this exports to opponent per pillar
+
+Respond ONLY with valid JSON matching this structure:
+{{
+  "system_a": {{
+    "name": "{side_a}",
+    "parameters": [
+      {{"id": "A_F1", "pillar": "form", "name": "...", "stability": 0.0, "export_entropy": {{"form": 0.0, "position": 0.0, "action": 0.0}}}},
+      {{"id": "A_F2", "pillar": "form", "name": "...", "stability": 0.0, "export_entropy": {{"form": 0.0, "position": 0.0, "action": 0.0}}}},
+      {{"id": "A_P1", "pillar": "position", "name": "...", "stability": 0.0, "export_entropy": {{"form": 0.0, "position": 0.0, "action": 0.0}}}},
+      {{"id": "A_P2", "pillar": "position", "name": "...", "stability": 0.0, "export_entropy": {{"form": 0.0, "position": 0.0, "action": 0.0}}}},
+      {{"id": "A_A1", "pillar": "action", "name": "...", "stability": 0.0, "export_entropy": {{"form": 0.0, "position": 0.0, "action": 0.0}}}},
+      {{"id": "A_A2", "pillar": "action", "name": "...", "stability": 0.0, "export_entropy": {{"form": 0.0, "position": 0.0, "action": 0.0}}}}
+    ]
+  }},
+  "system_b": {{
+    "name": "{side_b}",
+    "parameters": [same structure as system_a with B_ prefix]
+  }}
+}}"""
+
+    result = api_generate("openrouter", prompt, model="openai/gpt-4o-mini",
+                          max_tokens=2000, temperature=0.3)
+    if result.success and result.text:
+        try:
+            text = result.text.strip()
+            text = text.replace("```json", "").replace("```", "").strip()
+            return json.loads(text)
+        except json.JSONDecodeError:
+            pass
+    return propose_constructor_output(side_a, side_b)
+
+
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Dual war model: constructor scaffold + entropy-export analysis")
     parser.add_argument("--propose", action="store_true", help="Generate constructor scaffold JSON")
@@ -233,11 +343,25 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--b-name", type=str, default="System B")
     parser.add_argument("--json", type=str, default="", help="Input constructor-output JSON")
     parser.add_argument("--out", type=str, default="", help="Output JSON file")
+    parser.add_argument("--simulate", type=int, default=0, help="Run N rounds of time-series simulation (Patch 6.1)")
+    parser.add_argument("--estimate", type=str, default="", help="LLM parameter estimation from conflict description (Patch 6.2)")
     return parser.parse_args()
 
 
 def main() -> None:
     args = _parse_args()
+
+    # Patch 6.2: LLM parameter estimation
+    if args.estimate:
+        print(f"Estimating parameters from conflict description...")
+        payload = estimate_params(args.estimate, args.a_name, args.b_name)
+        text = json.dumps(payload, ensure_ascii=False, indent=2)
+        if args.out:
+            Path(args.out).write_text(text, encoding="utf-8")
+            print(f"Saved estimated scaffold: {args.out}")
+        else:
+            print(text)
+        return
 
     if args.propose:
         payload = propose_constructor_output(args.a_name, args.b_name)
@@ -250,9 +374,23 @@ def main() -> None:
         return
 
     if not args.json:
-        raise SystemExit("Use --propose or provide --json INPUT_FILE")
+        raise SystemExit("Use --propose, --estimate, or provide --json INPUT_FILE")
 
-    result = analyze_duality(_load_json(args.json))
+    payload = _load_json(args.json)
+
+    # Patch 6.1: time-series simulation
+    if args.simulate > 0:
+        print(f"Simulating {args.simulate} rounds of conflict...")
+        trajectory = simulate_rounds(payload, n_rounds=args.simulate)
+        for snap in trajectory:
+            print(f"  Round {snap['round']:2d}: U_A={snap['u_a']:.3f}  U_B={snap['u_b']:.3f}")
+        if args.out:
+            Path(args.out).write_text(
+                json.dumps(trajectory, ensure_ascii=False, indent=2), encoding="utf-8")
+            print(f"Saved trajectory: {args.out}")
+        return
+
+    result = analyze_duality(payload)
     _print_summary(result)
 
     if args.out:

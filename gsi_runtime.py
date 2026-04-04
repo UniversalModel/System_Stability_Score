@@ -111,6 +111,32 @@ class TriadicBudget:
                 f"E={self.E_used:.1f}/{self.E_max:.1f}  "
                 f"remaining={self.remaining_ratio:.2f}")
 
+    def to_dict(self) -> dict:
+        """Serialize budget state for checkpointing (Patch 3.2)."""
+        return {
+            "T_max": self.T_max, "S_max": self.S_max, "E_max": self.E_max,
+            "T_used": self.T_used, "S_used": self.S_used, "E_used": self.E_used,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "TriadicBudget":
+        """Restore budget from checkpoint dict (Patch 3.2)."""
+        b = cls(T_max=d["T_max"], S_max=d["S_max"], E_max=d["E_max"])
+        b.T_used = d.get("T_used", 0.0)
+        b.S_used = d.get("S_used", 0.0)
+        b.E_used = d.get("E_used", 0.0)
+        return b
+
+    # ── Budget persistence (§3.2) ────────────────────────────────────────────
+    def to_dict(self) -> dict:
+        return {k: getattr(self, k) for k in
+                ("T_max", "S_max", "E_max", "T_used", "S_used", "E_used")}
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "TriadicBudget":
+        return cls(**{k: float(d[k]) for k in
+                      ("T_max", "S_max", "E_max", "T_used", "S_used", "E_used")})
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # LEARNING LAW  (§26 — impact weight update)
@@ -442,6 +468,7 @@ class GSIRuntime:
             E_max=float(self.config.jury_top_k * self.config.generations * len(domains)),
         )
         self.history: List[GenerationResult] = []
+        self.transfer_log: List[dict] = []
         self._plateau_counts: Dict[str, int] = {d.name: 0 for d in domains}
         self._prev_mean_SI:   Dict[str, float] = {d.name: 0.0 for d in domains}
 
@@ -453,12 +480,16 @@ class GSIRuntime:
 
     # ── Phase 5: Evaluate (AgentJury on top-k) ───────────────────────────────
     def _phase5_evaluate(self, scheduler: TriadicScheduler,
-                         top: List[TriadicSystem]) -> List[TriadicSystem]:
+                         top: List[TriadicSystem], mean_si: float = 0.0) -> List[TriadicSystem]:
         """
         Run AgentJury on the top jury_top_k candidates.
+        Patch 3.3: adaptive jury_top_k — more evaluation when SI is low.
         Replace them in the population with jury-revised scores.
         """
-        k = min(self.config.jury_top_k, len(top))
+        # Adaptive: evaluate more candidates when SI is low (more room for improvement)
+        base_k = self.config.jury_top_k
+        adaptive_k = max(2, int(base_k * (1.5 - mean_si)))  # low SI → more jury
+        k = min(adaptive_k, len(top))
         jury_candidates = top[:k]
         revised = []
         for s in jury_candidates:
@@ -498,7 +529,8 @@ class GSIRuntime:
 
     # ── Cross-domain transfer ─────────────────────────────────────────────────
     def _transfer_high_si(self):
-        """Inject high-SI templates across structurally similar domains (§26.4)."""
+        """Inject high-SI templates across structurally similar domains (§26.4).
+        Patch 3.4: structured logging of transfer details."""
         schedulers = list(self.schedulers.values())
         for i, src in enumerate(schedulers):
             for j, tgt in enumerate(schedulers):
@@ -521,9 +553,23 @@ class GSIRuntime:
                         generation=donor.generation,
                     )
                     tgt.population.append(adapted)
+                    if self.config.verbose:
+                        print(f"      [Transfer] {src.domain.name} → {tgt.domain.name}: "
+                              f"SI={donor.SI:.3f} adapted as ({t_a[0][:12]}, {t_f[0][:12]}, {t_p[0][:12]})")
+                    # Structured transfer log (§3.4)
+                    self.transfer_log.append({
+                        "src_domain": src.domain.name,
+                        "tgt_domain": tgt.domain.name,
+                        "donor_SI": round(donor.SI, 4),
+                        "adapted_labels": f"{t_a[0]}|{t_f[0]}|{t_p[0]}",
+                        "similarity": round(sim, 3),
+                    })
+                # Enforce population cap after transfer
+                tgt._trim_population()
 
-    # ── Halt check (§22.4) ────────────────────────────────────────────────────
-    def _should_halt(self, domain_name: str, mean_si: float) -> bool:
+    # ── Halt check (§22.4 + Patch 3.5 pillar-level) ──────────────────────────
+    def _should_halt(self, domain_name: str, mean_si: float,
+                     scheduler: TriadicScheduler = None) -> bool:
         if mean_si >= self.config.halt_si_threshold:
             return True
         if abs(mean_si - self._prev_mean_SI[domain_name]) < 1e-4:
@@ -531,7 +577,71 @@ class GSIRuntime:
         else:
             self._plateau_counts[domain_name] = 0
         self._prev_mean_SI[domain_name] = mean_si
-        return self._plateau_counts[domain_name] >= self.config.halt_plateau
+        if self._plateau_counts[domain_name] >= self.config.halt_plateau:
+            return True
+        # Patch 3.5: pillar-level early stopping
+        # If all pillars are stable (>0.9) for this domain, no point continuing
+        if scheduler and scheduler.population:
+            best = max(scheduler.population, key=lambda s: s.SI)
+            if best.F > 0.9 and best.P > 0.9 and best.A > 0.9:
+                return True
+        return False
+
+    # ── Checkpoint persistence (§3.2) ─────────────────────────────────────────
+    def save_checkpoint(self, path: str):
+        """Serialize runtime state to JSON for resume."""
+        import json as _json
+        from pathlib import Path as _Path
+        state = {
+            "budget": self.budget.to_dict(),
+            "transfer_log": self.transfer_log,
+            "history_len": len(self.history),
+            "plateau_counts": self._plateau_counts,
+            "prev_mean_SI": self._prev_mean_SI,
+            "populations": {
+                name: [
+                    {"F": s.F, "P": s.P, "A": s.A, "SI": s.SI,
+                     "domain": s.domain_name, "action": s.action_label,
+                     "form": s.form_label, "position": s.position_label,
+                     "gen": s.generation}
+                    for s in sched.population
+                ]
+                for name, sched in self.schedulers.items()
+            },
+            "si_history": {
+                name: sched.si_history
+                for name, sched in self.schedulers.items()
+            },
+        }
+        _Path(path).write_text(_json.dumps(state, indent=2), encoding="utf-8")
+
+    @classmethod
+    def load_checkpoint(cls, path: str, domains: "List[Domain]",
+                        config: "Optional[RuntimeConfig]" = None) -> "GSIRuntime":
+        """Restore runtime from a JSON checkpoint file."""
+        import json as _json
+        from pathlib import Path as _Path
+        state = _json.loads(_Path(path).read_text(encoding="utf-8"))
+        rt = cls(domains, config)
+        rt.budget = TriadicBudget.from_dict(state["budget"])
+        rt.transfer_log = state.get("transfer_log", [])
+        rt._plateau_counts = state.get("plateau_counts", rt._plateau_counts)
+        rt._prev_mean_SI = state.get("prev_mean_SI", rt._prev_mean_SI)
+        for name, pop_data in state.get("populations", {}).items():
+            if name in rt.schedulers:
+                sched = rt.schedulers[name]
+                sched.population = [
+                    TriadicSystem(
+                        domain_name=s["domain"], action_label=s["action"],
+                        form_label=s["form"], position_label=s["position"],
+                        F=s["F"], P=s["P"], A=s["A"], generation=s["gen"],
+                    )
+                    for s in pop_data
+                ]
+        for name, hist in state.get("si_history", {}).items():
+            if name in rt.schedulers:
+                rt.schedulers[name].si_history = hist
+        return rt
 
     # ── Main runtime loop ─────────────────────────────────────────────────────
     def run(self) -> List[GenerationResult]:
@@ -574,8 +684,8 @@ class GSIRuntime:
                 top = scheduler.step(top_k=self.config.top_k)
                 self.budget.charge(delta_T=0.0, delta_S=float(len(top)), delta_E=0.0)
 
-                # Phase 5: Evaluate — AgentJury on top-jury_top_k
-                top = self._phase5_evaluate(scheduler, top)
+                # Phase 5: Evaluate — AgentJury on top-jury_top_k (adaptive)
+                top = self._phase5_evaluate(scheduler, top, mean_si=0.0)
 
                 # Phase 6: Triage
                 triage = self._phase6_triage(top)
@@ -609,7 +719,7 @@ class GSIRuntime:
                     print(f"      Learning: {self.learning.summary()}")
 
                 # Phase 11: Halt check for this domain
-                if self._should_halt(domain_name, mean_si):
+                if self._should_halt(domain_name, mean_si, scheduler=scheduler):
                     print(f"    [{domain_name}] Halt condition met — removing from active set")
                     active_domains.discard(domain_name)
 

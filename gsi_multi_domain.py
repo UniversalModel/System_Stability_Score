@@ -38,6 +38,8 @@ EXPLORATION_EPS_INIT  = 0.30   # ε₀ at generation 1
 EXPLORATION_EPS_FLOOR = 0.05   # minimum ε
 EXPLORATION_DECAY     = 0.10   # λ decay rate
 MUTATION_STRENGTH     = 0.10   # 10% boost on weakest pillar per mutation
+MAX_POPULATION_SIZE   = 500    # Patch 4.1: cap to prevent unbounded growth
+MAX_POPULATION_SIZE   = 500    # §4.1 — cap to prevent population explosion
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -259,17 +261,21 @@ class TriadicScheduler:
         potential = 1.0 - s.SI
         return (s.SI * balance * potential) ** (1 / 3)
 
-    # ── Mutation: boost weakest pillar ────────────────────────────────────────
+    # ── Mutation: boost weakest pillar (adaptive strength) ──────────────────
     def _mutate(self, s: TriadicSystem) -> TriadicSystem:
-        """Boost weakest pillar by MUTATION_STRENGTH (GSI-RTD §§ weakest-pillar rule)."""
+        """Boost weakest pillar with decaying mutation strength."""
         m = deepcopy(s)
+        # Adaptive: strength decays as generations increase (§4.4)
+        max_gen = max(50, self.generation)
+        strength = MUTATION_STRENGTH * (1.0 - 0.5 * self.generation / max_gen)
+        strength = max(0.02, strength)
         w = m.weakest_pillar()
         if w == "F":
-            m.F = min(1.0, m.F * (1 + MUTATION_STRENGTH))
+            m.F = min(1.0, m.F * (1 + strength))
         elif w == "P":
-            m.P = min(1.0, m.P * (1 + MUTATION_STRENGTH))
+            m.P = min(1.0, m.P * (1 + strength))
         else:
-            m.A = min(1.0, m.A * (1 + MUTATION_STRENGTH))
+            m.A = min(1.0, m.A * (1 + strength))
         m.generation = self.generation
         return m
 
@@ -279,6 +285,12 @@ class TriadicScheduler:
         eps = EXPLORATION_EPS_INIT * math.exp(-EXPLORATION_DECAY * self.generation * coverage)
         return max(EXPLORATION_EPS_FLOOR, eps)
 
+    def _trim_population(self):
+        """Enforce MAX_POPULATION_SIZE by dropping lowest-SI systems."""
+        if len(self.population) > MAX_POPULATION_SIZE:
+            self.population.sort(key=lambda s: s.SI, reverse=True)
+            self.population = self.population[:MAX_POPULATION_SIZE]
+
     # ── Main step ─────────────────────────────────────────────────────────────
     def step(self, top_k: int = 20) -> List[TriadicSystem]:
         """
@@ -286,9 +298,10 @@ class TriadicScheduler:
         1. Filter by hard gates
         2. Rank by scheduler score (geometric, non-compensatory)
         3. Select top-k
-        4. Mutate weakest pillar in each
-        5. Inject ε-exploration (random novel candidates)
-        6. Merge into population
+        4. Elitism: preserve top-1 unmutated
+        5. Mutate remaining top candidates (weakest-pillar boost)
+        6. Inject ε-exploration (random novel candidates)
+        7. Merge into population (capped at MAX_POPULATION_SIZE)
         Returns: top_k best systems after mutation
         """
         self.generation += 1
@@ -298,17 +311,21 @@ class TriadicScheduler:
         ranked    = sorted(survivors, key=self._scheduler_score, reverse=True)
         top       = ranked[:top_k]
 
-        # Mutate top candidates (weakest-pillar boost)
-        mutated = [self._mutate(s) for s in top]
+        # Elitism: keep top-1 system unmutated (§4.3)
+        elite = [deepcopy(top[0])] if top else []
+        mutated = [self._mutate(s) for s in top[1:]]
 
         # Exploration injection
         eps = self._epsilon()
         n_explore = max(1, int(top_k * eps))
         explorers = random.sample(self.population, min(n_explore, len(self.population)))
 
-        # Merge: keep top mutated + explorers; replace worst in population
-        self.population = ranked[:len(ranked) - len(mutated) - len(explorers)] \
-                         + mutated + explorers
+        # Merge: elite + mutated + explorers + remaining ranked
+        keep_n = max(0, len(ranked) - len(elite) - len(mutated) - len(explorers))
+        self.population = elite + mutated + explorers + ranked[:keep_n]
+
+        # Population cap (§4.1)
+        self._trim_population()
 
         mean_si = statistics.mean(s.SI for s in top) if top else 0.0
         self.si_history.append(round(mean_si, 4))
@@ -350,7 +367,7 @@ class MultiDomainGSI:
         """
         Transfer high-SI systems across domains (§26.4 Triadic Transfer).
         A high-SI system from domain A is injected into domain B if their
-        action-space overlap is ≥ 50% (simple structural similarity proxy).
+        triadic overlap is ≥ 30%. Population cap enforced after transfer.
         """
         all_schedulers = list(self.schedulers.values())
         for i, src in enumerate(all_schedulers):
@@ -359,16 +376,13 @@ class MultiDomainGSI:
                     continue
                 similarity = self._structural_similarity(src.domain, tgt.domain)
                 if similarity < 0.3:
-                    continue  # domains too different — skip transfer
+                    continue
 
-                # Find high-SI donors
                 donors = [s for s in src.population if s.triage_category() == "HIGH"]
                 if not donors:
                     continue
 
-                # Adapt donor to target domain (keep scores, relabel)
                 for donor in donors[:2]:
-                    # Pick random target labels
                     t_a = random.choice(tgt.domain.actions)
                     t_f = random.choice(tgt.domain.forms)
                     t_p = random.choice(tgt.domain.positions)
@@ -384,16 +398,21 @@ class MultiDomainGSI:
                     )
                     tgt.population.append(adapted)
 
+                # Enforce population cap after transfer (§4.1)
+                tgt._trim_population()
+
     @staticmethod
     def _structural_similarity(d1: Domain, d2: Domain) -> float:
         """
-        Jaccard similarity on action labels (proxy for §26.4 transfer coefficient β).
+        Triadic Jaccard similarity — average of action/form/position overlap (§4.2).
         """
-        a1 = set(a[0] for a in d1.actions)
-        a2 = set(a[0] for a in d2.actions)
-        union = a1 | a2
-        intersection = a1 & a2
-        return len(intersection) / len(union) if union else 0.0
+        def _jaccard(s1, s2):
+            u = s1 | s2
+            return len(s1 & s2) / len(u) if u else 0.0
+        a_sim = _jaccard(set(a[0] for a in d1.actions),   set(a[0] for a in d2.actions))
+        f_sim = _jaccard(set(f[0] for f in d1.forms),     set(f[0] for f in d2.forms))
+        p_sim = _jaccard(set(p[0] for p in d1.positions), set(p[0] for p in d2.positions))
+        return (a_sim + f_sim + p_sim) / 3.0
 
     def summary(self) -> Dict[str, Dict]:
         """Return final generation statistics per domain."""

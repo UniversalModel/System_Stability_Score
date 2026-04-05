@@ -26,6 +26,79 @@ Part of [U-Model.org](https://U-Model.org) — Universal Model of System Stabili
 
 ---
 
+## What's New — Patch Suite (5 April 2026)
+
+**22 patches across 11 files (+1 044 lines).** Major infrastructure upgrade — no breaking changes.
+
+### Cost Estimation (before you spend a cent)
+```bash
+python -c "from sss_llm_adapter import estimate_batch_cost; print(estimate_batch_cost(12, 20))"
+```
+`estimate_cost()` and `estimate_batch_cost()` calculate approximate API cost **before** launching a run.  
+Pricing table covers ~13 models (GPT-4o, Claude 3.5/Opus, Gemini 2.0, Llama 3/4, DeepSeek, Qwen).  
+Cost summary is printed automatically at the start of every `System_Stability_Score.py` evaluation.
+
+### Checkpoint System (crash-safe batch runs)
+Long evaluations are now **resumable**. Progress is saved to `.checkpoints/` every N entities.  
+If the process crashes or you interrupt it, re-running the same batch picks up where it left off.
+```bash
+python System_Stability_Score.py "Heart" --domain biology/heart --models 20 --save
+# ↑ if interrupted, just re-run — checkpoints are loaded automatically
+```
+
+### Domain Auto-Discovery (fuzzy matching)
+No need to type the exact domain path. If you write `--domain heart`, the system finds `biology/heart` automatically using word-level fuzzy matching across all available `principles/` folders.
+
+### Adaptive Jury & Early Stopping (GSI runtime)
+- **Adaptive jury_top_k**: scales with mean SI — low-quality populations get stricter selection.
+- **Pillar-level early stopping**: if any pillar (F, P, or A) exceeds 0.9, the run halts early — no wasted API calls.
+- **TriadicBudget serialization**: `to_dict()` / `from_dict()` for saving/loading budget state across sessions.
+- **Verbose transfer logging**: when knowledge transfers between domains, every transfer is logged with source, target, and delta.
+
+### Multi-Party War Index (N systems, coalition stability)
+```bash
+python war_incompatibility_index.py --multi systems_a.json systems_b.json systems_c.json
+```
+Computes all **pairwise war indices** for N systems + overall coalition stability score.
+
+### War Time-Series Simulation
+```bash
+python war_duality_engine.py --json conflict.json --simulate 20 --out reports/war_sim.json
+```
+Runs N rounds of damage/repair dynamics — entropy export decays each other system's pillars, repair partially restores them. Outputs time-series data for each round.
+
+### LLM-Powered Parameter Estimation
+```bash
+python war_duality_engine.py --estimate "Russia controls upstream dam; Georgia depends on river for irrigation"
+```
+Feeds free-text conflict descriptions to the LLM, which returns structured F/P/A estimates for both sides.
+
+### Principle Validation & Deduplication (Constructor)
+- **Validation**: each generated principle is scored 1–5 by heuristics (length, specificity, measurability). Low-quality ones are flagged.
+- **Deduplication**: word-level Jaccard similarity > 0.85 → duplicate removed automatically.
+- **Multi-language**: `--lang bg` (or any language) appends a language instruction to the generation prompt.
+```bash
+python 3_pillars_constructor.py --system "Човешко сърце" --n 12 --domain biology/heart --lang bg --yes
+```
+
+### Unified CLI (`cli.py`)
+One entry point for all tools:
+```bash
+python cli.py sss "Human Heart" --domain biology/heart --models 10
+python cli.py gsi --config gsi_config.json
+python cli.py construct --system "Bank" --n 10 --domain finance/bank
+python cli.py war --json conflict.json
+python cli.py incompat --json pair.json
+```
+
+### Unit Tests (15 tests)
+```bash
+python -m pytest tests/test_core.py -v
+```
+Covers: `compute_si`, `_parse`, `_clamp_score`, `war_index`, `estimate_cost`, `TriadicScheduler`, `TriadicBudget`.
+
+---
+
 ## What It Does
 
 The U-Model measures how stable any system is across three inescapable dimensions:
@@ -329,7 +402,8 @@ python System_Stability_Score.py "B2B SaaS Company" --domain business/saas \
 
 - Python 3.12+
 - `OPENROUTER_API_KEY` in `.github/.env`
-- Local adapter `sss_llm_adapter.py` (included in this folder) + `OPENROUTER_API_KEY` in `.github/.env`
+- Local adapter `sss_llm_adapter.py` (included in this folder)
+- `pytest` (optional, for running tests: `pip install pytest`)
 
 ---
 

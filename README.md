@@ -407,6 +407,23 @@ python System_Stability_Score.py "B2B SaaS Company" --domain business/saas \
 
 ---
 
+## Why I Created U-Theory — Author's Note
+
+Due to the annoying academic dullness and dismissive silence, I announce: I will not publish any more of my ideas, because in these 3 months I have come up with ideas that will last for 3 generations — academic silence. I am concentrating on my personal problems — I will not fix the world... However, I have already fixed it :)
+
+> *"I created U-Theory to prove — through the language of mathematics, physics, economics, and philosophy — that the collapse of a constructive 30-year-old business in a deeply corrupt and dying country is not the result of managerial incompetence. Rather, it is the inevitable result of the systematic export of entropy by a corrupt state machine. This machine deliberately maintains high levels of instability, dooming the honest entrepreneur to pay the price for systemic debauchery with their personal life and capital.*
+>
+> *Reinterpreting Confucius through the lens of Appendix POLEMOS (The War v.26 — U-Theory): A bad form of government exports entropy to good people and organizations, whereas a good form of government exports entropy to bad people and organizations!*
+>
+> *My stable Form has sent out a signal against these entropic forms. Now, let us observe to whom the European institutional Form will choose to export its entropy. I harbor a strong suspicion it will be directed at the good Form, rather than the bad:*
+>
+> *EPPO Reports: PP.00700_2026_BG & PP.00747_2026_BG*
+> *Timestamp: Wed., 01/04/2026 - 04:43, Luxembourg"*
+
+— **Petar Nikolov**, Author of U-Theory
+
+---
+
 ## Related
 
 - [Quantum-triadic-autopsy](https://github.com/UniversalModel/Quantum-triadic-autopsy) — quantum computer evaluation

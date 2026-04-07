@@ -6,6 +6,7 @@
 
 **AI jury that evaluates ANY system via the triadic stability framework: Form / Position / Action**
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18475832.svg)](https://doi.org/10.5281/zenodo.18475832)
 [![U-Model](https://img.shields.io/badge/U--Model-v26-blue)](https://U-Model.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![OpenRouter](https://img.shields.io/badge/AI-OpenRouter-orange)](https://openrouter.ai)

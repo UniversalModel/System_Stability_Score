@@ -12323,8 +12323,9 @@ $$\boxed{\text{All DST.3.4-3.6 predictions are L3 (Speculative) — presented fo
 | **Organizational Scientists** | Validate U-Score in real systems | DST.1.1 |
 | **Philosophers** | Examine F-P-A exhaustivity claim | §11.4.5 of main theorem |
 
-**Zenodo DOI:** https://zenodo.org/records/18408477  
-**GitHub:** https://github.com/UniversalModel/core
+**DOI:** https://doi.org/10.17605/OSF.IO/74XGR  
+**OSF:** https://osf.io/74xgr/files/osfstorage  
+**GitHub:** https://github.com/UniversalModel/System_Stability_Score
 
 ---
 

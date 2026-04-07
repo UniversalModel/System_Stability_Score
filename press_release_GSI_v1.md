@@ -54,7 +54,7 @@ The book will cover the complete logical chain — from the three irreducible pr
 
 - GitHub: https://github.com/UniversalModel/System_Stability_Score/tree/main/GSI_simulations
 - DOI: https://doi.org/10.17605/OSF.IO/74XGR
-- Zenodo: https://zenodo.org/records/19155464
+- OSF: https://osf.io/74xgr/files/osfstorage
 - Video: https://youtu.be/y1sgI4PEK1o
 
 ---

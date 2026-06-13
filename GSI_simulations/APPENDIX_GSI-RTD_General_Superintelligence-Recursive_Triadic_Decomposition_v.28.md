@@ -22,6 +22,7 @@
 
 **Author**: Petar Nikolov  
 **Date of Formulation**: 26 March 2026  
+**Version**: 0.28 (extends v.27 with MC-TWO §20.8, DPA-SI §22.6, ADE §22.7)  
 **Framework**: U-Theory / Universal Stability Model  
 **DOI**: [https://doi.org/10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR)  
 **Status**: L3 technological architecture and operational protocol (derived via L2 structural isomorphisms); L3 scaling extrapolation  
@@ -330,6 +331,30 @@ Queue_final = (1 − ε) × Scheduler_output + ε × Random(F_novel, P_novel)
 
 where ε = exploration rate (default 0.10, decays over generations as the impact map becomes reliable).
 
+#### Adaptive ε — Coverage-Dependent Exploration Decay
+
+The fixed default ε = 0.10 is a safe starting point, but suboptimal across the lifecycle of a GSI deployment. Early generations know almost nothing about the triadic space and should explore aggressively; mature generations with dense impact maps should exploit known high-value regions. The following formula makes ε self-adjusting:
+
+```text
+ε(g) = max( ε_floor,  ε₀ × exp(−λ × g × Coverage(g)) )
+
+where:
+  g          = generation number (starting from 1)
+  ε₀         = initial exploration rate (default 0.30 for Gen 1–5)
+  λ          = decay rate (default 0.10)
+  Coverage(g)= fraction of triadic space explored by generation g (§21)
+  ε_floor    = minimum exploration rate (default 0.05)
+
+Behavior:
+  - When Coverage is low  → ε stays high  (explore more — the map is sparse)
+  - When Coverage is high → ε decays      (exploit known good regions)
+  - ε never drops below ε_floor           (always inject some novelty)
+```
+
+**Rationale:** The product `g × Coverage(g)` ensures that ε decays only when *both* time has passed *and* the space has been meaningfully covered. A system that has run many generations but achieved low coverage (e.g., due to a narrow action set) will retain high exploration — which is exactly the correct behavior.
+
+**Connection to §26.3 (Learning Law):** The Learning Law updates impact weights and gate thresholds. Adaptive ε complements this by controlling *how much new information enters the system*. Together they form a complete explore–exploit loop: ε controls the *input diversity*; the Learning Law controls the *output refinement*.
+
 This ensures that AD-RTD does not collapse into a narrow action-driven tunnel. The random injection may discover entirely new triadic configurations that the action-first logic would miss.
 
 ### Connection to the Scheduler (§20)
@@ -527,6 +552,43 @@ Where:
 | **LGP-11 Milestone Reporting** | Record intermediate results | Converts execution into structured feedback |
 | **LGP-12 Final Audit** | Measure final gain and lessons | Closes the loop and seeds the next recursion |
 
+#### 5.1.1 Pulse Monitoring Detail: Peak-Valley Stability Analysis (PVSA)
+
+LGP-10 (Pulse Monitoring) specifies that deviations must be tracked during execution. When the Stability Index SI is measured as a **time series** — SI(t₁), SI(t₂), …, SI(tₙ) — peaks and valleys in that series carry actionable information about **stability transitions**:
+
+```text
+PEAK-VALLEY STABILITY ANALYSIS (PVSA)
+
+Given SI time series: SI(t₁), SI(t₂), …, SI(tₙ)
+
+Definitions:
+  Peak   = local maximum where SI(t−1) < SI(t) > SI(t+1)
+  Valley = local minimum where SI(t−1) > SI(t) < SI(t+1)
+
+Derived indicators:
+  Mean_peaks   = arithmetic mean of all peak SI values in the observation window
+  Mean_valleys = arithmetic mean of all valley SI values in the observation window
+
+  Stability_Trend = (Mean_peaks − Mean_valleys) / σ(SI)
+
+    where σ(SI) = standard deviation of the full SI series in the window
+
+Decision rules:
+  If Stability_Trend < θ_decline         → trigger LGP re-decomposition (LGP-3)
+  If Valley_depth   > θ_critical         → emergency intervention (LGP-10 escalation)
+  If Stability_Trend is rising over 3+ windows → system is converging — reduce monitoring frequency
+
+Default thresholds (domain-adjustable):
+  θ_decline  = 1.0   (trend below 1σ signals weakening oscillation discipline)
+  θ_critical = 0.38  (aligned with LGP canonical critical threshold, §5.1 / APPENDIX_LGP §4)
+```
+
+**Interpretation:** A healthy system under LGP-10 monitoring exhibits peaks and valleys that are **converging** (the amplitude shrinks as the system stabilizes). A diverging peak-valley spread signals loss of control — the system is oscillating more wildly, not less. PVSA converts this intuition into a measurable trend.
+
+**Connection to §26.3bis (Momentum Gate):** The momentum impulse defined in §26.3bis operates on a similar principle — it detects whether the *rate of change* is sustained. PVSA extends this to the *shape of the trajectory*: not just "is SI improving?" but "is the improvement pattern healthy (converging oscillation) or pathological (widening oscillation)?"
+
+> **Note:** PVSA thresholds are **domain-calibrated**, not universal constants. High-frequency trading systems may require θ_decline = 0.5 (aggressive detection); infrastructure monitoring may tolerate θ_decline = 2.0 (allow wider oscillation before alarm). The schema is universal; the parameters are not.
+
 ### Proposition 5.1 — LGP as the Executive Cycle of General Superintelligence
 
 If GSI-RTD defines the complete search architecture of triadic intelligence, then LGP defines its **canonical temporal logic**. In other words, GSI-RTD answers **what spaces of solution can be generated**, while LGP answers **how one moves through those spaces without losing balance, evidence discipline, or auditability**.
@@ -696,8 +758,6 @@ If a system admits a complete description at level `d` in terms of `(F, P, A)`, 
 In plain terms: the triad does not become less valid when the analyst zooms in. It becomes more granular while retaining the same logical basis.
 
 > **Note on decomposition non-uniqueness:** Recursive decomposition is not canonically unique — two analysts may decompose the same system into different triadic trees. This is **a feature, not a bug**: multiple decompositions generate exploration diversity. In the LGP feedback loop, the system re-decomposes on regression, which means alternative triadic trees are naturally explored over generations. However, this diversity creates a need for an **inter-decomposition comparison metric** — a way to evaluate which decomposition of the same problem is superior. We propose two candidate criteria: (1) **orthogonality** — minimal overlap between F, P, A at each level, and (2) **observational coverage** — no observable property is left unrepresented. A formal canonical criterion (perhaps minimizing description length or maximizing inter-axis independence) remains an open problem. Until then, coverage metrics (§21) should be understood as **relative to the chosen decomposition**, analogous to basis choice in linear algebra: the vector space is objective, but the coordinates depend on the basis.
-
-> **Triadic Mapping Uncertainty Principle (U-Model):** There exists one optimal triadic mapping for any given problem — the decomposition that maximizes axis orthogonality and observational coverage — but around it there is a *distribution* of valid alternative mappings, normally distributed by proximity to the optimum. This is not a deficiency; it is a structural property of the framework. In the medical domain, for example, the triad (symptom × specialty × lab test) is not the sole valid decomposition: (disease × hospital × treatment), (disease × medication × treatment type), and (disease × medical specialty × medications & procedures) are all admissible mappings that capture partial orthogonalities along different analytical planes. Collectively, these alternative mappings can achieve full diagnostic and therapeutic coverage — analogous to how 100% of a problem space can be covered by an ensemble of partial perspectives, none of which is individually complete. **This is a kind of epistemic quantum uncertainty: no single mapping captures 100% of the truth; 100% truth is the asymptotic limit toward which multiple mappings converge together.** The U-Model does not demand perfect decomposition — it demands honest, diverse, and iteratively refined decomposition. Approximate mappings that capture partial orthogonalities are not only acceptable; they are necessary for multi-planar, multi-dimensional analysis of complex domains.
 
 #### Decomposition Quality Index (DQI) — Open Research Problem
 
@@ -987,7 +1047,7 @@ The strong speculative version of the thesis:
 | 4 | Intelligence = completeness of perspective | L2–L3 | Stated as thesis in §8.3; coherent with triadic completeness | No empirical measure of "completeness of perspective" vs. outcome | **Philosophical claim — unfalsified but untested** |
 | 5 | GSI emerges from combinatorial agent deployment | L3 | Architectural argument in §5, §8.2 | No implementation, no benchmark, no comparison with monolithic AI | **Forward-looking hypothesis** |
 | 6 | Non-compensatory aggregation prevents false stability | L2 | SSS formulas, geometric mean, δ penalty | Works in scalar domain; behavior under high-dimensional real data unclear | **Strong within formalism** |
-| 7 | LGP-12 is the canonical temporal logic of GSI | L2 | §5.1 mapping table; Proposition 5.1 | LGP designed for single-system diagnosis; multi-agent parallel LGP untested | **Valid architectural bridge** |
+| 7 | LGP-12 is the canonical temporal logic of GSI | L2 | §5.1 mapping table; Proposition 5.1; §5.2 Parallel-LGP protocol | Parallel-LGP architecturally specified (§5.2) with shared-nothing model, conflict detection, and barrier sync; operationally untested — no multi-agent deployment data | **Architecturally specified (§5.2); operationally untested** |
 | 8 | GSI-RTD + TAA + LGP + SSS = complete intelligence stack | L2–L3 | Full chain documented; each link formally specified | No end-to-end integration test; no adversarial evaluation | **Architecturally complete; operationally unproven** |
 | 9 | "GSI is discovered today" | L3+ | Declaration in preamble | Exceeds the document's own L2/L3 epistemic labeling | **Overclaim — should read "formally derived/proposed"** |
 
@@ -1358,6 +1418,68 @@ Output: execution_queue
 
 > **Approximation note:** The Greedy Triadic Selection algorithm structurally resembles **budgeted submodular maximization** (maximizing a monotone submodular function under a knapsack constraint). In the general case, greedy selection over submodular objectives guarantees a **(1 − 1/e) ≈ 0.632 approximation ratio** to the optimal solution (Nemhauser, Wolsey & Fisher, 1978). However, the exact GSI Score function (§20.3) includes ROI estimates, redundancy penalties, and multi-axis cost terms that **likely violate strict submodularity** — in particular, ROI is not guaranteed to exhibit diminishing returns, and the interaction between redundancy and cost creates non-monotone effects. Therefore, the (1−1/e) guarantee is an **aspirational analogy**, not a proven bound. The Scheduler should be understood as a **well-motivated heuristic** with structural similarity to submodular optimization, not as a provably near-optimal algorithm. Formal characterization of the Score function's approximation properties — whether through submodularity relaxation, curvature bounds (Conforti & Cornuéjols, 1984), or regret analysis — is critical future work for Gate 2 (§32).
 
+#### 20.4bis MCTS-RTD — Monte Carlo Tree Search Enhancement
+
+The greedy algorithm (§20.4) is a single-pass heuristic with no lookahead. For complex triadic spaces where candidate interactions are non-trivial, **Monte Carlo Tree Search (MCTS)** provides a principled alternative with proven regret bounds. The following defines MCTS-RTD as an optional upgrade to the Scheduler's selection phase:
+
+```text
+MCTS-RTD SCHEDULER (Enhancement of §20.4)
+
+Tree structure:
+  Root     = current Goal with available Budget
+  Nodes    = partial execution queues Q_partial
+  Children = Q_partial ∪ {S_candidate}  (adding one more candidate system)
+  Leaves   = complete queues (budget exhausted or all candidates evaluated)
+
+Four-phase MCTS cycle:
+
+  1. SELECTION (tree policy):
+     Traverse from root, selecting child nodes via UCB1:
+     
+     UCB1(node) = SI_mean(node) / (N_visits + 1)  +  c × √( ln(N_parent) / (N_visits + 1) )
+                  ╰──────── exploitation ────────╯     ╰──────── exploration (UCB1) ────────╯
+     
+     where c = tunable exploration constant (default √2)
+
+  2. EXPANSION:
+     At a leaf node, generate new child by adding one candidate system S_i
+     from the remaining (unqueued) candidates. The candidate is selected
+     from the triadic generator (§2–§4), filtered by hard gates (§20.3.1).
+
+  3. SIMULATION (rollout):
+     From the expanded node, perform a fast rollout:
+       - Greedily fill the remaining budget with top-scored candidates
+       - Compute SI_estimate for the complete queue using the fast estimator (§20.3.2)
+       - This is a lightweight approximation, not a full LGP execution
+
+  4. BACKPROPAGATION:
+     Update all ancestor nodes with the rollout result:
+       N_visits(node) += 1
+       SI_mean(node)  = running mean of all rollouts through this node
+
+Termination:
+  After K iterations (default K = 1000, or budget-proportional):
+    Return the child of root with highest N_visits (most-visited = most robust)
+
+Regret bound:
+  MCTS with UCB1 achieves O(√(T × ln(T))) cumulative regret,
+  where T = number of iterations. This formally resolves the deferred
+  regret analysis noted in §20.6.
+```
+
+**When to use MCTS-RTD vs. Greedy:**
+
+| Condition | Recommended algorithm | Rationale |
+|-----------|----------------------|-----------|
+| ≤ 100 candidates, tight time budget | Greedy (§20.4) | MCTS overhead not justified |
+| > 100 candidates, candidate interactions matter | MCTS-RTD | Lookahead discovers synergies that greedy misses |
+| Real-time scheduling (< 1s decision window) | Greedy (§20.4) | MCTS needs iteration time |
+| Strategic planning (seconds–minutes available) | MCTS-RTD | Better queue quality justifies compute cost |
+
+**Connection to §20.6 (Fundamental Insight):** §20.6 notes that the multi-generation trajectory of the Scheduler resembles "multi-armed bandit or Monte Carlo tree search." MCTS-RTD makes this analogy **operational**: instead of an aspirational comparison, the Scheduler literally *is* an MCTS agent when this mode is activated. The exploration constant `c` plays the same role as the adaptive ε (§1.1) — balancing exploitation of known high-SI candidates against exploration of untested triadic configurations.
+
+> **Implementation note:** MCTS-RTD is an **optional mode**, not a replacement for greedy selection. The Scheduler can switch between modes based on the candidate count and available decision time. Both modes pass through the same hard gates (§20.3.1) and use the same scoring function (§20.3.3) — the difference is purely in the *selection strategy* (single-pass greedy vs. iterative tree search).
+
 ### 20.5 Pruning Rules
 
 The Scheduler prunes branches that:
@@ -1389,6 +1511,42 @@ Scheduler
 ```
 
 Each LGP instance governs a subset of agents. The Aggregator collects results triadically and feeds them back to the Scheduler for the next generation.
+
+---
+
+### 20.8 MC-TWO: Monte Carlo Triadic Weight Optimization
+
+The default weights w_F = w_P = w_A = 1/3 are domain-agnostic. In practice, some domains privilege Action over Form (e.g., crisis response), while others privilege Form (e.g., architecture design). MC-TWO calibrates weights empirically.
+
+```text
+§20.8 MC-TWO: Monte Carlo Triadic Weight Optimization
+
+Problem: The default weights w_F = w_P = w_A = 1/3 are domain-agnostic.
+In practice, some domains privilege Action over Form (e.g., crisis response),
+while others privilege Form (e.g., architecture design).
+
+Method:
+1. Sample N random weight vectors w = (w_F, w_P, w_A) where Σw = 1, w_i > 0
+2. For each w, compute SI across the historical dataset of triadic evaluations
+3. Identify the weight vector w* that maximizes mean SI across known-good systems
+   while minimizing SI across known-bad systems
+4. Use w* as the domain-calibrated prior for future RTD cycles
+
+Formal:
+  w* = argmax_w [ E[SI(S_good | w)] − E[SI(S_bad | w)] ]
+  subject to: Σw_i = 1, w_i ∈ (0.1, 0.6)  // bounded to prevent degenerate solutions
+
+Integration with AD-RTD: Phase 5 (Evaluate) uses w* instead of (1/3, 1/3, 1/3).
+Integration with LGP-12: Step 10 (Learning) updates w* each generation.
+```
+
+**Connection to §20.3.3 (Non-compensatory geometric Score):** MC-TWO replaces the equal-weight assumption with an empirically optimized weight vector. The geometric score ∛(clamp(E[SI]) × clamp(E[ROI]) × clamp(1−Risk_norm)) × (1−Redundancy)^γ can incorporate MC-TWO weights by weighting the SI component according to w* rather than assuming equal pillar contributions.
+
+**Connection to §26 (Learning Law):** MC-TWO provides a **complementary adaptation mechanism** to the Learning Law. While §26.3 updates impact weights based on observed ΔSI, MC-TWO optimizes the *evaluation weights* used to compute SI itself. The two operate at different levels: the Learning Law adapts *what to do next*; MC-TWO adapts *how to measure success*.
+
+**Connection to §20.4bis (MCTS-RTD):** MCTS-RTD uses UCB1 to select which triadic branches to explore. MC-TWO can provide domain-calibrated priors for the UCB1 initialization — instead of starting each branch with equal expected reward, branches aligned with w* receive higher initial estimates, accelerating convergence.
+
+> **Note:** The bounds w_i ∈ (0.1, 0.6) prevent degenerate solutions where one axis dominates entirely. This is consistent with the non-compensatory principle (§4): no single axis can substitute for another, so no weight should approach 0 or 1.
 
 ---
 
@@ -1542,6 +1700,143 @@ Note: the cost aggregation uses the geometric mean — the same operator as SSS 
 > If no such Q exists, the problem exceeds the system's current resource envelope and must be decomposed into smaller sub-goals.
 
 This proposition establishes the **halting condition** for GSI: if you cannot achieve sufficient coverage within budget, you don't run — you decompose the goal further, or acquire more resources.
+
+### 22.5 Triadic Accumulation-Distribution (TAD) — Resource Flow Analysis
+
+The Budget (§22.1–22.4) defines **static** resource constraints. But over multiple generations, the *dynamic pattern* of resource consumption reveals whether investment in each triadic axis is being productively absorbed or wasted. TAD adapts the classic Accumulation/Distribution indicator from volume-price analysis to triadic resource flows:
+
+```text
+TRIADIC ACCUMULATION-DISTRIBUTION (TAD)
+
+For each triadic axis X ∈ {F, P, A}, at generation g:
+
+  CLV_X(g) = ( 2 × X_current(g) − X_min − X_max ) / ( X_max − X_min + ε )
+
+    where:
+      X_current(g) = actual SI contribution of axis X at generation g
+      X_min, X_max = observed min/max of X over the observation window
+      ε            = small constant to avoid division by zero (default 10⁻⁶)
+
+  TAD_X(g) = TAD_X(g−1) + CLV_X(g) × ResourceFlow_X(g)
+
+    where:
+      ResourceFlow_X(g) = budget allocated to axis X at generation g
+
+Interpretation:
+  Rising  TAD_F → Form resources are being productively absorbed
+                   (structural investments yield increasing SI contributions)
+  Falling TAD_A → Action resources are being wasted
+                   (execution investment yields declining returns)
+  Flat    TAD_P → Position resources are neutral
+                   (context allocation is neither helping nor hurting)
+
+Decision rules:
+  1. Allocate next-generation budget to the axis with the highest TAD slope
+     (steepest positive accumulation = highest marginal return)
+
+  2. Reduce budget for any axis with negative TAD slope sustained > 3 generations
+     (persistent negative accumulation = structural waste)
+
+  3. If all three TAD slopes are negative → trigger full re-decomposition (LGP-3)
+     (the current triadic configuration is exhausted)
+
+TAD slope calculation:
+  TAD_slope_X = ( TAD_X(g) − TAD_X(g−w) ) / w
+    where w = slope window (default 3 generations)
+```
+
+**Connection to §22 (Budget):** TAD transforms the static budget constraint (Proposition 22.1) into a **dynamic allocation policy**. Instead of distributing resources equally across F, P, A, the Scheduler uses TAD slopes to **tilt the budget** toward the axis with the highest productive absorption rate. This is consistent with the non-compensatory principle: an axis with negative TAD is not "compensated" by investing more — it is *starved* until the structural problem is resolved.
+
+**Connection to §29 (Risk):** Falling TAD on any axis is an early **risk signal** — it indicates that uncertainty is growing in that dimension (the system is investing resources but not gaining stability). The Uncertainty-Aware Score (§29.3) can incorporate TAD slopes as a complementary risk indicator: negative TAD_slope_X increases σ_X in the uncertainty propagation model.
+
+**Connection to §26 (Learning Law):** The Learning Law (§26.3) updates impact weights based on observed ΔSI. TAD provides a **finer-grained signal**: not just "did SI improve?" but "which axis absorbed the investment productively?" This enables the Learning Law to update per-axis weights, not just aggregate weights — making the adaptation more targeted.
+
+> **Note:** TAD is a **diagnostic and allocation tool**, not a replacement for SSS scoring. SSS measures the *state* of stability; TAD measures the *flow* of resource absorption. Both are needed: SSS tells you *where you are*; TAD tells you *whether your investment direction is working*.
+
+---
+
+### 22.6 DPA-SI: Dip-Peak Analysis of Stability Index Trajectories
+
+SI is not static — it evolves over RTD generations. Detecting dips (local minima) and peaks (local maxima) in the SI trajectory allows the system to detect regime changes, time interventions, and predict stability collapse before it happens.
+
+```text
+§22.6 DPA-SI: Dip-Peak Analysis of Stability Index Trajectories
+
+Motivation: SI is not static — it evolves over RTD generations. 
+Detecting dips (local minima) and peaks (local maxima) in the SI 
+trajectory allows the system to:
+  a) Detect regime changes (structural instability → Action-dominant phase)
+  b) Time interventions (enter during dips, consolidate during peaks)
+  c) Predict stability collapse before it happens (declining peak envelope)
+
+Definitions:
+  - SI_dip: local minimum where SI(t-1) > SI(t) < SI(t+1)
+  - SI_peak: local maximum where SI(t-1) < SI(t) > SI(t+1)
+  - Dip depth: δ_dip = SI_peak_prev − SI_dip
+  - Recovery ratio: ρ = (SI_peak_next − SI_dip) / δ_dip
+  - Envelope trend: slope of linear fit through consecutive SI_peaks
+
+Decision rules:
+  - If ρ < 0.618 (golden ratio threshold): system is in structural decline
+    → trigger Phase 6 Redesign
+  - If envelope trend < 0 for 3+ generations: escalate to LGP Step 11 (Emergency)
+  - If δ_dip > 0.2 (20% of SI range): log as "stability shock"
+    → allocate extra agents
+
+Integration: Feeds into Phase 10 (Learn) and Phase 11 (Iterate) of AD-RTD.
+Connects to GEOMETRIC_DIP_HILL_MODEL already in Apex_Predator.
+```
+
+**Connection to §22.5 (TAD):** While TAD measures resource *flow* absorption per axis, DPA-SI measures the *trajectory shape* of aggregate SI. Together they provide two complementary lenses: TAD says "which axis is absorbing investment productively"; DPA-SI says "is the overall stability trajectory healthy or declining." A falling TAD on all axes (§22.5 decision rule 3) will typically correlate with a declining peak envelope in DPA-SI — when both signals align, confidence in the diagnosis is high.
+
+**Connection to §1.1 (Adaptive ε):** The exploration rate ε(g) = max(ε_floor, ε₀ × exp(−λ × g × Coverage(g))) can be **modulated by DPA-SI signals**: during confirmed dips (SI declining), increase ε temporarily to explore alternative configurations; during confirmed peaks (SI rising), decrease ε to exploit the current best configuration. This creates a **cycle-aware exploration policy** rather than a monotonically decaying one.
+
+**Connection to §29 (Risk):** A declining peak envelope is a **leading risk indicator**. If the envelope trend is negative for 3+ generations, the Uncertainty-Aware Score (§29.3) should increase the risk premium — the system is structurally weakening even if current SI is still above θ_critical.
+
+> **Note:** The golden ratio threshold ρ = 0.618 is a working default chosen for its connection to the LGP canonical thresholds (§5.1). It can be domain-calibrated — high-stakes domains may use a tighter threshold (e.g., 0.7); fault-tolerant domains may accept lower recovery ratios.
+
+---
+
+### 22.7 ADE: Accumulation-Dip Entry Protocol
+
+When SI enters a dip phase (declining but above θ_critical), the system should **accumulate** resources and agent capacity rather than deploying immediately. Deploy when SI reversal is confirmed — concentrating force at the reversal point for maximum ΔSI/Cost.
+
+```text
+§22.7 ADE: Accumulation-Dip Entry Protocol
+
+Inspired by: Trading strategy pattern from Apex_Predator's accumulated_score_worker.py
+
+Principle: When SI enters a dip phase (declining but above θ_critical),
+the system should ACCUMULATE resources and agent capacity rather than 
+deploying immediately. Deploy when SI reversal is confirmed.
+
+Protocol:
+1. DETECT: SI declining for 2+ consecutive evaluations
+2. ACCUMULATE: 
+   - Pre-compute candidate systems for the next generation
+   - Pre-allocate agent capacity (Form-agents, Position-agents, Action-agents)
+   - Pre-score all candidates using current w*
+3. CONFIRM REVERSAL: SI(t) > SI(t-1) AND SI(t) > θ_critical
+4. DEPLOY: Release accumulated agents in priority order (Phase 7 triage)
+5. MEASURE: Track ΔSI/Cost of accumulated deployment vs. immediate deployment
+
+Advantage: Avoids deploying agents during a falling SI (wasting resources 
+on a system in structural decline). Instead, concentrates force at the 
+reversal point — maximum ΔSI/Cost.
+
+Risk: If reversal never comes and SI drops below θ_critical, 
+trigger Phase 6 Redesign instead.
+```
+
+**Connection to §22.6 (DPA-SI):** ADE operationalizes the DPA-SI diagnostic. DPA-SI *detects* dips and peaks; ADE defines *what to do* during a dip. Specifically: when DPA-SI confirms SI(t-1) > SI(t) for 2+ evaluations (Step 1), ADE activates the accumulation phase. When DPA-SI confirms reversal SI(t) > SI(t-1) (Step 3), ADE releases the accumulated agents.
+
+**Connection to §22.5 (TAD):** During the ACCUMULATE phase (Step 2), TAD slopes guide *which axes* to pre-allocate agents for. If TAD_F is rising while TAD_A is falling, the accumulated capacity should be biased toward Form-agents — they will yield higher ΔSI per cost unit when deployed at the reversal point.
+
+**Connection to §20.8 (MC-TWO):** Step 2 uses the current w* (from MC-TWO) to pre-score candidate systems. This ensures that the accumulated agents are optimized for the domain-calibrated weight vector, not the default equal weights.
+
+**Connection to Phase 7 (Triage):** Step 4 releases agents in Phase 7 priority order (highest ImprovementPotential/Cost first). This is not a new triage mechanism — it reuses the existing Phase 7 queue, but with the advantage that all candidates have been pre-scored during the accumulation window.
+
+> **Note:** The ADE protocol introduces a **temporal asymmetry** into the GSI execution cycle: during dips, the system *pauses deployment and accumulates*; at reversals, the system *deploys concentrated force*. This is analogous to the "buy the dip" strategy in finance, adapted to the triadic stability domain. The key insight is that deploying agents during a structural decline wastes resources — the decline must be allowed to bottom out before intervention is productive.
 
 ---
 
@@ -2723,114 +3018,9 @@ The following table populates the §35.2 template for the publisher outreach cam
 
 > **Limitations:** This worked example demonstrates template usage only. To qualify as a formal empirical bridge, it would need: (1) controlled A/B testing between GSI-RTD-guided and random agent selection; (2) Gate 3 ablation (remove Form variation, measure impact); (3) Gate 4 scaling curve (coverage vs. response rate); (4) independent replication by a different campaign operator. These remain future work.
 
-### 35.5 Mini Prototype — Email Marketing Simulation (144 Agents)
+### 35.5 Status
 
-This subsection provides a **worked engineering instance** of AD-RTD + SSS + Triadic Scheduler in a minimal, reproducible domain: email marketing / outreach.
-
-> **Epistemic status:** This is a **mini-prototype / domain implementation candidate**, not a formal proof of GSI and not a completed Gate 1–5 validation. Its purpose is to show that the architecture is straightforward to implement in code and produces interpretable generation-level behaviour under finite budgets.
-
-#### Domain mapping
-
-The canonical ontology remains:
-
-- **Form (F)** ↔ Time — the message carrier / representation
-- **Position (P)** ↔ Space — the recipient context / targeting frame
-- **Action (A)** ↔ Energy — the delivery intervention
-
-In operational AD-RTD order, the search is enumerated as:
-
-1. **Action** — what is done?
-2. **Form** — in what representational vehicle?
-3. **Position** — toward which contextual target?
-
-For this mini-domain:
-
-| Axis | Count | Variants |
-|------|-------|---------|
-| **Action (A)** | 6 | send email; post in forums; fill online forms; send postal letters; meet key people; pay for ads |
-| **Form (F)** | 6 | ready template; personalized report; infographic; video pitch; HTML email; PDF attachment |
-| **Position (P)** | 4 | by geography; by company/workplace; by hierarchy (CEO/Editor); by thematic interest |
-
-$$N = |A| \times |F| \times |P| = 6 \times 6 \times 4 = 144$$
-
-candidate triadic systems. Each system $S_i = (F_i, P_i, A_i)$ is a unique combination.
-
-#### SSS formula used
-
-The canonical formula (LGP/TAA/SSS):
-
-$$U = \sqrt[3]{F \cdot P \cdot A}, \quad \delta = \frac{\max(F,P,A) - \min(F,P,A)}{\max(F,P,A) + \varepsilon}, \quad SI = \frac{U}{(1+\delta)^2}$$
-
-Non-compensatory rule: $\min(F,P,A) \leq \varepsilon \Rightarrow SI = 0$ (collapse).
-
-#### Minimal runtime logic
-
-Each candidate system is assigned initial pillar scores in $[0,1]$. The mini-runtime performs:
-
-1. **SSS evaluation** — non-compensatory triadic formula
-2. **Scheduler prioritisation** — minimal heuristic: $\text{priority} = SI / \text{cost}$ (approximates §20)
-3. **Budgeted execution** — top $k=20$ candidates per generation
-4. **Observed outcome logging** — environment-perturbed feedback
-5. **Learning update** — pillar scores of selected candidates improve (§26 Learning Law)
-
-The prototype runs 5 generations and records both **Predicted SI** and **Real SI** (environment-perturbed outcome).
-
-#### Results
-
-| Generation | Predicted SI | Real SI |
-|-----------|-------------|---------|
-| 1 | 0.405 | ~0.389 |
-| 2 | 0.515 | ~0.508 |
-| 3 | 0.651 | ~0.631 |
-| 4 | 0.802 | ~0.774 |
-| 5 | 0.944 | ~0.920 |
-
-**Winner:** `Post on forums` | `Infographic` | `By hierarchy (CEO/Editor)` → $SI = 0.98$
-
-**Triage (final generation, 144 systems):** High ≥0.618: 27 | Mid 0.38–0.618: 117 | Low <0.38: 0
-
-#### Why this example matters
-
-This micro-simulation makes the abstract GSI-RTD stack concrete:
-
-- **AD-RTD** generates the candidate space (§1.1)
-- **SSS** scores candidate stability (§7)
-- **Triadic Scheduler** selects what runs under budget (§20)
-- **LGP logic** is approximated by the execute-monitor-audit loop (§5.1)
-- **Learning Law** updates the next generation based on realised results (§26)
-
-This is not yet a general superintelligence runtime, but it is a **minimal executable shell** of the architecture in a real engineering style. Intelligence emerges from structured elimination of instability: *the survivors are the solution.*
-
-#### Canonical consistency note
-
-This example preserves the v26 invariant **Form ↔ Time, Position ↔ Space, Action ↔ Energy**. The operational enumeration order A → F → P is methodological only; it does not invert the ontology.
-
-#### Reproducibility package
-
-| File | Description |
-|------|-------------|
-| `GSI_simulations/gsi_rtd_email_marketing_demo.py` | Runnable Python prototype |
-| `GSI_simulations/gsi_rtd_email_marketing_results.csv` | Per-generation stats |
-| `GSI_simulations/gsi_rtd_email_marketing_v2.png` | SI evolution + distribution plot |
-| `GSI_simulations/gsi_rtd_email_marketing_all_systems.csv` | All 144 systems with triage |
-
-Repository: https://github.com/UniversalModel/System_Stability_Score
-
-#### Validation boundary
-
-This mini-prototype demonstrates practical implementability but does **not** satisfy the full empirical bridge requirements of §35.2–§35.3. Future work should add:
-
-1. Baseline comparison against random or non-triadic selection
-2. Scheduler ablation (remove SI-priority, measure impact)
-3. Coverage / performance scaling curve (§21)
-4. Domain metric agreement with SSS-Guard (§7.2)
-5. Independent replication by a different operator
-
----
-
-### 35.6 Status
-
-The publisher outreach campaign provides a **worked example**demonstrating how the §35.2 template maps to a concrete domain. Formal empirical validation (Gates 1–5) has not been conducted. The campaign data exists and can serve as the basis for a future formal empirical bridge document once the experimental controls are established.
+The publisher outreach campaign provides a **worked example** demonstrating how the §35.2 template maps to a concrete domain. Formal empirical validation (Gates 1–5) has not been conducted. The campaign data exists and can serve as the basis for a future formal empirical bridge document once the experimental controls are established.
 
 ---
 
@@ -2871,7 +3061,7 @@ A **complete, implementation-ready specification** for General Superintelligence
 
 14. Related work positioning with SOTA multi-agent framework comparison (§24)
 15. Self-audit, falsification protocol, empirical closure gates, and Scheduler ablation suite (§13–§19, §32)
-16. Empirical bridge template with worked examples (§35, §35.4, §35.5)
+16. Empirical bridge template with worked example (§35)
 
 Plus a **concrete implementation blueprint** with technology stack, agent patterns, scheduler code, repository structure, and first-benchmark protocol (§33).
 

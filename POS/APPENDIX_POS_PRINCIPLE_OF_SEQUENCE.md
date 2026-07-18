@@ -6,7 +6,7 @@
 > **Copyright © 2026 Petar Nikolov. Licensed under CC BY 4.0.**
 > **Appendix for U-Theory / U-Model — v.28 appendix series** | Aligned with SSS / LGP / GSI-RTD / TE / TAA
 > **Status:** L2 methodology — a **commitment-control discipline** layered on the SSS measurement engine
-> **Version:** 1.4
+> **Version:** 1.6.1
 > **Epistemic Level:** B2 / L2 — a disciplined commitment heuristic; the claim that readiness-gated commitment beats ungated alternatives at equal cost is a **pre-registered hypothesis** (§8), not yet a validated result
 > **Author:** Petar Nikolov (ORCID 0009-0001-8669-2276)
 > **Prerequisites:** `APPENDIX_SSS` (the score), `APPENDIX_LGP` (the cycle), `APPENDIX_GSI-RTD` (the runtime), `APPENDIX_TE` (the umbrella)
@@ -124,6 +124,39 @@ R(a,t) ≥ 1   ⇔   both Form- and Position-readiness clear their thresholds
                  at the chosen confidence standard.
 ```
 
+### 2.6.1 Readiness margin and the active bottleneck
+
+`R(a,t)` says *whether* both conditions clear; the **margin** says *by how much*:
+
+```
+m_F(a,t) = LCB(F_t|a) / θ_F(a,d,s) − 1
+m_P(a,t) = LCB(P_t|a) / θ_P(a,d,s) − 1
+m_R(a,t) = min( m_F , m_P ) = R(a,t) − 1
+```
+
+`m_R > 0`: both clear with positive reserve · `m_R = 0`: exactly on the boundary · `m_R < 0`: at least one unmet. The **active readiness bottleneck** `b(a,t) = argmin_{i∈{F,P}} m_i(a,t)` names the limiting pillar (`F`, `P`, or a tie). It authorizes nothing; it points preparatory effort at the pillar with the highest immediate readiness value.
+
+### 2.6.2 Confidence standard
+
+POS reads each pillar at a *lower confidence bound*, never an optimistic point estimate. For `X ∈ {F,P}`:
+
+```
+LCB_{1−α}(X_t|a) = Q_α( X_t | a, D_t )                 (lower α-quantile of the posterior / sampling dist.)
+                  ≈ mean[X_t(a)] − z_{1−α} · SE[X_t(a)]  (approximately-Gaussian estimator)
+```
+
+A one-sided 95% bound uses `α = 0.05`. The requirement scales with stakes: `α = α(s)`, `dα/ds ≤ 0` — higher stakes demand a more conservative bound. Estimator, uncertainty model, and `α` are **declared before the gate is evaluated**; POS may not pick a friendlier uncertainty model after seeing whether the action passes.
+
+### 2.6.3 Risk-adjusted readiness thresholds (a calibration candidate)
+
+`θ_F`, `θ_P` must ultimately be calibrated (POS-P1). A candidate family to *test*:
+
+```
+θ_i(a,d,s) = clip_[0,1]( θ_i⁰(d) + β_i·κ(a) + γ_i·e(a) + η_i·s ) ,   i ∈ {F,P}
+```
+
+with `θ_i⁰(d)` the domain baseline, `κ(a)` irreversibility, `e(a) ∈ [0,1]` normalized exposure, `s ∈ [0,1]` normalized stakes, `β_i, γ_i, η_i ≥ 0` calibrated coefficients. Intended monotonicity `∂θ_i/∂κ ≥ 0`, `∂θ_i/∂e ≥ 0`, `∂θ_i/∂s ≥ 0` — the more irreversible, exposed, or consequential the action, the stronger the readiness evidence required. A **calibration candidate, not a validated law**; POS-P1 tests it against simpler and non-linear rivals.
+
 **Degree of irreversibility** `κ(a) ∈ [0,1]`: `κ=0` a fully reversible probe; `κ=1` a practically irreversible commitment; intermediate = partial reversibility / recovery cost / limited option preservation.
 
 **The POS authorization gate** `G_POS(a,t) ∈ {0,1}` — authorize (`1`) **iff** the values-firewall passes **and** at least one readiness condition holds:
@@ -144,6 +177,27 @@ G_POS(a,t) = 1[ Firewall(a) = PASS ]
 | Values-forbidden action | **always prohibited** |
 
 The **values-firewall dominates every readiness result**: no `R(a,t)` or `κ(a)`, however favorable, authorizes an action barred by ethics, law, or a domain safety constraint (§7).
+
+### 2.6.4 Severity of a readiness violation
+
+The binary gate says authorized / not; it does not grade *how bad* an attempted violation is. For audit and prioritization:
+
+```
+V_POS(a,t) = s(a) · κ(a) · [ 1 − R(a,t) ]_+ ,   [x]_+ = max(x, 0)
+```
+
+Properties: `R ≥ 1 ⇒ V_POS = 0`; `κ → 0 ⇒ V_POS → 0`; and `R ≪ 1, κ → 1, s → 1 ⇒ V_POS` large — the worst violation is a high-stakes, highly irreversible commitment far below the boundary. `V_POS` is an **audit measure, not a second gate**, and a values-firewall failure is *never* folded into it (values-forbidden actions stay categorically prohibited regardless of `V_POS`).
+
+### 2.6.5 Uncertainty-adjusted emergency override
+
+The emergency branch must not fire merely because the *point estimate* of inaction loss exceeds that of action. Require a **robust** margin on confidence bounds:
+
+```
+M_emg(a,t) = LCB[ L(inaction) ] − UCB[ L(a) ]                emergency iff  M_emg > 0
+ER(a,t)    = ( LCB[L(inaction)] + ε ) / ( UCB[L(a)] + ε ) ,  robust iff  ER > 1   (ε > 0)
+```
+
+The gate's emergency branch tightens to `a = a^emg  ∧  M_emg(a,t) > 0  ∧  Log(a,t) = COMPLETE`. This stops an optimistic estimate of action success from manufacturing an emergency exemption. Where time forbids reliable bounds, the override is recorded as taken under explicit, unresolved uncertainty.
 
 ---
 
@@ -185,6 +239,33 @@ with domain-calibrated weights `w_F, w_P ≥ 0` **declared before analysis**. Bu
 
 `ΔB > 0` supports the base-burning mechanism (premature commitment damages the base more than the sequenced policy); `ΔB ≤ 0` weakens or falsifies it, under the pre-registered equivalence / uncertainty criteria (§8, POS-P2).
 
+### 3.3 Base dynamics — separating construction from destruction
+
+The one-step burn records a decline but does not split gains from damages. Model each pillar as gain minus damage:
+
+```
+F_{t+1} = clip_[0,1]( F_t + g_F(a,t) − d_F(a,t) )
+P_{t+1} = clip_[0,1]( P_t + g_P(a,t) − d_P(a,t) )        g_*, d_* ≥ 0
+```
+
+Immediate burn `B_1 = w_F·d_F + w_P·d_P`. To separate temporary disruption from *persistent* damage, use the discounted `H`-horizon burn:
+
+```
+B_H(a,t) = Σ_{h=1..H} γ^{h−1} ( w_F·[F_t − F_{t+h}]_+ + w_P·[P_t − P_{t+h}]_+ ) ,   0 < γ ≤ 1
+```
+
+A dip that fully recovers yields a smaller `B_H` than a persistent decline. POS-P2 preregisters `H`, `γ`, `w_F,w_P`, and the minimum practically-important `B_H`.
+
+### 3.4 Counterfactual accumulation gap
+
+"Falls behind the prepared trajectory" made precise — the gap between the sequenced and premature policies:
+
+```
+ΔM_T = ∫[0,T] ( U_seq(t) − U_prem(t) ) dt          (normalized: ΔM_T / T)
+```
+
+`ΔM_T > 0`: the sequenced policy accumulated more stability · `= 0`: no advantage · `< 0`: the ungated policy accumulated more. Because both trajectories come from the *same* internal pillar model, `ΔM_T` is a **secondary internal outcome**; POS-P1 keeps external domain outcomes as its primary evidence.
+
 ---
 
 ## 4. Why F-then-P is the default verification order — and why this does not touch AD-RTD
@@ -195,7 +276,40 @@ Both readiness conditions must hold before a commitment, so the *conjunction* `L
 - **Option value.** The decisive commitment is verified last and executed last because it is the **least reversible** move — the one that forecloses the most options. Reversible work (probes, preparation) keeps options open; the commitment spends them. You spend option-value last.
 - **Integral, not instant.** POS optimizes the accumulation `ℳ`, not a single moment's `U`. The gate that protects the base maximizes the *area under the curve* across the whole life of the system — not one brilliant, base-burning moment.
 - **No conflict with Action-first discovery.** AD-RTD's `A → F → P` answers *"how do I efficiently find what to do?"* — Action defines intent, so discovery correctly starts there (GSI-RTD Prop. 1.1: reversing the discovery order "generates structure without purpose"). POS answers a different question: *"when may the found action be executed irreversibly?"* **Discover Action-first; commit readiness-first.** The two orders operate on different objects (candidate-space vs. commitment) and compose cleanly — §5.
-- **Coupling honesty.** In some systems (notably political ones) available *Forms* are constrained by *Position*, so F and P must co-evolve. POS handles this precisely: the **verification order is fixed** (F is always checked first) and the **commit-gate is unconditional**, but the *building* of F and P may interleave freely via `a^prep` (§2.5, §8). Order-of-verification and order-of-build are distinct; only the first is fixed.
+- **Coupling honesty.** In some systems (notably political ones) available *Forms* are constrained by *Position*, so F and P must co-evolve. POS handles this precisely: **F-first is the canonical *default* verification order, not an unconditional universal requirement.** A domain adapter MAY select P-first when a pre-registered verification-cost or dependency analysis establishes `C_{P→F} < C_{F→P}` (§4.1), or when Position must be resolved before Form can be validly estimated; the selected order, its cost/dependency assumptions, and the adapter version are recorded in the decision certificate. This changes only the *verification schedule* — the **commit-gate is unconditional** and the final readiness predicate is order-independent:
+
+```
+LCB(F|a) ≥ θ_F   ∧   LCB(P|a) ≥ θ_P
+```
+
+The *building* of F and P may interleave freely via `a^prep` (§2.5, §8); order-of-verification and order-of-build are distinct.
+
+### 4.1 The economics of checking Form first
+
+Since `F-ready ∧ P-ready` is order-independent, the value of checking Form first comes from cost, information, or dependency. Let `c_F, c_P` be the verification costs and `p_F, p_P` the pass-probabilities. With early-exit on the first failure:
+
+```
+C_{F→P} = c_F + p_F · c_P          C_{P→F} = c_P + p_P · c_F
+```
+
+F-first is economically preferred when `C_{F→P} ≤ C_{P→F}`, i.e. `c_F·(1 − p_P) ≤ c_P·(1 − p_F)` — a cheap gate that often rejects should be checked early; an expensive gate deferred until cheaper necessary conditions pass. When a Position estimate becomes invalid after a Form failure, add a dependency term:
+
+```
+C*_{P→F} = C_{P→F} + c_invalid · q_{P|¬F}
+```
+
+So **F-first's superiority is an empirical proposition** about costs, rejection probabilities, and dependency — not a consequence of the conjunction alone.
+
+### 4.2 Commitment burden and option-foreclosure
+
+Irreversibility is not only physical recovery cost; a commitment can destroy valuable future choices. Define:
+
+```
+Ω(a,t)        = V_free(t) − V_after,a(t)
+C_commit(a,t) = κ(a) · ( c(a,t) + λ_Ω · Ω(a,t) ) ,   λ_Ω ≥ 0
+```
+
+where `V_free` is the value of the best future policy *before* commitment and `V_after,a` *after* committing `a`. A large immediate payoff can still carry a high burden when it prunes superior future branches. This formalizes the rule: **reversible exploration preserves the policy tree; irreversible commitment prunes it.** `Ω` is model-dependent — its estimation method and sensitivity range are declared before use.
 
 ---
 
@@ -280,6 +394,24 @@ POS is a **disciplined heuristic**, held to the corpus's own evidence standard.
 
 **Apparent counterexamples (why they do not falsify POS).** Celebrated "act-first" strategies — *"fake it till you make it,"* the scrappy launch, the bluff that buys time — are almost never unprepared *commitments*. Examined against the taxonomy (§2.5) they are `a^probe` / `a^prep`: small, cheap, **reversible** moves taken to *improve* Position or Form, on a base that survives their failure. POS endorses them. POS is falsified only if **unprepared `a^commit`** — decisive, irreversible, from a genuinely unready base — **systematically outperforms** the gated alternative at equal budget (POS-P1). The reclassification discipline cuts both ways: an action may be called a probe **only before** its outcome is known — no post-hoc relabeling of failed commitments as "probes."
 
+**POS-P3 (advanced research formalization) — the policy-level control objective.**
+
+> **RESEARCH OBJECTIVE ONLY — NOT FOR OPERATIONAL AUTHORIZATION.** The policy-level objective below is a mathematical research specification, not a deployment rule. It must not authorize any real commitment until its coefficients, loss scales, constraints, external outcomes, and calibration procedure have been pre-registered, externally validated, and independently replicated.
+
+A full POS policy `π` over `[0,T]` can be written as a constrained control problem:
+
+```
+J(π) = E_π[ Y_ext(T) + λ_U·∫[0,T] U dt − λ_B·∫[0,T] B dt − λ_C·∫[0,T] C_commit dt ]
+
+  s.t.   Firewall(a_t) = PASS
+         G_POS(a_t, t) = 1        for every non-emergency commitment
+         C_total(π) ≤ C_max       (equal-budget constraint)
+
+  π*_POS = argmax_{π ∈ Π_POS} J(π)
+```
+
+`Y_ext(T)` external domain outcome, `U` internal stability, `B` base damage, `C_commit` commitment burden. This does **not** establish POS is optimal; it *defines the control problem* that POS-P1 and future simulations must compare against ungated and alternative-gated policies.
+
 **Epistemic level:** B2 / L2. A serious, testable commitment discipline with two pre-registered falsifiers; **scaffolding until POS-P1/P2 report**, and marked as such.
 
 ---
@@ -301,6 +433,23 @@ POS is a **disciplined heuristic**, held to the corpus's own evidence standard.
 | `ℳ_net` | loss-adjusted stability stock | domain-specific | the *only* form that may decline (§9.1) |
 | `L(a)` | expected loss of action a | domain-specific | same scale as `L(inaction)` |
 | `w_F, w_P` | base-damage weights | dimensionless | declared before analysis |
+| `m_F, m_P` | normalized pillar readiness margins | dimensionless | positive above threshold, negative below |
+| `m_R` | joint readiness margin | dimensionless | `m_R = R − 1` |
+| `b(a,t)` | active readiness bottleneck | categorical (F or P) | identifies the limiting gate |
+| `α(s)` | stakes-conditioned confidence level | dimensionless (0,1) | decreases as stakes rise |
+| `e(a)` | normalized action exposure | dimensionless [0,1] | separate from irreversibility |
+| `V_POS` | readiness-violation severity | dimensionless / audit-scaled | does not replace the binary gate |
+| `M_emg` | robust emergency margin | loss units | emergency support when `M_emg > 0` |
+| `ER(a,t)` | emergency necessity ratio | dimensionless | robust support when `ER > 1` |
+| `c_F, c_P` | costs of readiness verification | domain-specific | compare F-first vs P-first |
+| `p_F, p_P` | readiness pass-probabilities | dimensionless [0,1] | estimated before ordering analysis |
+| `g_F, g_P` | action-generated pillar gains | score change / step | constructive contribution |
+| `d_F, d_P` | action-generated pillar damage | score change / step | destructive contribution |
+| `B_H` | persistent base burn over horizon H | domain-specific / normalized | temporary vs durable damage |
+| `ΔM_T` | counterfactual accumulation gap | time-dimensioned unless normalized | secondary internal outcome |
+| `Ω(a,t)` | option-foreclosure cost | value / loss units | model-dependent |
+| `C_commit` | commitment burden | common decision units | direct cost + lost option value |
+| `J(π)` | policy-level objective | domain utility | research formalization, not a validated law |
 
 ### 9.1 The monotonicity of `ℳ` (stated precisely)
 
@@ -312,13 +461,43 @@ For `U(t) ∈ [0,1]` and `ℳ(t) = ∫[0,t] U dτ`, we have `dℳ/dt = U(t) ≥ 
 
 which declines exactly when `L(τ) > U(τ)`. Unqualified `ℳ = ∫U dt` is therefore always "cumulative stability / area under the `U`-trajectory"; any claim of a *declining* stock must name `ℳ_net`.
 
+> **Epistemic status of the extended formal core (§§2.6.1–2.6.5, 3.3–3.4, 4.1–4.2, POS-P3).** These equations convert POS into a more explicit measurement-and-control specification. They do **not** upgrade its empirical status. The readiness margin, risk-adjusted thresholds, violation score, emergency margin, persistent-burn metric, counterfactual gap, option-foreclosure cost, and policy objective are all **L2/B2 candidate operationalizations**: their functional forms, coefficients, confidence rules, horizons, and loss scales require preregistration, calibration, ablation, and comparison against rival policies. *A formula makes a claim inspectable; it does not make the claim true.*
+
+---
+
+## 10. Integration into mathematical engines — POS as a plug-in commitment gate
+
+POS is designed to drop into an existing engine as a **filter layer between candidate selection and irreversible execution** — it changes nothing in the discovery / optimization loop; it only decides whether an already-chosen action may be *committed* now. A runnable reference (pure-Python, standard library only, so it ports to C++/Julia/Rust or symbolic solvers) ships with this appendix: **`pos_reference.py`** (the gate, readiness metrics, base-burn, verification economics, reward-shaping helper) + **`test_pos.py`** (property tests).
+
+**The contract.** *Inputs:* two readiness estimates with uncertainty (`F, P` as mean + standard error), and the candidate action's `κ, e, s`, domain, values-firewall verdict, and — for emergencies — loss bounds. *Output:* `authorize ∈ {true,false}`, a `reason`, and diagnostics (`R, m_R, bottleneck, V_POS, M_emg`). The gate is the faithful §2.6 predicate — **a high-`κ` commit is authorized only when `R ≥ 1`**; a reversible probe / low-`κ` prep is ungated; a values-forbidden action is refused at every readiness.
+
+**Where it plugs in, per engine:**
+
+| Engine | POS insertion |
+|---|---|
+| **Reinforcement learning** | an **action mask** on irreversible commits (`G_POS = 0` → masked), plus reward shaping `r' = r + λ_U·U − λ_B·B − λ_V·V_POS`; probes / prep stay available, so exploration is preserved |
+| **Model-predictive / optimal control** | `G_POS(a_t,t) = 1` as a **hard constraint** in the receding-horizon program; the POS-P3 objective `J(π)` (§8) as the cost |
+| **Hierarchical planning** | the gate **between the planner** (discovery + selection) **and the executor** — the plan is generated freely; the commit step must clear |
+| **Multi-agent systems** | the **Σ-agent commitment veto** (§5): the F/P/A agents diagnose in parallel; Σ withholds `execute(a^commit)` until `G_POS = 1` |
+| **Discrete-event simulation** | evaluate the gate at each commit event; log `V_POS` and every `a^emg` forced move for audit |
+
+**Substrate-mapping recipe (what makes it interdisciplinary).** (1) Map the domain's quantities to `F, P, A ∈ [0,1]` — normalized readiness of capability/structure, environment-fit/standing, operational readiness. (2) Attach `κ, e, s` to each action. (3) Calibrate `θ_i(a,d,s)` for the domain (POS-P1); declare `α(s)`, the uncertainty model, and the loss scale **before** running the gate. (4) Wire the gate at the commit boundary. The *same* code then serves a trading system, a clinical protocol, a launch campaign, a governance reform, or an autonomous agent — only the `F/P/A` definitions and the `θ` calibration change.
+
+**A note on the naïve gate.** The tempting shortcut *"if the action is decisive/irreversible, just authorize it"* is exactly inverted: high `κ` is what **raises** the readiness bar, never what waives it. The reference implementation refuses a high-`κ` commit unless `R ≥ 1`, precisely to avoid that error.
+
+> **Scope (unchanged).** §10 makes POS *runnable and embeddable*, not *validated*. The gate remains an L2/B2 candidate operationalization; a live deployment must first calibrate `θ`, `α`, `κ`, and the loss scales for its domain and clear POS-P1/P2. Embedding a formula is not evidence that the formula pays.
+
+*Reference code: `pos_reference.py`, `test_pos.py` (MIT; ship with this appendix).*
+
 ---
 
 ## References & provenance
+
+> **Implementation companion.** `APPENDIX_POS_ENGINE_PROFILE` defines the universal kernel, the domain-adapter contract, the uncertainty modes, the irreversibility estimators, the typed interfaces, and the compliance requirements. `pos_reference.py` (v0.2) is the RUO scalar reference implementation; `pos_example_lbo.py` is a **computational consistency illustration, not empirical evidence.**
 
 - **Parent record:** U-Theory / U-Model — DOI **10.17605/OSF.IO/74XGR** · https://u-model.org · https://github.com/UniversalModel
 - **Inherited primitives:** `SSS` (score `U`, `δ`, `SI` + stakes-scaled thresholds), `GSI-RTD` (**AD-RTD `A→F→P` candidate generation** + the Triadic Scheduler, fed by `π*` weakest-pillar triage + SSS-Guard), `LGP` (the 12-step cycle: parallel F/P/A diagnostics, LGP-7 selection, LGP-10 abort), `TAA` (the F/P/A/Σ jury), `TE` (umbrella).
 - **Sibling cross-refs:** `MMT` / `DIM` (the L3 meaning-interpretation layer; non-load-bearing here), `QMC` (measurement/irreversibility discussions), `WAR` / TRC / TRA firewalls (values-forbidden action), domain instances `TRA` / `TRB` / `TRC` / `TSE` (the TRA hardening supplies the zero-limit-only scoping of non-compensation adopted in §3).
 - **Author:** Petar Nikolov (ORCID 0009-0001-8669-2276). © 2026, CC BY 4.0.
 
-*Version 1.4 — added the **formal core**: the gate as a computable predicate — readiness ratio `R(a,t)` on lower confidence bounds, irreversibility `κ(a)`, the authorization gate `G_POS(a,t)` with its regime table (§2.6); the base-burning metric `B(a,t)` and its causal comparator `ΔB` (§3.2); and a full equation & variable registry with the precise `ℳ` monotonicity treatment and the loss-adjusted `ℳ_net` (§9). — v1.3 minor revision per second re-review (ACCEPT, 8.6/10): F-first re-scoped as the *default* verification order (the F∧P conjunction is order-independent; superiority is part of POS-P1) §4; `a^prep` gating made `κ`-based, not label-based, with an explicit no-label-gaming rule §2.5; `ℳ` introduced as cumulative stability with the *meaning*-reading demoted to the L3 MMT/DIM layer §0/§6. — v1.2 major revision per adversarial re-review: POS repositioned as a **readiness-ordered commitment gate** (not a thinking-order law); reconciled with GSI-RTD's canonical AD-RTD `A→F→P` discovery order (three-orders table §0, pipeline §5) and with LGP's parallel diagnostics (gate sits between LGP-7 and LGP-8/9); action taxonomy `a^probe / a^prep / a^commit / a^emg` + irreversibility `κ(a)` dissolves the action-circularity; energy wording corrected to commitment-irreversibility / option-value; `ℳ` monotonicity corrected (growth collapses; the integral never reverses); non-compensation scoped to the zero-limit (the gate is a normative constraint, not a theorem of `U`); thresholds re-cast as `θ(a,d,s)` functions with LCBs, illustrative numbers stripped of decision authority; POS-P1/P2 upgraded to PASS / INCONCLUSIVE / KILL bands with mandatory AD-RTD baseline, ablations, external outcomes, and composite equal-budget; cosmological paragraph demoted to an L3 non-load-bearing note; license corrected. B2/L2 throughout. Not a guarantee of success — a discipline for accumulating stability (and, in the L3 MMT/DIM reading, meaning) over time.*
+*Version 1.6.1 — doc pass: F-first re-scoped as the canonical default (adapter may select P-first on pre-registered cost/dependency; §4), POS-P3 marked NOT-FOR-OPERATIONAL-AUTHORIZATION, and an implementation-companion cross-ref to APPENDIX_POS_ENGINE_PROFILE / pos_reference.py (v0.2). — v1.6 — POS made a **runnable, embeddable plug-in commitment gate** (§10): engine-integration contract + per-engine insertion patterns (RL action-mask & reward shaping, MPC hard constraint, hierarchical-planning gate, multi-agent Σ-veto, discrete-event) + a substrate-mapping recipe; ships a pure-Python reference `pos_reference.py` (faithful §2.6 predicate — high-`κ` commits require `R ≥ 1`; Acklam inverse-normal so `α(s)` needs no SciPy) and property tests `test_pos.py` (13/13). — v1.5 **maximum formalization for interdisciplinary math engines** (10 compatible patches; binary gate & B2/L2 unchanged): readiness margin + active bottleneck (§2.6.1), explicit lower-confidence-bound standard with stakes-scaled α (§2.6.2), risk-adjusted threshold family θ_i(a,d,s) (§2.6.3), readiness-violation severity V_POS (§2.6.4), uncertainty-adjusted robust emergency override M_emg/ER (§2.6.5), base dynamics + persistent H-horizon burn B_H (§3.3), counterfactual accumulation gap ΔM_T (§3.4), F-first verification-cost economics (§4.1), commitment burden + option-foreclosure Ω (§4.2), the POS-P3 policy-level control objective J(π) (§8), a full registry expansion (§9), and an epistemic guardrail keeping all of it L2/B2 candidate operationalizations. — v1.4 added the **formal core**: the gate as a computable predicate — readiness ratio `R(a,t)` on lower confidence bounds, irreversibility `κ(a)`, the authorization gate `G_POS(a,t)` with its regime table (§2.6); the base-burning metric `B(a,t)` and its causal comparator `ΔB` (§3.2); and a full equation & variable registry with the precise `ℳ` monotonicity treatment and the loss-adjusted `ℳ_net` (§9). — v1.3 minor revision per second re-review (ACCEPT, 8.6/10): F-first re-scoped as the *default* verification order (the F∧P conjunction is order-independent; superiority is part of POS-P1) §4; `a^prep` gating made `κ`-based, not label-based, with an explicit no-label-gaming rule §2.5; `ℳ` introduced as cumulative stability with the *meaning*-reading demoted to the L3 MMT/DIM layer §0/§6. — v1.2 major revision per adversarial re-review: POS repositioned as a **readiness-ordered commitment gate** (not a thinking-order law); reconciled with GSI-RTD's canonical AD-RTD `A→F→P` discovery order (three-orders table §0, pipeline §5) and with LGP's parallel diagnostics (gate sits between LGP-7 and LGP-8/9); action taxonomy `a^probe / a^prep / a^commit / a^emg` + irreversibility `κ(a)` dissolves the action-circularity; energy wording corrected to commitment-irreversibility / option-value; `ℳ` monotonicity corrected (growth collapses; the integral never reverses); non-compensation scoped to the zero-limit (the gate is a normative constraint, not a theorem of `U`); thresholds re-cast as `θ(a,d,s)` functions with LCBs, illustrative numbers stripped of decision authority; POS-P1/P2 upgraded to PASS / INCONCLUSIVE / KILL bands with mandatory AD-RTD baseline, ablations, external outcomes, and composite equal-budget; cosmological paragraph demoted to an L3 non-load-bearing note; license corrected. B2/L2 throughout. Not a guarantee of success — a discipline for accumulating stability (and, in the L3 MMT/DIM reading, meaning) over time.*

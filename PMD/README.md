@@ -38,7 +38,7 @@ A U-Theory appendix on the **Position ↔ Space** currency. Position carries two
 
 ## Files
 
-- [`APPENDIX_PMD_POSITION_MASS_DUALITY.md`](APPENDIX_PMD_POSITION_MASS_DUALITY.md) — the appendix (v1.5.2).
+- [`APPENDIX_PMD_POSITION_MASS_DUALITY.md`](APPENDIX_PMD_POSITION_MASS_DUALITY.md) — the appendix (v1.5.3).
 - [`APPENDIX_PMD_POSITION_MASS_DUALITY.md.pdf`](APPENDIX_PMD_POSITION_MASS_DUALITY.md.pdf) — rendered PDF.
 - [`pmd_scale_sensitivity.py`](pmd_scale_sensitivity.py) — reproduces every numerical figure in §16.1 (reference-scale sensitivity), the PMD-2R violation factor, and the PMD-10 mass elasticity. Pure standard library; `python pmd_scale_sensitivity.py`.
 

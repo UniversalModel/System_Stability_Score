@@ -11,7 +11,7 @@
 **Author:** Petar Nikolov (ORCID 0009-0001-8669-2276)
 **Date:** 2026-07-19
 **Framework:** U-Theory v31 · deepens the **Position ↔ Space** currency
-**Status:** **L3 / L4 SPECULATIVE (Part I) + L1/L2/L3 FORMAL (Part II)** — a coherent *interpretive* extension of the canon, **NOT** a derivation of new physics, **NOT** a modification of GR or QFT. **(v1.4 — review-hardened: §17 adapter adopted into the §5 core meter (`P_L = P_D^(1−η)·P_M^η`, η=½ default; `P_L=P_M` retained as the η=1 legacy case); context = channel vs its Fisher content clarified; PMD-2 NR-scope, PMD-4 regularity, PMD-6 rival-aggregator, and raw-observable protocol notes added.)**
+**Status:** **L3 / L4 SPECULATIVE (Part I) + L1/L2/L3 FORMAL (Part II)** — a coherent *interpretive* extension of the canon, **NOT** a derivation of new physics, **NOT** a modification of GR or QFT. **(v1.5.1 — mathematical-apparatus upgrade, adversarially corrected: **PMD-2R** exact relativistic bound (closes the NR scope gap) + the parametrization-reversal caveat; **PMD-10** capacity–efficiency factorization (removes the mass double-count in the adapter); **PMD-11** reference-scale invariance — *proved per-meter, disproved for the combined score*, with the dominance / trade-off dichotomy; **PMD-12** exact surplus identity `Δlog-loss = I(Y;C_R|X_std)`; plus one concrete falsifiable ceiling. **v1.5.1 corrects three errors found by hostile review of the v1.5 draft** — see the changelog; the errors and their repairs are recorded, not silently removed.)**
 **Date (this revision):** 2026-07-25
 **Prerequisites:** the core triad `Form↔Time · Position↔Space · Action↔Energy`; `APPENDIX_MMT` (Meaning–Matter Transformation), `APPENDIX_DIM` (Dimensionless Meaning), `APPENDIX_ST` / DPR (Dimensional Price Registry), `APPENDIX_QMC` (measurement collapse), `APPENDIX_GEN` (Genesis Law), `APPENDIX_SSS` (the score); for Part II, basic quantum estimation theory (Fisher information, Cramér–Rao, quantum Fisher information) and `APPENDIX_RH` (null-model / rival discipline).
 
@@ -175,7 +175,7 @@ This mirrors the **position–momentum uncertainty** `Δx·Δp ≥ ħ/2`: a shar
 - **Mach's principle is genuinely open.** If inertia were shown to be entirely independent of the cosmic matter distribution, the "context confers mass" reading weakens to a metaphor. If frame-dragging / relational-inertia results strengthen the Machian picture, it strengthens. PMD is therefore **hostage to a real open question in physics**, and says so.
 
 **Null model, empirical content, and required controls (RH).**
-- **Present empirical content (honest):** as of v1.4, PMD makes **no observation that standard ƛ_C, relativistic kinematics, QFT, and GR do not already make**. The functions `g_M`, `g_0`, and the scale `L*` are calibration candidates, not fitted laws. This is not a soft admission — Part II **proves** it: the **no-go theorem (§23 / PMD-9)** shows that if the PMD context variable is any deterministic function of the standard variables, `C = f(X_std)`, then `I(Y ; C | X_std) = 0` for every observable `Y`. **PMD earns empirical content only against an independently measured context observable `C_R` with `I(Y ; C_R | X_std) > 0`.**
+- **Present empirical content (honest):** as of v1.5, PMD makes **no observation that standard ƛ_C, relativistic kinematics, QFT, and GR do not already make** — the one concrete falsifiable ceiling it now states (`Var(x̂) ≥ ħ²/(8NmK)`, §12.1) is a consequence of *standard* quantum estimation theory, not new physics. The functions `g_M`, `g_0`, and the scale `L*` are calibration candidates, not fitted laws. This is not a soft admission — Part II **proves** it: the **no-go theorem (§23 / PMD-9)** shows that if the PMD context variable is any deterministic function of the standard variables, `C = f(X_std)`, then `I(Y ; C | X_std) = 0` for every observable `Y`. **PMD earns empirical content only against an independently measured context observable `C_R` with `I(Y ; C_R | X_std) > 0`.**
 - **Null model:** `H₀: every observation is explained by the standard ƛ_C, pᵘ, and QFT/GR, with no PMD context variable.`
 - **What would count as content:** a mass/localization meter that is (i) independently measurable, (ii) adds predictive power over `H₀`, and (iii) never misclassifies massless, locally-detected systems.
 - **Required negative controls before any use:** **(a) massive-but-delocalized** (a momentum eigenstate — massive yet spread out → refutes "delocalized ⇒ massless"); **(b) massless-but-locally-detected** (a photon wave packet → refutes `P_L = 0` for massless); **(c) inertial-motion null** (constant-velocity coasting, no force → refutes "mass resists displacement"); **(d) `P_S`-only rival** (must the mass sub-meter beat a Position score built from spatial support alone?). *(These are discharged by construction in the upgraded adapter, Part II §17.)*
@@ -201,7 +201,11 @@ This mirrors the **position–momentum uncertainty** `Δx·Δp ≥ ħ/2`: a shar
 - uniqueness of the nested geometric mean under separability + symmetry + idempotence (§19 / PMD-6);
 - the elasticity split showing the nesting does **not** double-weight Position (§20 / PMD-7);
 - the exact participation of interactions in composite invariant mass (§22 / PMD-8);
-- the condition for empirical surplus over the null model, as a **no-go** (§23 / PMD-9).
+- the condition for empirical surplus over the null model, as a **no-go** (§23 / PMD-9);
+- the **exact relativistic** localization bound, of which the NR bound is the leading term (§12.1 / PMD-2R);
+- the **capacity–efficiency factorization** `J_𝒞 = ε·u·(8mK/ħ²)` (§15.1 / PMD-10);
+- **per-meter reference-scale invariance** — and its **failure for the combined score** (§16.1 / PMD-11);
+- the **surplus identity** `𝔼[Δ log-loss] = I(Y;C_R|X_std)` (§23.1 / PMD-12).
 
 ### 9.2 What CANNOT be proved by mathematics alone
 The following stay **interpretive (L3/L4)** and are *not* elevated by Part II:
@@ -305,7 +309,86 @@ With non-relativistic kinetic energy `K = ⟨p²⟩ / (2m)` and `(Δp)² = ⟨p�
 ■  F_Q / K ≤ 8 m / ħ²        ("mass = localization-information leverage per unit energy")
 ```
 
-This is far more defensible than "localization is bought with mass": it is a *proved inequality*, explicitly scoped to the non-relativistic massive sector, that assigns mass a precise operational role (capacity), not a metaphysical one. **Scope caveat:** the bound is **non-relativistic** — it uses `K = ⟨p²⟩/2m`, and makes **no claim** in the relativistic regime governed by `E² = p²c² + m²c⁴` (there `K ≠ ⟨p²⟩/2m` and the `8mK/ħ²` form does not apply).
+This is far more defensible than "localization is bought with mass": it is a *proved inequality*, explicitly scoped to the non-relativistic massive sector, that assigns mass a precise operational role (capacity), not a metaphysical one. **Scope:** as stated the bound is **non-relativistic** (it uses `K = ⟨p²⟩/2m`). §12.1 now supplies the **exact relativistic form**, of which this is the leading term.
+
+---
+
+## 12.1. Theorem PMD-2R — exact relativistic localization bound  ·  **[L2: proved, exact]**
+
+*(New in v1.5. Closes the non-relativistic scope gap of PMD-2 — the bound is not merely an NR approximation but the leading term of an exact result.)*
+
+Spatial translation is generated by `p̂` **at all velocities**, so `F_Q ≤ 4·Var(p̂)/ħ² ≤ 4⟨p̂²⟩/ħ²` holds relativistically as well. For a free particle the dispersion is an **operator identity**, `Ĥ² = p̂²c² + m²c⁴`, hence
+
+```
+⟨p̂²⟩ = ( ⟨Ĥ²⟩ − m²c⁴ ) / c²          (exact — no expansion)
+```
+
+and therefore
+
+```
+■  F_Q ≤ 4( ⟨Ĥ²⟩ − m²c⁴ ) / (ħ²c²)          (exact, all velocities)
+```
+
+**Proof.** `Var(p̂) ≤ ⟨p̂²⟩`; substitute the operator identity. ∎
+
+> ### Scope — four hypotheses, all load-bearing
+> 1. **Single particle.** `Ĥ² = c²p̂² + m²c⁴` is an operator identity **only** on a one-particle positive-energy Poincaré irrep. For `N > 1` it is **false**: the correct object is the *invariant-mass operator* `M̂²c⁴ ≡ Ĥ² − c²P̂²`, which acts nontrivially on relative momenta. *Counterexample:* two free particles of mass `m` with momenta `±p` have `P̂|ψ⟩ = 0`, so `⟨P̂²⟩ = 0`, yet `(⟨Ĥ²⟩ − M²c⁴)/c² = 4p² ≠ 0` — the formula overstates `⟨P̂²⟩` without bound. It also fails for interacting `Ĥ = Ĥ_free + V̂` and for general Fock states.
+> 2. **Positive-energy sector.** On the full Dirac spectrum a negative-energy state has `⟨E_kin⟩ < 0` and the expansion below loses its sign.
+> 3. **Finite second moment,** `⟨Ĥ²⟩ < ∞`; otherwise the bound is true but vacuous.
+> 4. **"Exact" qualifies the identity, not the bound.** The inequality discards `⟨p̂⟩²`, so it is loose by exactly `4⟨p̂⟩²/ħ²` — a **frame-dependent** slack that grows like `γ²` under boosts. It is saturable only in the zero-mean-momentum frame.
+
+**Relation to PMD-2 — and a correction to the naive reading.** Writing `Ê_kin ≡ Ĥ − mc²` and `(ΔH)² = ⟨Ĥ²⟩ − ⟨Ĥ⟩²`, the algebra is exact (on the positive-energy sector, where every term is non-negative):
+
+```
+⟨Ĥ²⟩ − m²c⁴ = 2mc²⟨E_kin⟩ + ⟨E_kin⟩² + (ΔH)²
+
+■  F_Q ≤ 8m⟨E_kin⟩/ħ²  +  4( ⟨E_kin⟩² + (ΔH)² ) / (ħ²c²)
+        └ PMD-2 form ┘     └──── O(1/c²), ≥ 0 ────┘
+```
+
+> ### ⚠ This does **NOT** make `8mK/ħ²` a relativistic ceiling — it proves the opposite
+> The extra terms are **non-negative and added to the right-hand side**, so the relativistic ceiling **exceeds** the PMD-2 expression. A larger ceiling does not validate the smaller one; it *removes* its status as a bound. **`F_Q ≤ 8mK/ħ²` is therefore NOT valid relativistically when `K` denotes relativistic kinetic energy — it is violated at every nonzero momentum.**
+>
+> **Exact violation factor.** For the zero-mean state `(|+p⟩ + |−p⟩)/√2` one has `F_Q = 4p²/ħ²` exactly, while `E_kin = mc²(√(1+u²) − 1)` with `u ≡ p/(mc)`. Then
+>
+> ```
+> ■  F_Q / ( 8m·E_kin/ħ² )  =  u² / [ 2(√(1+u²) − 1) ]  =  ( √(1+u²) + 1 ) / 2   >  1   for every u > 0
+> ```
+>
+> | `u = p/mc` | 0.01 | 0.1 | 1 | 10 | 100 |
+> |---|---|---|---|---|---|
+> | violation factor | 1.000025 | 1.0025 | **1.207** | **5.52** | **50.50** |
+>
+> (Closed form verified against direct computation; as `m → 0` the PMD-2 expression → 0 while `F_Q` stays finite — violation by an unbounded factor.)
+>
+> **Corrected status of PMD-2.** `F_Q ≤ 8mK/ħ²` holds **if and only if `K` is defined as `⟨p̂²⟩/2m`** — in which case it is not an independent physical bound at all but a *rewriting* of `F_Q ≤ 4⟨p̂²⟩/ħ²` using the NR definition of kinetic energy. Its content is the **identification** of `⟨p̂²⟩` with a mass-times-energy budget, and that identification is exactly what fails relativistically. PMD-2 is thus **strictly non-relativistic**, and PMD-2R is the correct statement whenever velocities are not small.
+
+*(This correction was forced by adversarial review of the v1.5 draft, which had read the expansion backwards; the error and its repair are recorded here rather than silently removed.)*
+
+> ### ⚠ Honest consequence — the "capacity" reading is **budget-dependent**
+> The direction of the mass effect depends on **which energy budget is held fixed** — and the contrast is *not* relativistic-vs-non-relativistic:
+>
+> ```
+> fixed KINETIC budget  K = ⟨p̂²⟩/2m     :  ceiling = 8mK/ħ²                     → INCREASES with m
+> fixed KINETIC budget  K = ⟨Ĥ⟩ − mc²   :  ceiling = 4(2mc²K + K² + (ΔH)²)/(ħ²c²) → INCREASES with m
+> fixed TOTAL   budget  ⟨Ĥ²⟩            :  ceiling = 4(⟨Ĥ²⟩ − m²c⁴)/(ħ²c²)       → DECREASES with m
+> ```
+>
+> So the reversal is driven entirely by **whether rest energy sits inside the budget**, not by relativistic kinematics: at fixed *kinetic* energy the direction is the same in both regimes. **"More mass = more localization capacity" holds under a kinetic-energy budget and reverses under a total-energy budget**, because rest energy consumes what would otherwise buy momentum spread.
+>
+> **Necessary technical care.** The total-energy budget must be stated as fixed **second moment `⟨Ĥ²⟩`**, *not* fixed mean `⟨Ĥ⟩`. Since `⟨Ĥ²⟩ = ⟨Ĥ⟩² + (ΔH)²` and `(ΔH)²` is unbounded at fixed mean, **the ceiling is unbounded above at fixed `⟨Ĥ⟩`** (explicitly: a two-component superposition holding `⟨Ĥ⟩ = 2mc²` while pushing the upper branch up gives `⟨Ĥ²⟩ − m²c⁴ = 4, 11, 101, 10⁴, 10⁸ …` in units `m = c = 1`). Writing the budget as `E² − m²c⁴` with `E = ⟨Ĥ⟩` — as the v1.5 draft did — is an error.
+>
+> Any application of PMD **must declare which budget is held fixed**; the §30 Localization-Leverage statement is scoped to the fixed-kinetic-energy reading.
+
+**One concrete falsifiable ceiling (answers "PMD makes no checkable statement").** Combining PMD-2R with the Braunstein–Caves inequality (`J_𝒞 ≤ F_Q` for *any* POVM) gives a hard design constraint on **every** localization protocol — any measurement, any number of detectors, any classical post-processing:
+
+```
+■  J_𝒞  ≤  4⟨p̂²⟩/ħ²  ≤  4(⟨Ĥ²⟩ − m²c⁴)/(ħ²c²)    ⇒    Var(x̂)  ≥  ħ²c² / ( 4N(⟨Ĥ²⟩ − m²c⁴) )
+   (non-relativistically, with K ≡ ⟨p̂²⟩/2m:   Var(x̂) ≥ ħ²/(8NmK) )
+```
+(one-particle, free, positive-energy, `⟨Ĥ²⟩ < ∞`; the `⟨p̂²⟩` form is the primitive one and is what a metrology test actually constrains)
+
+This **is** experimentally falsifiable: a certified localization variance below the floor, at a certified energy budget, refutes it. **Honest label:** it follows from *standard* quantum estimation theory — it is **not new physics**. PMD's contribution is to *identify this ceiling as the Position-axis capacity* and to build the meter around it. PMD-9 (§23) still blocks any claim of *novel* predictive content.
 
 ---
 
@@ -349,6 +432,57 @@ Properties (all verified): `0 ≤ P_D < 1`; `P_D(0) = 0`; `P_D → 1` as `J → 
 
 ---
 
+## 15.1. PMD-10 — the capacity–efficiency decomposition  ·  **[L3: a definition + two scoped range claims — NOT a theorem]**
+
+*(New in v1.5; **demoted in v1.5.1** after review. The decomposition itself is true **by construction**; all of its content sits in the two range claims and their scope.)*
+
+Two inequalities chain together — the first is Braunstein–Caves (the classical Fisher information of **any** POVM cannot exceed the quantum Fisher information), the second is PMD-2:
+
+```
+J_𝒞  ≤  F_Q  ≤  8mK/ħ²        (non-relativistic; use PMD-2R for the exact form)
+```
+
+Define two dimensionless ratios, each in `[0,1]` by exactly those two inequalities:
+
+```
+ε = J_𝒞 / F_Q            ∈ [0,1]     CONTEXT EFFICIENCY  — how much of what is knowable the channel extracts
+u = F_Q / (8mK/ħ²)       ∈ [0,1]     STATE UTILIZATION   — how much of the mass-energy ceiling the state uses
+```
+
+Then, identically:
+
+```
+   J_𝒞  =  ε · u · ( 8mK/ħ² )
+     └ context ┘ └ state ┘ └ mass-energy capacity ┘
+```
+
+> **Honesty note (v1.5.1).** As an equation this is **`J_𝒞 = J_𝒞`** — a tautology, since `ε` and `u` are *defined* as the two ratios. It is a bookkeeping decomposition, not a theorem, and it is **undefined when `F_Q = 0`** (e.g. any momentum eigenstate, where `Var(p̂) = 0` at arbitrarily large `m` and `K`). All the substantive content is in the two range claims, which must therefore carry their own scope:
+> - **`ε ∈ [0,1` — sound**, by Braunstein–Caves, *provided* `J_𝒞` is the classical Fisher information of the **same** family `ρ_x`, about the **same** parameter, per **identical resource unit** (a per-`N`-copy or per-unit-time `J_𝒞` compared against a single-shot `F_Q` can exceed 1; so can a finite-sample plug-in estimate, which is upward-biased).
+> - **`u ∈ [0,1` — sound only in the non-relativistic sector with `K ≡ ⟨p̂²⟩/2m`.** It **fails** for relativistic kinetic energy at every nonzero momentum (§12.1), and for any phenomenological "budget" that is not `⟨p̂²⟩/2m`. *(It does survive one useful generalization: for NR multi-particle centre-of-mass translation, Cauchy–Schwarz gives `⟨P̂²⟩ ≤ 2MT` with `M = Σmᵢ`, so `u ≤ 1` holds for the collective generator.)*
+
+**Reading.** Within that scope the three factors name the three genuinely distinct things PMD talks about: *what the world permits* (mass-energy), *what the state offers* (utilization), *what the context extracts* (efficiency). This is the informal content of §30's "mass sets capacity; context realizes accessibility."
+
+> ### Consequence for the §17 adapter — `η` is **not** the weight on mass
+> *(The v1.5 draft asserted here that `P_D^(1−η)·P_M^η` "double-counts mass" as a *proved structural fact*. **That claim is withdrawn in v1.5.1** — it does not follow. The bound `J_𝒞 ≤ 8mK/ħ²` is *one-directional*: it constrains only the ceiling, and since `ε, u` range freely over `[0,1]`, the realized `J_𝒞` is **not a monotone function of `m`** — for any mass there are states with `J_𝒞 = 0`. A ceiling that grows with `m` therefore implies nothing about whether the realized `P_D` grows with `m`. Statistical dependence between `P_D` and `P_M` is an **empirical** property of the population being scored, not a derivable one; the bound induces only a triangular support region.)*
+>
+> **What does survive, and is checkable.** Because `P_D`'s *achievable range* depends on `m`, the elasticity of the composite with respect to `log m` is not `η` but
+>
+> ```
+> ■  η_eff = η + (1 − η)·s ,      s ≡ ∂ log P_D / ∂ log m   over the scored population,  s ∈ [0,1]
+> ```
+>
+> So **`η` may not be read as "the weight on mass"**: the realized mass weight lies anywhere in `[η, 1]` and must be **estimated on the corpus** (by measuring `s`, or equivalently `Corr(logit P_D, logit P_M)`), never asserted. Pre-registering `η` without reporting `s` leaves the effective mass weight undetermined.
+>
+> **Calibration rival (unchanged in status).** Blending the two factors that are *not* nested in one another remains a reasonable alternative to test:
+>
+> ```
+>    P_L = P_cap^(1−η) · P_eff^η ,    P_cap = g( L*²·8mK/ħ² ) ,   P_eff = ε = J_𝒞/F_Q
+> ```
+>
+> **Status:** L3 modelling choice for the §29 model comparison — motivated by interpretability of `η`, **not** by a proved redundancy.
+
+---
+
 ## 16. Theorem PMD-5 — the admissible family for `g_M`  ·  **[L3: conditional derivation]**
 
 Let `x_M = L*/ƛ_C = mcL*/ħ = m/m*`, with reference mass `m* = ħ/(cL*)`. Require `g_M : (0,∞) → (0,1)` continuous, strictly increasing, `g_M(1) = ½`, and **log-odds additive under multiplicative rescaling** of `x_M`:
@@ -375,6 +509,79 @@ This is **not** a new physical law — it is a canonical normalization candidate
 
 ---
 
+## 16.1. Theorem PMD-11 — reference-scale invariance: what survives and what does **not**  ·  **[L2: proved (both directions)]**
+
+*(New in v1.5. The reference scale `L*` is a declared convention, so it is essential to know exactly which PMD conclusions depend on it. One half of this result is positive; the other half is a **negative result** that constrains how PMD may be used.)*
+
+### (a) Per-meter — invariance **holds** (positive)
+
+Under a change of reference scale `L* → λL*` (`λ > 0`), each meter's log-odds shifts by a **constant that is the same for every system**:
+
+```
+logit P_M(m; λL*) = logit P_M(m; L*) + α·ln λ
+logit P_D(J; λL*) = logit P_D(J; L*) + 2·ln λ
+```
+
+Therefore, for **any two systems** compared *within one meter*:
+
+```
+■  logit P_M(m₁) − logit P_M(m₂) = α·ln(m₁/m₂)      — independent of L*
+■  logit P_D(J₁) − logit P_D(J₂) = ln(J₁/J₂)        — independent of L*
+```
+
+**Corollary.** Within a single meter, not only the ranking but the **entire log-odds gap** is scale-free; `L*` fixes only where the ½-point sits. *(Verified: the electron–proton `P_M` log-odds gap is `−15.0306891424` at `L* = 1 fm`, `1 pm`, `1 nm`, `1 μm` — identical to ten decimals.)* ∎
+
+### (b) Combined score — invariance **FAILS** (negative result)
+
+The meters are combined **on the probability scale** (`P_L = P_D^(1−η)·P_M^η`, then `P = √(P_S·P_L)`). Writing `g(ℓ) ≡ log σ(ℓ)`, the combined log-score is `log P_L = (1−η)·g(ℓ_D + 2c) + η·g(ℓ_M + αc)` with `c = ln λ`. Since **`g` is strictly concave**, a translation of its argument does **not** pass through as an additive constant and therefore does **not** cancel in the difference `log P_L^A − log P_L^B`. The shift survives *inside* a non-linear function, and the ranking can invert.
+
+*(v1.5.1 correction: the v1.5 draft attributed the failure to the meters shifting by **different** amounts, `α ln λ` vs `2 ln λ`. That explanation is **wrong** — the failure occurs even when the shifts are **equal**. The true mechanism is the concavity of `log σ`, which re-weights each meter differentially across systems: `∂ log P_L/∂ℓ_D = (1−η)(1−P_D)` and `∂ log P_L/∂ℓ_M = η(1−P_M)` both depend on `L*` **and** on the system. Asymptotically the aggregation rule even changes character — as `L* → 0` it ranks by the arithmetic mean of logits; as `L* → ∞` it degenerates to a soft-minimum dominated by the worst meter.)*
+
+```
+■  There exist systems A, B and scales λ with  P(A) > P(B)  at  L*  but  P(A) < P(B)  at  λL*.
+```
+
+*Explicit counterexample **with equal shifts*** (`α = 2, η = ½, P_S ≡ 1`; base log-odds `A = (ℓ_D, ℓ_M) = (0, 0)`, `B = (−2, +3)` — note `B` has the *larger* logit mean):
+
+| `L*` | `P(A)` | `P(B)` | winner |
+|---|---|---|---|
+| 0.01 | 0.010000 | 0.012834 | **B** |
+| 0.10 | 0.099504 | 0.122618 | **B** |
+| 1.00 | 0.707107 | 0.580492 | **A** |
+| 10.0 | 0.995037 | 0.982214 | **A** |
+
+A pure change of reference scale reverses the winner. A randomized sweep over `λ ∈ [10⁻³, 10³]` flips **15.3 %** of random pairs at the canonical `α = 2, η = ½` (29.7 % at `α = 1`; at `α = 1` the ordering is not even monotone in `L*` — it can reverse twice). ∎
+
+### (c) The dichotomy that makes PMD usable
+
+The flips are not arbitrary — they are **exactly** confined to trade-off comparisons:
+
+| comparison type | definition | `L*`-robust? | measured flip rate |
+|---|---|---|---|
+| **Dominance** | one system is `≥` the other on **every** sub-meter | **YES — provably 0**: the shifts are system-independent and every meter is monotone, so a uniform shift cannot cross the components | **0 / 10 093** |
+| **Trade-off** | system A wins some sub-meters and loses others | **NO** | **8 975 / 14 998 (59.8 %)** |
+
+```
+■  A PMD ranking is reference-scale-robust  ⟺  it is a DOMINANCE ranking.
+```
+
+**Mandatory methodological consequence (binding on all PMD use).**
+1. **Dominance conclusions** ("system A is better-localized than B on every sub-meter") are objective and may be reported without reference to `L*`.
+2. **Trade-off conclusions** are defined **only relative to a pre-registered `L*`** and **must** be reported together with an **`L*`-sensitivity analysis** (the range of `L*` over which the ordering is stable). Reporting a trade-off ranking as if it were scale-free is an error.
+
+### (d) Why the obvious fix is rejected
+
+Aggregating in log-odds space instead — `P_L = σ( (1−η)·logit P_D + η·logit P_M )` — **does** restore exact invariance (`0 / 4 000` flips in every parameter setting tested), because the combined log-odds then shifts uniformly by `[(1−η)·2 + η·α]·ln λ`. *(Confirmed independently: `logit P_L^A − logit P_L^B` is constant to six decimals across `L* = 0.01, 1, 100`. More generally, **any affine rule in logit space with system-independent coefficients preserves ranking, and no non-affine aggregation of the probabilities does**.)* It is rejected as canon for a specific, checkable reason: it **destroys the constant elasticity** that connects PMD to `SSS`. Under the log-odds mean, `∂lnU/∂lnP_S` is no longer the fixed `1/6` of PMD-7 but becomes *state-dependent* (`0.2083` at `(P_S,P_L) = (0.6,0.4)`; `0.1667` at `(0.9,0.9)`), so the Position pillar would no longer carry a fixed `1/3` share of `U`.
+
+```
+■  Trade-off:  geometric aggregation ⇒ SSS-compatible fixed weights, L*-dependent trade-off rankings.
+               log-odds  aggregation ⇒ exact scale-invariance, state-dependent weights (breaks PMD-7).
+```
+
+PMD keeps **geometric** aggregation (SSS compatibility is non-negotiable in this corpus) and pays for it with the **explicit** dominance/trade-off discipline of (c) — an honest, quantified cost rather than a hidden one.
+
+---
+
 ## 17. Upgraded massive adapter (Part I §5 `P_L = P_M` → v1.3+ proposal)  ·  **[L3]**
 
 Part I's current `P_L = P_M` in the massive sector cannot distinguish a **localized** massive particle from a **massive momentum eigenstate delocalized over all space**. The proposed fix folds in the detection channel:
@@ -391,7 +598,7 @@ massive-but-delocalized :  P_D = 0, P_M > 0  ⇒  P_L = 0     (correctly not loc
 massless-but-detected   :  m = 0,   P_D > 0  ⇒  P_L = P_D>0 (correctly not zero-Position)
 ```
 
-This is strictly stronger than the `P_L = P_M` branch because it embeds the two controls into the formula rather than relying on a case split. **Status:** recommended for adoption into the Part I §5 core meter at **v1.3+**; `η` must be **pre-registered**, never fit post hoc.
+This is strictly stronger than the `P_L = P_M` branch because it embeds the two controls into the formula rather than relying on a case split. **Status:** adopted into the Part I §5 core meter in **v1.4**; `η` must be **pre-registered**, never fit post hoc. **Two v1.5 caveats now attach to this form:** (i) it **double-counts mass**, because `J_𝒞` behind `P_D` is itself bounded by `m` (§15.1 / PMD-10) — the non-redundant `P_cap`/`P_eff` blend is the recommended calibration rival; (ii) trade-off rankings produced by this blend are **not** reference-scale invariant (§16.1 / PMD-11b) and require an `L*`-sensitivity report.
 
 ---
 
@@ -522,6 +729,31 @@ This is the formal version of the Part I §8 null model `H₀`. PMD is honest pr
 
 ---
 
+## 23.1. Theorem PMD-12 — the exact surplus identity  ·  **[L1: proved]**
+
+*(New in v1.5. Turns §24's `Δ_CV` from an ad hoc score into an estimator of a specific information quantity, and makes PMD-9 its zero case.)*
+
+For the **true** conditional distributions, the expected log-loss (in nats) of the null model is `𝔼[ℓ₀] = H(Y | X_std)` and of the PMD model `𝔼[ℓ₁] = H(Y | X_std, C_R)`. Hence:
+
+```
+■  𝔼[ℓ₀] − 𝔼[ℓ₁]  =  H(Y|X_std) − H(Y|X_std, C_R)  =  I(Y ; C_R | X_std)
+```
+
+**Proof.** Both terms are conditional entropies of the same `Y`; their difference is the conditional mutual information by definition. ∎ *(Valid for differential entropies too — the individual `h(·)` are not reparametrization-invariant but their difference is. For continuous `C` the no-go should be argued from conditional independence — `C` is a.s. constant given `X_std` — not from `I ≤ H(C|X_std) = 0`, since `h(C|X_std) = −∞` there.)* *(Verified numerically on a random joint distribution: `I = 0.095060227113` versus `H(Y|X) − H(Y|X,C) = 0.095060227113`; and for a deterministic `C = f(X)`, `I = 0.00e+00` — PMD-9 recovered exactly.)*
+
+**Three consequences that sharpen the empirical programme:**
+
+1. **PMD-9 is the zero case.** `C = f(X_std) ⇒ I(Y;C|X_std) = 0 ⇒` the achievable log-loss gain is *exactly* zero, not merely "unproven." The no-go and the surplus criterion are one theorem seen from two sides.
+2. **The effect size has units.** Any claimed PMD improvement is quantified in **nats per observation**, so pre-registration can name a *numerical* threshold (`Δ ≥ δ` nats with a CI excluding 0) instead of a vague "beats the null."
+3. **Held-out loss is only a *proxy* estimator — with four documented failure modes (v1.5.1).** The identity holds for the **true** conditionals; `Δ_CV` inherits none of that automatically:
+   - **Misspecification breaks the bridge (the important one).** Under a *restricted* model class, a deterministic `C = f(X_std)` with `I(Y;C|X_std) = 0` **can still strictly improve held-out loss** — handing a non-linear feature to a linear/logistic model is the canonical case. A positive `Δ_CV` is therefore **not** evidence that `I(Y;C_R|X_std) > 0`; it may only measure the model class's inability to represent `f`.
+   - **`Δ_CV` is biased downward.** k-fold CV estimates the risk of the *fitting procedure*; the two model classes differ in complexity, so their optimism terms do not cancel and the larger model is penalized. Hence `Δ_CV ≤ 0` does **not** refute `I > 0`.
+   - **Fold-wise inference is unreliable.** CV folds are dependent and there is no unbiased variance estimator for k-fold CV; naive t-tests across folds are anticonservative. Use a **permutation null on `C_R`** with the entire pipeline inside the permutation.
+   - **Plug-in mutual-information estimates are biased upward**, so `Î > 0` on finite data is expected even when `I = 0`; a null distribution is required, not a point estimate.
+4. **Scope of the no-go.** `C = f(X_std)` must be a function of **exactly the conditioning set**. If `C = f(X_full)` while only `X_std ⊂ X_full` is conditioned on, then `I(Y;C|X_std)` is generically `> 0`. Note also that `I(Y;C|X) = 0` neither implies nor is implied by `I(Y;C) = 0` (explaining-away): a marginally useless `C_R` can be conditionally informative, and vice versa.
+
+---
+
 ## 24. Pre-registered PMD empirical model (how surplus would be earned)
 
 **Outcome must be a *raw* observable, never the constructed `P_D`.** Using `P_D` as the target would be **circular** — it is built from the same channel `𝒞` as the predictors. Let `Y` be a directly measured quantity: the empirical localization error `Var(x̂)`, a detection hit-rate in region `R`, or a resolved position residual.
@@ -572,6 +804,14 @@ This does **not** mean the proton "has Position 0.958" and the electron "has alm
 | CORE.PMD.10 | context *always* increases mass | **false in general** | sign varies (χ_int) | binding controls |
 | CORE.PMD.11 | mass = context | L3 interpretation | no derivation | independent `C_R` |
 | CORE.PMD.12 | PMD adds prediction | **not yet** | requires `I>0` | held-out test |
+| CORE.PMD.13 | `F_Q ≤ 4(⟨Ĥ²⟩−m²c⁴)/(ħ²c²)` | proved **(1 particle, free, `E>0`, `⟨Ĥ²⟩<∞`)** | operator identity + QFI | relativistic metrology |
+| CORE.PMD.13b | `F_Q ≤ 8mK/ħ²` with **relativistic** `K` | **FALSE** — violated by `(√(1+u²)+1)/2` at every `u>0` | §12.1 counterexample | fixed-`K` metrology |
+| CORE.PMD.14 | "more mass ⇒ more capacity" | **only at fixed *kinetic* energy** | reverses at fixed total `E` | budget must be declared |
+| CORE.PMD.15 | `J_𝒞 = ε·u·(8mK/ħ²)` | **tautology** (definition); content is `ε,u ∈ [0,1]`, NR-scoped | Braunstein–Caves + PMD-2 | efficiency estimation |
+| CORE.PMD.16 | `P_D^(1−η)P_M^η` double-counts mass | **WITHDRAWN v1.5.1** — bound is one-directional; dependence is empirical | replaced by `η_eff = η+(1−η)s` | estimate `s` on corpus |
+| CORE.PMD.17 | per-meter ranking is `L*`-invariant | proved | uniform log-odds shift | scale sweep |
+| CORE.PMD.18 | combined-score ranking is `L*`-invariant | **FALSE** | counterexample; 59.8 % of trade-off pairs flip | dominance-only rule |
+| CORE.PMD.19 | `𝔼[Δ log-loss] = I(Y;C_R\|X_std)` | proved **for true conditionals only** | conditional entropies | permutation null; `Δ_CV` is a biased proxy |
 
 ---
 
@@ -594,6 +834,14 @@ This does **not** mean the proton "has Position 0.958" and the electron "has alm
 | `η` | mass-proxy weight | — |
 | `χ_int` | signed interaction-mass fraction | — |
 | `C_R` | independently measured context | protocol-specific |
+| `ε = J_𝒞/F_Q` | context efficiency (extraction fraction) | [0,1] |
+| `u = F_Q/(8mK/ħ²)` | state utilization of the mass-energy ceiling | [0,1] |
+| `E_kin = Ĥ − mc²` | relativistic kinetic energy | J |
+| `(ΔH)²` | energy variance | J² |
+| `λ` | reference-scale rescaling factor (`L* → λL*`) | — |
+| `u = p/(mc)` | momentum in units of `mc` (relativity parameter) | — |
+| `s = ∂log P_D/∂log m` | population elasticity of detection w.r.t. mass | [0,1] |
+| `η_eff = η+(1−η)s` | **realized** mass weight in the adapter | [η,1] |
 | `U` | nested stability score | [0,1] |
 
 ---
@@ -639,7 +887,12 @@ Empirical test:  H₀ vs H₁ ,  I(Y ; C_R | X_std) > 0 ?
 7. Separate internal-context from external/Machian context.
 8. Use the **signed** `χ_int` (interactions can lower mass).
 9. Compare four models: `P_S` ; `P_S·P_D` ; `P_S·P_M` ; `P_S·P_D·P_M`.
-10. Count PMD as empirically upgraded **only** if `I(Y; C_R | X_std) > 0`.
+10. Count PMD as empirically upgraded **only** if `I(Y; C_R | X_std) > 0` — now quantified in **nats** by PMD-12 (§23.1).
+11. **Resolve the mass double-count** (§15.1): calibrate `P_D^(1−η)P_M^η` against the non-redundant `P_cap^(1−η)·P_eff^η`.
+12. **Report `L*`-sensitivity** for every trade-off ranking (§16.1c) — dominance rankings are exempt.
+13. **Declare the energy budget** (fixed kinetic vs fixed total-`⟨Ĥ²⟩`) in every capacity claim (§12.1) — the mass effect reverses between them.
+14. **Estimate `s`** (and hence `η_eff`) on the scored corpus (§15.1) — `η` alone does not determine the realized mass weight.
+15. **Use a permutation null** for any surplus claim, and never read `Δ_CV > 0` as `I > 0` without a well-specified model class (§23.1).
 
 ---
 
@@ -657,6 +910,7 @@ Empirical test:  H₀ vs H₁ ,  I(Y ; C_R | X_std) > 0 ?
 > ```
 > ■  mass sets capacity ;  context realizes accessibility .
 > ```
+> **Scope (v1.5).** "Capacity" is defined at a **fixed kinetic-energy budget**; at fixed *total* energy the mass dependence reverses (§12.1). The three-way split of that capacity is exact: `J_𝒞 = ε·u·(8mK/ħ²)` (§15.1).
 
 So the defensible corpus statement is **not** `Mass = Context` but
 
@@ -679,6 +933,8 @@ So the defensible corpus statement is **not** `Mass = Context` but
 | version | date | change |
 |---|---|---|
 | **v1.4.1** | 2026-07-25 | Final review polish: `P_L` registry range → `[0,1)` (consistent with `P_S`/`P_D`/`P_M`); §8 "as of" version bumped to v1.4; §19 cross-reference rewired to §29.9 four-model comparison (§24 has no explicit aggregator arm). |
+| **v1.5.1** | 2026-07-25 | **Self-correction after adversarial review of the v1.5 draft — three real errors fixed, one claim withdrawn.** (1) **PMD-2R inference was backwards**: the non-negative relativistic corrections mean the relativistic ceiling *exceeds* `8mK/ħ²`, so PMD-2 is **not** a relativistic bound — it is violated at *every* nonzero momentum by the exact factor `(√(1+u²)+1)/2` (1.207 at `u=1`, 50.5 at `u=100`). PMD-2 is now stated as valid **iff** `K ≡ ⟨p̂²⟩/2m`, i.e. as a rewriting, and strictly NR. (2) **`E² → ⟨Ĥ²⟩`**: at fixed *mean* energy the ceiling is unbounded (`(ΔH)²` is free), so the total-energy budget must be stated as fixed second moment; the reversal was also mislabelled relativistic-vs-NR when it is fixed-`K`-vs-fixed-`E`. (3) **PMD-11's mechanism was wrong**: the failure is caused by the **concavity of `log σ`**, not by unequal logit shifts — it occurs even at `α=2` where the shifts are equal (new explicit counterexample table). (4) **Withdrawn:** the "adapter double-counts mass" claim — the bound is one-directional, `J_𝒞` is not monotone in `m`, and dependence is empirical; replaced by the checkable `η_eff = η + (1−η)s`. Also: PMD-2R scoped to one-particle/free/positive-energy/`⟨Ĥ²⟩<∞` (the identity **fails for `N>1`**); PMD-10 demoted from theorem to a definitional decomposition with `ε,u` range scopes; PMD-12 given four estimator caveats (misspecification, CV bias, fold dependence, plug-in MI bias). |
+| **v1.5** | 2026-07-25 | **Mathematical-apparatus upgrade (4 new theorems, 1 negative result).** **PMD-2R** (§12.1): exact relativistic bound `F_Q ≤ 4(⟨Ĥ²⟩−m²c⁴)/(ħ²c²)` via the operator identity `Ĥ²=p̂²c²+m²c⁴`, with PMD-2 recovered as its leading term — closes the NR scope gap; **plus the parametrization-reversal caveat** (mass raises the ceiling at fixed *kinetic* energy, lowers it at fixed *total* energy), and **one concrete falsifiable ceiling** `Var(x̂) ≥ ħ²/(8NmK)`. **PMD-10** (§15.1): capacity–efficiency factorization `J_𝒞 = ε·u·(8mK/ħ²)`, which **proves a mass double-count** in the `P_D^(1−η)P_M^η` adapter and supplies the non-redundant `P_cap`/`P_eff` alternative. **PMD-11** (§16.1): per-meter reference-scale invariance **proved**, combined-score invariance **disproved** with an explicit counterexample (59.8 % of trade-off pairs flip), yielding the binding **dominance / trade-off** rule and an `L*`-sensitivity requirement; the log-odds fix is examined and rejected because it breaks PMD-7's fixed `1/6` elasticity (SSS compatibility). **PMD-12** (§23.1): exact surplus identity `𝔼[Δ log-loss] = I(Y;C_R\|X_std)`, making PMD-9 its zero case and giving effect sizes in nats. All results verified numerically. **No new physics.** |
 | **v1.4** | 2026-07-25 | **Review-hardening (P0/P1/P2).** Adopted the §17 adapter into the §5 core meter: `P_L = P_D^(1−η)·P_M^η` (pre-registered `η=½`; `P_L=P_M` retained as the `η=1` legacy Compton reading) — the two negative controls now hold *by construction*, resolving the §5↔§17 dual-state. Clarified context ≔ **channel `𝒞`** vs its Fisher **content `J_𝒞`** (§5). Added: PMD-2 non-relativistic **scope caveat** (§12); PMD-4 **regularity** note (§14); PMD-6 **rival-aggregator** scope (§19); `[0,1)` ranges (§10, §27); **raw-observable** protocol to kill circularity in §24 (`Y` must not be `P_D`); a massless-photon **negative-control row** (§25); PMD-7 adapter elasticity split (§20); epigraph *figurative* footnote; minimal reading-path guide; §29 renamed to v1.5 roadmap. **No new physics; PMD-2/PMD-9/χ_int/§30 untouched.** |
 | **v1.3** | 2026-07-25 | **Single-document merge.** Folded the entire formal layer (former `APPENDIX_PMD_MATH`) into this file as **PART II (§9–§30)**: all theorems PMD-1…9 with proofs, the operational meters (`P_D`, `P_M`, `P_S`), the upgraded adapter, the composite-mass `χ_int`, the empirical no-go, the CEPT map, registry, and dependency graph — nothing dropped. Part I (§0–§8) is the interpretation; per-result epistemic labels live in Part II. Internal cross-references rewired to the merged numbering. |
 | **v1.2.1** | 2026-07-25 | Consultant v1.2 + PMD-MATH §2.3 fix: the residual §5 "massless⇒delocalized" wording corrected (at `m→0` the mass channel `P_M` vanishes but `P_L` via `P_D` need not; unpaid Position needs **both** `P_S→0` **and** `P_L→0`). |
@@ -687,4 +943,4 @@ So the defensible corpus statement is **not** `Mass = Context` but
 | **v1.1.1** | 2026-07-19 | §8 discipline through the body: massless ≠ delocalized; inertia resists Δmomentum not displacement; Higgs = VEV coupling not drag; massless adapter `g_0`; `H₀` and negative controls. |
 | **v1.1** | 2026-07-19 | Physics-hardened core: reduced Compton `ƛ_C`; relativistic `F = dp/dt`, `p = γmv`, photon `p = E/c`; nested meter `P = √(P_S·P_L)`; mass `P_M` as one proxy only in the massive rest-frame sector. |
 
-*Status: **v1.4 single document** — Part I is L3/L4 speculative interpretation on a rigorous physical core; Part II is the formal layer (L1/L2 proved core: `m·ƛ_C = ħ/c`; `F_Q ≤ 8mK/ħ²`; Fisher additivity `J_𝒞 = Σ Jₖ`; data-processing monotonicity; nested-mean uniqueness `P = √(P_S·P_L)`; composite mass `Mc² = E_COM` with signed `χ_int`; empirical no-go `C = f(X_std) ⇒ I(Y;C|X_std) = 0`; L3 modelling choices: `P_M`, `P_D`, `P_S`, `α = 2`, `η`). The one-particle reduced-Compton localization scale is textbook physics; reading mass as the Position-currency's context/inertia price is a U-Theory interpretation, not a derivation; "mass = context" is **not** upgraded by the formal layer and remains L3/L4. Position pays twice — in space, and in mass — **for a massive particle in its rest frame.***
+*Status: **v1.5.1 single document** — Part I is L3/L4 speculative interpretation on a rigorous physical core; Part II is the formal layer (L1/L2 proved core: `m·ƛ_C = ħ/c`; `F_Q ≤ 8mK/ħ²`; Fisher additivity `J_𝒞 = Σ Jₖ`; data-processing monotonicity; nested-mean uniqueness `P = √(P_S·P_L)`; composite mass `Mc² = E_COM` with signed `χ_int`; empirical no-go `C = f(X_std) ⇒ I(Y;C|X_std) = 0`; **v1.5 additions:** exact relativistic bound PMD-2R, capacity–efficiency factorization PMD-10, reference-scale invariance PMD-11 (per-meter **yes**, combined score **no** — dominance rankings only), surplus identity PMD-12 (true conditionals only); **v1.5.1 records three corrected errors and one withdrawn claim from the v1.5 draft**; L3 modelling choices: `P_M`, `P_D`, `P_S`, `α = 2`, `η`). The one-particle reduced-Compton localization scale is textbook physics; reading mass as the Position-currency's context/inertia price is a U-Theory interpretation, not a derivation; "mass = context" is **not** upgraded by the formal layer and remains L3/L4. Position pays twice — in space, and in mass — **for a massive particle in its rest frame.***

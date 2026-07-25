@@ -2,42 +2,50 @@
 
 **The context-price of a definite location — how *localization* is bought with mass as well as with space.**
 
-A U-Theory appendix on the **Position ↔ Space** currency: for a massive one-particle state in its rest frame, invariant mass fixes the reduced-Compton localization scale `ƛ_C = ħ/(mc)` and the inertial response to a change of momentum (`F = dp/dt`). U-Theory reads mass as a **nested sub-meter inside the Position pillar** — `P = √(P_S · P_L)`, keeping `U = ∛(F·P·A)` — **not** a fourth currency.
+A U-Theory appendix on the **Position ↔ Space** currency. Position carries two non-compensable sub-meters — **spatial/contextual distinguishability** `P_S` and **localization accessibility** `P_L` — combined as `P = √(P_S·P_L)` so that `U = ∛(F·P·A)` is untouched. **In the massive one-particle rest-frame sector**, invariant mass supplies *one capacity proxy* inside `P_L` via the reduced Compton scale `ƛ_C = ħ/(mc)`. Mass is **not** a fourth pillar, and **not** a universally required sub-price: massless quanta pay `P_L` through detection alone.
 
 ## Structure (single document, two parts)
 
-- **Part I (§0–§8) — Interpretation.** What the duality means, its honest scope, and where it is speculative. **L3/L4.** Massless quanta (photons) are explicitly **not** assigned zero Position.
-- **Part II (§9–§30) — Formal layer.** What can actually be **proved**, what is a **declared modelling choice**, and what is **forbidden** without a new observable. Per-result epistemic labels throughout.
+- **Part I (§0–§8) — Interpretation.** What the duality means, its honest scope, where it is speculative. **L3/L4.**
+- **Part II (§9–§30) — Formal layer.** What is **proved**, what is a **declared modelling choice**, and what is **forbidden** without a new observable. Per-result epistemic labels throughout.
 
-## What Part II proves
+## What Part II establishes
 
 | Result | Statement | Level |
 |---|---|---|
-| **PMD-1** | `m·ƛ_C = ħ/c` (mass × localization scale is constant) | L1 identity |
-| **PMD-2** | `F_Q ≤ 8mK/ħ²` — mass bounds spatial Fisher information per unit kinetic energy | L2 (non-relativistic) |
-| **PMD-3** | Context Fisher information is additive: `J_𝒞 = Σ Jₖ` | L2 |
-| **PMD-4** | Coarse-graining cannot raise localization info (`J_Z ≤ J_Y`) | L2 |
-| **PMD-5** | Admissible `g_M(x) = x^α/(1+x^α)` from a log-odds axiom | L3 conditional |
-| **PMD-6** | Nested-mean uniqueness: `P = √(P_S·P_L)` | L3 conditional |
-| **PMD-7** | Elasticity split `1/6 + 1/6 = 1/3` — nesting does not double-weight Position | L2 |
-| **PMD-8** | Interactions modify composite invariant mass (`Mc² = E_COM`, signed `χ_int`) | L1 |
-| **PMD-9** | **No-go:** `C = f(X_std) ⇒ I(Y;C\|X_std) = 0` — no prediction without an independent observable | L1 |
+| **PMD-1** | `m·ƛ_C = ħ/c` | L1 identity |
+| **PMD-2** | `F_Q ≤ 8mK/ħ²` — valid **iff** `K ≡ ⟨p̂²⟩/2m`; strictly non-relativistic | L2 (NR only) |
+| **PMD-2R** | `F_Q ≤ 4(⟨Ĥ²⟩−m²c⁴)/(ħ²c²)` — one particle, free, positive-energy, `⟨Ĥ²⟩<∞` | L2 |
+| **PMD-3** | `J_𝒞 = Σ Jₖ` for **product / conditionally independent** channels only | L2 |
+| **PMD-4** | `J_Z ≤ J_Y` under a **parameter-independent** coarse-graining kernel | L2 |
+| **PMD-5** | `g_M(x) = x^α/(1+x^α)` from a log-odds axiom | L3 conditional |
+| **PMD-6** | Nested-mean uniqueness `P = √(P_S·P_L)` within the declared axiom set | L3 conditional |
+| **PMD-7** | Elasticity split `1/6 + 1/6 = 1/3` — the nesting does not double-weight Position | L2 |
+| **PMD-8** | `Mc² = E_COM` exact; the kinetic/field/interaction split is **partition- and scheme-dependent** | L1 + caveat |
+| **PMD-9** | **No-go:** `C = f(X_std) ⇒ I(Y;C\|X_std) = 0` (proved by conditional independence) | L1 |
+| **PMD-10** | `J_𝒞 = ε·u·(8mK/ħ²)` — a **definitional decomposition**, content in the scoped ranges | L3 |
+| **PMD-11** | Reference-scale invariance: **holds per meter**; **fails** for the combined score. Dominance ⟹ robust (converse false) | L2 both ways |
+| **PMD-12** | `𝔼[Δ log-loss] = I(Y;C_R\|X_std)` for the **true** conditionals | L1 + estimator caveats |
 
-**Core claim (not "mass = context"):** *mass sets localization **capacity**; the measurement context realizes **access**.* Formally `F_Q/K ≤ 8m/ħ²` and `J_𝒞 ≤ F_Q`.
+**Core claim (not "mass = context"):** *mass scales a localization-capacity bound; context determines measurement access.* Formally `J_𝒞 ≤ F_Q ≤ 8mK/ħ²` (NR budget).
 
 ## Honest status
 
-- **No new physics.** PMD does not modify GR or QFT; it re-describes established results in F/P/A terms.
-- **No present empirical surplus.** As of v1.4, PMD makes no observation standard `ƛ_C` / QFT / GR do not already make — and PMD-9 *proves* this holds until an independent context observable `C_R` with `I(Y;C_R|X_std) > 0` is supplied.
-- The reduced-Compton localization scale is textbook physics; reading mass as the Position-currency's context/inertia price is a U-Theory **interpretation**, not a derivation.
+- **No new physics.** PMD does not modify GR or QFT; it re-describes established estimation theory and relativistic kinematics in F/P/A terms.
+- **No present empirical surplus.** PMD-9 *proves* this holds until an independent context observable `C_R` with `I(Y;C_R|X_std) > 0` is supplied. PMD-12 gives the effect size in **nats**.
+- **One concrete falsifiable ceiling:** `Var(x̂) ≥ ħ²/(8NmK)` (NR) — a consequence of standard quantum estimation theory, offered as a test of PMD's *framing*, not of new physics.
+- The appendix **records its own corrected errors** rather than removing them; see the changelog (v1.5 → v1.5.1 → v1.5.2).
 
 ## Files
 
-- [`APPENDIX_PMD_POSITION_MASS_DUALITY.md`](APPENDIX_PMD_POSITION_MASS_DUALITY.md) — the appendix (v1.4).
+- [`APPENDIX_PMD_POSITION_MASS_DUALITY.md`](APPENDIX_PMD_POSITION_MASS_DUALITY.md) — the appendix (v1.5.2).
 - [`APPENDIX_PMD_POSITION_MASS_DUALITY.md.pdf`](APPENDIX_PMD_POSITION_MASS_DUALITY.md.pdf) — rendered PDF.
+- [`pmd_scale_sensitivity.py`](pmd_scale_sensitivity.py) — reproduces every numerical figure in §16.1 (reference-scale sensitivity), the PMD-2R violation factor, and the PMD-10 mass elasticity. Pure standard library; `python pmd_scale_sensitivity.py`.
+
+> The explicit counterexamples in §16.1 are **proofs**; the percentages are **design-dependent Monte-Carlo figures** whose seeds and sampling ranges are declared in the script.
 
 ## Provenance
 
 - **Parent record:** U-Theory / U-Model — DOI [10.17605/OSF.IO/74XGR](https://doi.org/10.17605/OSF.IO/74XGR) · https://u-model.org
 - **Author:** Petar Nikolov (ORCID [0009-0001-8669-2276](https://orcid.org/0009-0001-8669-2276)).
-- **License:** CC BY 4.0 (text) / MIT (any code).
+- **License:** CC BY 4.0 (text) / MIT (code).

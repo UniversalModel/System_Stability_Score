@@ -2,6 +2,8 @@
 
 **The context-price of a definite location — how *localization* is bought with mass as well as with space.**
 
+> *The title is **historical** (v1.0). The canonical law is the v1.5.2 restatement in §5: Position's two sub-meters are **distinguishability** `P_S` and **localization accessibility** `P_L`, with mass a capacity proxy **inside** `P_L` in the massive sector only.*
+
 A U-Theory appendix on the **Position ↔ Space** currency. Position carries two non-compensable sub-meters — **spatial/contextual distinguishability** `P_S` and **localization accessibility** `P_L` — combined as `P = √(P_S·P_L)` so that `U = ∛(F·P·A)` is untouched. **In the massive one-particle rest-frame sector**, invariant mass supplies *one capacity proxy* inside `P_L` via the reduced Compton scale `ƛ_C = ħ/(mc)`. Mass is **not** a fourth pillar, and **not** a universally required sub-price: massless quanta pay `P_L` through detection alone.
 
 ## Structure (single document, two parts)
@@ -34,7 +36,7 @@ A U-Theory appendix on the **Position ↔ Space** currency. Position carries two
 - **No new physics.** PMD does not modify GR or QFT; it re-describes established estimation theory and relativistic kinematics in F/P/A terms.
 - **No present empirical surplus.** PMD-9 *proves* this holds until an independent context observable `C_R` with `I(Y;C_R|X_std) > 0` is supplied. PMD-12 gives the effect size in **nats**.
 - **One concrete falsifiable ceiling:** `Var(x̂) ≥ ħ²/(8NmK)` (NR) — a consequence of standard quantum estimation theory, offered as a test of PMD's *framing*, not of new physics.
-- The appendix **records its own corrected errors** rather than removing them; see the changelog (v1.5 → v1.5.1 → v1.5.2).
+- The appendix **records its own corrected errors** rather than removing them: seven errors found across two rounds of adversarial review are corrected *and kept visible* in the changelog (v1.5 → v1.5.1 → v1.5.2 → v1.5.3), with superseded claims marked inline so no historical row reads as current fact.
 
 ## Files
 

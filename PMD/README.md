@@ -38,6 +38,10 @@ A U-Theory appendix on the **Position ↔ Space** currency. Position carries two
 - **One concrete falsifiable ceiling:** `Var(x̂) ≥ ħ²/(8NmK)` (NR) — a consequence of standard quantum estimation theory, offered as a test of PMD's *framing*, not of new physics.
 - The appendix **records its own corrected errors** rather than removing them: seven errors found across two rounds of adversarial review are corrected *and kept visible* in the changelog (v1.5 → v1.5.1 → v1.5.2 → v1.5.3), with superseded claims marked inline so no historical row reads as current fact.
 
+## Canonical location
+
+> **This folder is the single source of truth for PMD.** The appendix was briefly duplicated at the corpus root (`v.28\.md\APPENDIX_PMD_*`); those copies were removed on 2026-07-25 after verifying they were byte-identical, and `APPENDIX_MASTER_INTEGRATION_MAP.md` + `THEORY_OF_EVERYTHING_v31.index.md` now point here. **Edit only this copy** — a second copy is how the v1.5.1 → v1.5.3 contradictions arose in the first place. The GitHub mirror is `System_Stability_Score/PMD/`.
+
 ## Files
 
 - [`APPENDIX_PMD_POSITION_MASS_DUALITY.md`](APPENDIX_PMD_POSITION_MASS_DUALITY.md) — the appendix (v1.5.3).
